@@ -21,9 +21,6 @@ const Navbar = () => {
         </Link>
 
         <div className="flex items-center gap-4">
-          <span className="text-sm text-muted-foreground hidden sm:block">
-            Lee el panorama completo.
-          </span>
 
           {user ? (
             <>

@@ -1,8 +1,22 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
-import { Check, Globe, Zap, BookOpen, Bell, Palette } from "lucide-react";
+import { Check, Globe, Zap, BookOpen, Bell, Palette, Crown, Trash2 } from "lucide-react";
 import { toast } from "sonner";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const verticals = ["Economía", "Tech", "Global", "Política", "Social", "Ciencia", "Deportes", "Cultura", "Medio Ambiente", "Salud"] as const;
 
@@ -43,7 +57,27 @@ const languages = [
   { label: "Français", value: "fr" },
 ] as const;
 
+const plans = [
+  {
+    value: "free",
+    label: "Free",
+    price: "Gratis",
+    features: ["Titulares y resúmenes", "3 temas máximo", "1 región", "Digest diario"],
+    limitations: ["Sin análisis profundo", "Sin alertas en tiempo real", "Sin selección de tono"],
+  },
+  {
+    value: "full",
+    label: "Full",
+    price: "$4.99/mes",
+    features: ["Todas las temáticas", "Todas las regiones", "Análisis profundo ilimitado", "Alertas en tiempo real", "Selección de tono y idioma", "Sin publicidad"],
+    limitations: [],
+  },
+] as const;
+
 const Preferences = () => {
+  const navigate = useNavigate();
+  const { signOut } = useAuth();
+  const [selectedPlan, setSelectedPlan] = useState("free");
   const [selectedVerticals, setSelectedVerticals] = useState<string[]>(["Economía", "Tech"]);
   const [intensity, setIntensity] = useState("standard");
   const [frequency, setFrequency] = useState("morning");
@@ -51,6 +85,9 @@ const Preferences = () => {
   const [tone, setTone] = useState("neutral");
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>(["es"]);
   const [notifications, setNotifications] = useState({ breaking: true, digest: true, comments: false });
+  const [deleting, setDeleting] = useState(false);
+
+  const isFree = selectedPlan === "free";
 
   const toggleItem = (list: string[], item: string, setter: (v: string[]) => void) => {
     setter(list.includes(item) ? list.filter((x) => x !== item) : [...list, item]);
@@ -58,8 +95,21 @@ const Preferences = () => {
 
   const handleSave = () => {
     toast.success("¡Preferencias guardadas!", {
-      description: `${selectedVerticals.length} temas, ${selectedRegions.length} regiones, intensidad ${intensity}`,
+      description: `Plan ${selectedPlan === "full" ? "Full" : "Free"} · ${selectedVerticals.length} temas · ${selectedRegions.length} regiones`,
     });
+  };
+
+  const handleDeleteAccount = async () => {
+    setDeleting(true);
+    try {
+      await signOut();
+      toast.success("Cuenta eliminada. ¡Hasta pronto!");
+      navigate("/");
+    } catch {
+      toast.error("Error al eliminar la cuenta.");
+    } finally {
+      setDeleting(false);
+    }
   };
 
   const SectionTitle = ({ icon, title }: { icon: React.ReactNode; title: string }) => (
@@ -99,6 +149,52 @@ const Preferences = () => {
           </p>
 
           <div className="space-y-10">
+            {/* Plan */}
+            <div>
+              <SectionTitle icon={<Crown className="w-4 h-4" />} title="Tu Plan" />
+              <div className="grid grid-cols-2 gap-4">
+                {plans.map((plan) => (
+                  <button
+                    key={plan.value}
+                    onClick={() => setSelectedPlan(plan.value)}
+                    className={`p-5 rounded-2xl border text-left transition-all relative overflow-hidden ${
+                      selectedPlan === plan.value
+                        ? "border-primary bg-primary/10 glow-border"
+                        : "border-border/50 bg-secondary/30 hover:bg-secondary/50"
+                    }`}
+                  >
+                    {plan.value === "full" && (
+                      <div className="absolute top-0 right-0 bg-primary text-primary-foreground text-[10px] font-bold px-2 py-0.5 rounded-bl-lg">
+                        PRO
+                      </div>
+                    )}
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-base font-bold text-foreground">{plan.label}</span>
+                      <span className="text-xs text-muted-foreground">{plan.price}</span>
+                    </div>
+                    <ul className="space-y-1 mb-2">
+                      {plan.features.map((f) => (
+                        <li key={f} className="text-xs text-muted-foreground flex items-start gap-1.5">
+                          <Check className="w-3 h-3 text-primary shrink-0 mt-0.5" />
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+                    {plan.limitations.length > 0 && (
+                      <ul className="space-y-1">
+                        {plan.limitations.map((l) => (
+                          <li key={l} className="text-xs text-destructive/70 flex items-start gap-1.5">
+                            <span className="shrink-0 mt-0.5">✕</span>
+                            {l}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* Verticals */}
             <div>
               <SectionTitle icon={<BookOpen className="w-4 h-4" />} title="Temáticas" />
@@ -118,6 +214,7 @@ const Preferences = () => {
                   </button>
                 ))}
               </div>
+              {isFree && <p className="text-xs text-muted-foreground mt-2">Plan Free: máximo 3 temáticas.</p>}
             </div>
 
             {/* Regions */}
@@ -129,11 +226,13 @@ const Preferences = () => {
                 onToggle={(v) => toggleItem(selectedRegions, v, setSelectedRegions)}
                 cols="grid-cols-4"
               />
+              {isFree && <p className="text-xs text-muted-foreground mt-2">Plan Free: máximo 1 región.</p>}
             </div>
 
             {/* Intensity */}
-            <div>
+            <div className={isFree ? "opacity-60 pointer-events-none" : ""}>
               <SectionTitle icon={<Zap className="w-4 h-4" />} title="Intensidad de Lectura" />
+              {isFree && <p className="text-xs text-muted-foreground mb-2">Disponible en el plan Full.</p>}
               <div className="grid grid-cols-3 gap-3">
                 {intensities.map((opt) => (
                   <button
@@ -162,23 +261,25 @@ const Preferences = () => {
                 {frequencies.map((opt) => (
                   <button
                     key={opt.value}
-                    onClick={() => setFrequency(opt.value)}
+                    onClick={() => !isFree || opt.value !== "realtime" ? setFrequency(opt.value) : null}
                     className={`p-3 rounded-xl border text-center transition-all ${
                       frequency === opt.value
                         ? "border-primary bg-primary/10 glow-border"
                         : "border-border/50 bg-secondary/30 hover:bg-secondary/50"
-                    }`}
+                    } ${isFree && opt.value === "realtime" ? "opacity-40 cursor-not-allowed" : ""}`}
                   >
                     <span className="text-sm font-medium text-foreground block">{opt.label}</span>
                     <span className="text-xs text-muted-foreground">{opt.desc}</span>
+                    {isFree && opt.value === "realtime" && <span className="text-[10px] text-primary block mt-1">Full</span>}
                   </button>
                 ))}
               </div>
             </div>
 
             {/* Tone */}
-            <div>
+            <div className={isFree ? "opacity-60 pointer-events-none" : ""}>
               <SectionTitle icon={<Palette className="w-4 h-4" />} title="Tono Preferido" />
+              {isFree && <p className="text-xs text-muted-foreground mb-2">Disponible en el plan Full.</p>}
               <div className="grid grid-cols-3 gap-3">
                 {tones.map((opt) => (
                   <button
@@ -244,6 +345,42 @@ const Preferences = () => {
             >
               Guardar Preferencias
             </button>
+
+            {/* Delete Account */}
+            <div className="pt-6 border-t border-border/30">
+              <h2 className="text-sm font-medium text-destructive mb-2 flex items-center gap-2">
+                <Trash2 className="w-4 h-4" />
+                Zona de Peligro
+              </h2>
+              <p className="text-xs text-muted-foreground mb-4">
+                Eliminar tu cuenta borra todos tus datos permanentemente. Esta acción no se puede deshacer.
+              </p>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <button className="px-4 py-2.5 rounded-xl border border-destructive/50 text-destructive text-sm font-medium hover:bg-destructive/10 transition-colors">
+                    Eliminar mi cuenta
+                  </button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Esta acción eliminará tu cuenta y todos tus datos de forma permanente. No podrás recuperarlos.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleDeleteAccount}
+                      disabled={deleting}
+                      className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                    >
+                      {deleting ? "Eliminando..." : "Sí, eliminar mi cuenta"}
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
           </div>
         </motion.div>
       </div>

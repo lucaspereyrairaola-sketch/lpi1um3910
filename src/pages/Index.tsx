@@ -20,14 +20,14 @@ const Index = () => {
           <div className="flex items-center justify-center gap-2 mb-4">
             <Layers className="w-5 h-5 text-primary" />
             <span className="text-xs text-muted-foreground uppercase tracking-[0.2em] font-medium">
-              Multi-Perspective News
+              Noticias Multi-Perspectiva
             </span>
           </div>
           <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-4 tracking-tight">
-            Read the full picture.
+            Lee el panorama completo.
           </h1>
           <p className="text-muted-foreground leading-relaxed">
-            Every story has multiple perspectives. MIDIA surfaces them all — so you can think critically, not reactively.
+            Cada historia tiene múltiples perspectivas. MIDIA las muestra todas — para que pienses críticamente, no reactivamente.
           </p>
         </motion.div>
       </section>
@@ -36,10 +36,10 @@ const Index = () => {
       <section className="max-w-3xl mx-auto px-6 pb-20">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
-            Latest Events
+            Últimos Eventos
           </h2>
           <span className="text-xs text-muted-foreground">
-            {mockEvents.length} events
+            {mockEvents.length} eventos
           </span>
         </div>
 

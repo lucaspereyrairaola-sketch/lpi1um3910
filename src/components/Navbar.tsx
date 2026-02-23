@@ -18,13 +18,13 @@ const Navbar = () => {
 
         <div className="flex items-center gap-6">
           <span className="text-sm text-muted-foreground hidden sm:block">
-            Read the full picture.
+            Lee el panorama completo.
           </span>
           <Link
             to="/preferences"
             className="text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
-            Preferences
+            Preferencias
           </Link>
         </div>
       </div>

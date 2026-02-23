@@ -18,10 +18,10 @@ const PerspectivePanel = ({ perspective }: PerspectivePanelProps) => {
         <span className="text-2xl">{perspective.icon}</span>
         <div>
           <h3 className="text-lg font-semibold text-foreground">
-            {perspective.label} Perspective
+            Perspectiva {perspective.label}
           </h3>
           <span className="text-xs text-muted-foreground uppercase tracking-wider">
-            Tone: {perspective.tone}
+            Tono: {perspective.tone}
           </span>
         </div>
       </div>
@@ -38,7 +38,7 @@ const PerspectivePanel = ({ perspective }: PerspectivePanelProps) => {
         <div className="flex items-center gap-2 mb-3">
           <Lightbulb className="w-4 h-4 text-primary" />
           <span className="text-sm font-medium text-foreground">
-            Key Arguments
+            Argumentos Clave
           </span>
         </div>
         <ul className="space-y-2">

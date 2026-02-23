@@ -87,13 +87,13 @@ const CompareNarratives = ({ perspectives, biasAnalysis }: CompareNarrativesProp
       <div className="space-y-4 pt-4">
         <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
           <Eye className="w-4 h-4 text-primary" />
-          AI Bias Analysis
+          Análisis de Sesgo IA
         </h4>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-secondary/30 border border-border/50 rounded-lg p-4">
             <h5 className="text-xs font-medium text-primary mb-2 uppercase tracking-wider">
-              Framing Differences
+              Diferencias de Encuadre
             </h5>
             <ul className="space-y-2">
               {biasAnalysis.framingDifferences.map((item, i) => (
@@ -107,7 +107,7 @@ const CompareNarratives = ({ perspectives, biasAnalysis }: CompareNarrativesProp
           <div className="bg-secondary/30 border border-border/50 rounded-lg p-4">
             <h5 className="text-xs font-medium text-tag-economy mb-2 uppercase tracking-wider flex items-center gap-1">
               <AlertTriangle className="w-3 h-3" />
-              Word Choice Bias
+              Sesgo en Elección de Palabras
             </h5>
             <ul className="space-y-2">
               {biasAnalysis.wordChoiceBias.map((item, i) => (
@@ -120,7 +120,7 @@ const CompareNarratives = ({ perspectives, biasAnalysis }: CompareNarrativesProp
 
           <div className="bg-secondary/30 border border-border/50 rounded-lg p-4">
             <h5 className="text-xs font-medium text-tag-social mb-2 uppercase tracking-wider">
-              Omitted Elements
+              Elementos Omitidos
             </h5>
             <ul className="space-y-2">
               {biasAnalysis.omittedElements.map((item, i) => (

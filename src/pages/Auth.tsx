@@ -93,7 +93,8 @@ const Auth = () => {
               </h1>
               <p className="text-muted-foreground text-lg leading-relaxed mb-8 max-w-lg">
                 Lee y compará perspectivas de los principales diarios del mundo. 
-                Desde The New York Times hasta El País, desde Le Monde hasta Folha de São Paulo.
+                Desde The New York Times hasta El País, desde Le Monde hasta Folha de São Paulo, 
+                desde Clarín hasta El Universal.
               </p>
 
               {/* Feature pills */}
@@ -126,7 +127,7 @@ const Auth = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background" />
                 <div className="absolute bottom-3 left-4 flex gap-3">
-                  {["NYT", "Le Monde", "El País", "Guardian", "Folha"].map((n) => (
+                  {["NYT", "Le Monde", "El País", "Guardian", "Folha", "Clarín", "La Nación", "El Universal", "La Tercera"].map((n) => (
                     <span key={n} className="text-[10px] font-medium text-foreground/70 bg-background/60 backdrop-blur-sm px-2 py-1 rounded-md">
                       {n}
                     </span>

@@ -14,7 +14,7 @@ const Navbar = () => {
       className="sticky top-0 z-50 glass"
     >
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2">
+        <Link to={user ? "/feed" : "/"} className="flex items-center gap-2">
           <span className="text-xl font-bold tracking-tight text-gradient-brand">
             MIDIA
           </span>

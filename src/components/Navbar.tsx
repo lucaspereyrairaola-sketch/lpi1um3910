@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useAuth } from "@/hooks/useAuth";
+import { LogOut, LayoutDashboard, Settings } from "lucide-react";
 
 const Navbar = () => {
+  const { user, role, signOut } = useAuth();
+
   return (
     <motion.nav
       initial={{ opacity: 0, y: -10 }}
@@ -16,16 +20,45 @@ const Navbar = () => {
           </span>
         </Link>
 
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-4">
           <span className="text-sm text-muted-foreground hidden sm:block">
             Lee el panorama completo.
           </span>
-          <Link
-            to="/preferences"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            Preferencias
-          </Link>
+
+          {user ? (
+            <>
+              {role === "journalist" && (
+                <Link
+                  to="/journalist/dashboard"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
+                >
+                  <LayoutDashboard className="w-3.5 h-3.5" />
+                  Panel
+                </Link>
+              )}
+              <Link
+                to="/preferences"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
+              >
+                <Settings className="w-3.5 h-3.5" />
+                Preferencias
+              </Link>
+              <button
+                onClick={signOut}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                Salir
+              </button>
+            </>
+          ) : (
+            <Link
+              to="/auth"
+              className="text-sm bg-primary text-primary-foreground px-3 py-1.5 rounded-lg font-medium hover:bg-primary/90 transition-colors"
+            >
+              Ingresar
+            </Link>
+          )}
         </div>
       </div>
     </motion.nav>

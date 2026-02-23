@@ -14,16 +14,311 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      articles: {
+        Row: {
+          access_level: Database["public"]["Enums"]["article_access"]
+          body: string
+          created_at: string
+          id: string
+          journalist_id: string
+          price: number | null
+          published: boolean | null
+          published_at: string | null
+          tags: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          access_level?: Database["public"]["Enums"]["article_access"]
+          body?: string
+          created_at?: string
+          id?: string
+          journalist_id: string
+          price?: number | null
+          published?: boolean | null
+          published_at?: string | null
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          access_level?: Database["public"]["Enums"]["article_access"]
+          body?: string
+          created_at?: string
+          id?: string
+          journalist_id?: string
+          price?: number | null
+          published?: boolean | null
+          published_at?: string | null
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      followed_journalists: {
+        Row: {
+          created_at: string
+          id: string
+          journalist_id: string
+          reader_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          journalist_id: string
+          reader_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          journalist_id?: string
+          reader_id?: string
+        }
+        Relationships: []
+      }
+      forum_posts: {
+        Row: {
+          article_id: string | null
+          content: string
+          created_at: string
+          id: string
+          parent_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          article_id?: string | null
+          content: string
+          created_at?: string
+          id?: string
+          parent_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          article_id?: string | null
+          content?: string
+          created_at?: string
+          id?: string
+          parent_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_posts_article_id_fkey"
+            columns: ["article_id"]
+            isOneToOne: false
+            referencedRelation: "articles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "forum_posts_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "forum_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      journalist_profiles: {
+        Row: {
+          bio: string | null
+          created_at: string
+          id: string
+          specialization: string | null
+          total_earnings: number | null
+          total_reads: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          bio?: string | null
+          created_at?: string
+          id?: string
+          specialization?: string | null
+          total_earnings?: number | null
+          total_reads?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          bio?: string | null
+          created_at?: string
+          id?: string
+          specialization?: string | null
+          total_earnings?: number | null
+          total_reads?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      micropayments: {
+        Row: {
+          amount: number
+          article_id: string
+          created_at: string
+          id: string
+          journalist_id: string
+          type: Database["public"]["Enums"]["payment_type"]
+          user_id: string
+        }
+        Insert: {
+          amount?: number
+          article_id: string
+          created_at?: string
+          id?: string
+          journalist_id: string
+          type?: Database["public"]["Enums"]["payment_type"]
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          article_id?: string
+          created_at?: string
+          id?: string
+          journalist_id?: string
+          type?: Database["public"]["Enums"]["payment_type"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "micropayments_article_id_fkey"
+            columns: ["article_id"]
+            isOneToOne: false
+            referencedRelation: "articles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          display_name: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      reader_profiles: {
+        Row: {
+          created_at: string
+          depth: string
+          frequency: string
+          id: string
+          topics: string[] | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          depth?: string
+          frequency?: string
+          id?: string
+          topics?: string[] | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          depth?: string
+          frequency?: string
+          id?: string
+          topics?: string[] | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      reading_sessions: {
+        Row: {
+          article_id: string
+          created_at: string
+          id: string
+          seconds_read: number | null
+          user_id: string
+        }
+        Insert: {
+          article_id: string
+          created_at?: string
+          id?: string
+          seconds_read?: number | null
+          user_id: string
+        }
+        Update: {
+          article_id?: string
+          created_at?: string
+          id?: string
+          seconds_read?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reading_sessions_article_id_fkey"
+            columns: ["article_id"]
+            isOneToOne: false
+            referencedRelation: "articles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_journalist: { Args: { _user_id: string }; Returns: boolean }
+      is_reader: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "reader" | "journalist" | "admin"
+      article_access: "free" | "micropay" | "premium"
+      payment_type: "unlock" | "tip"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +445,10 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["reader", "journalist", "admin"],
+      article_access: ["free", "micropay", "premium"],
+      payment_type: ["unlock", "tip"],
+    },
   },
 } as const

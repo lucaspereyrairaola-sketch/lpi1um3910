@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
-import { Check, Globe, Zap, BookOpen, Bell, Palette, Crown, Trash2 } from "lucide-react";
+import { Check, Globe, Zap, BookOpen, Bell, Palette, Crown, Trash2, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -26,14 +26,14 @@ const intensities = [
   { label: "Análisis Profundo", desc: "~10 min · Completo", value: "deep", icon: <Globe className="w-4 h-4" /> },
 ] as const;
 
-const frequencies = [
+const frequencyOptions = [
   { label: "Mañana", desc: "7–9 AM", value: "morning" },
   { label: "Mediodía", desc: "12–2 PM", value: "noon" },
   { label: "Noche", desc: "7–9 PM", value: "evening" },
   { label: "Tiempo Real", desc: "Push instant", value: "realtime" },
 ] as const;
 
-const regions = [
+const regionOptions = [
   { label: "🇺🇸 EE.UU.", value: "us" },
   { label: "🇪🇸 España", value: "es" },
   { label: "🇦🇷 Argentina", value: "ar" },
@@ -44,13 +44,13 @@ const regions = [
   { label: "🌍 Global", value: "global" },
 ] as const;
 
-const tones = [
+const toneOptions = [
   { label: "Neutral", desc: "Sin opinión editorial", value: "neutral" },
   { label: "Analítico", desc: "Con contexto y datos", value: "analytical" },
   { label: "Opinión", desc: "Columnas con postura", value: "opinion" },
 ] as const;
 
-const languages = [
+const languageOptions = [
   { label: "Español", value: "es" },
   { label: "English", value: "en" },
   { label: "Português", value: "pt" },
@@ -76,12 +76,14 @@ const plans = [
 
 const Preferences = () => {
   const navigate = useNavigate();
-  const { signOut } = useAuth();
+  const { user, signOut } = useAuth();
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState("free");
-  const [selectedVerticals, setSelectedVerticals] = useState<string[]>(["Economía", "Tech"]);
+  const [selectedVerticals, setSelectedVerticals] = useState<string[]>([]);
   const [intensity, setIntensity] = useState("standard");
   const [frequency, setFrequency] = useState("morning");
-  const [selectedRegions, setSelectedRegions] = useState<string[]>(["ar", "global"]);
+  const [selectedRegions, setSelectedRegions] = useState<string[]>([]);
   const [tone, setTone] = useState("neutral");
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>(["es"]);
   const [notifications, setNotifications] = useState({ breaking: true, digest: true, comments: false });
@@ -89,14 +91,65 @@ const Preferences = () => {
 
   const isFree = selectedPlan === "free";
 
+  // Load preferences from DB
+  useEffect(() => {
+    if (!user) return;
+    const load = async () => {
+      const { data } = await supabase
+        .from("reader_profiles")
+        .select("*")
+        .eq("user_id", user.id)
+        .maybeSingle();
+      if (data) {
+        setSelectedVerticals(data.topics ?? []);
+        setIntensity(data.depth ?? "standard");
+        setFrequency(data.frequency ?? "morning");
+        setSelectedRegions((data as any).regions ?? []);
+        setSelectedPlan((data as any).plan ?? "free");
+        setTone((data as any).tone ?? "neutral");
+        setSelectedLanguages((data as any).languages ?? ["es"]);
+        setNotifications({
+          breaking: (data as any).notify_breaking ?? true,
+          digest: (data as any).notify_digest ?? true,
+          comments: (data as any).notify_comments ?? false,
+        });
+      }
+      setLoading(false);
+    };
+    load();
+  }, [user]);
+
   const toggleItem = (list: string[], item: string, setter: (v: string[]) => void) => {
     setter(list.includes(item) ? list.filter((x) => x !== item) : [...list, item]);
   };
 
-  const handleSave = () => {
-    toast.success("¡Preferencias guardadas!", {
-      description: `Plan ${selectedPlan === "full" ? "Full" : "Free"} · ${selectedVerticals.length} temas · ${selectedRegions.length} regiones`,
-    });
+  const handleSave = async () => {
+    if (!user) return;
+    setSaving(true);
+    const { error } = await supabase
+      .from("reader_profiles")
+      .update({
+        topics: selectedVerticals,
+        depth: intensity,
+        frequency,
+        regions: selectedRegions,
+        plan: selectedPlan,
+        tone,
+        languages: selectedLanguages,
+        notify_breaking: notifications.breaking,
+        notify_digest: notifications.digest,
+        notify_comments: notifications.comments,
+      } as any)
+      .eq("user_id", user.id);
+
+    setSaving(false);
+    if (error) {
+      toast.error("Error al guardar preferencias");
+    } else {
+      toast.success("¡Preferencias guardadas!", {
+        description: `Plan ${selectedPlan === "full" ? "Full" : "Free"} · ${selectedVerticals.length} temas · ${selectedRegions.length} regiones`,
+      });
+    }
   };
 
   const handleDeleteAccount = async () => {
@@ -137,6 +190,17 @@ const Preferences = () => {
       ))}
     </div>
   );
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navbar />
+        <div className="flex items-center justify-center py-32">
+          <Loader2 className="w-6 h-6 animate-spin text-primary" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -221,7 +285,7 @@ const Preferences = () => {
             <div>
               <SectionTitle icon={<Globe className="w-4 h-4" />} title="Regiones de Interés" />
               <ChipGrid
-                items={regions}
+                items={regionOptions}
                 selected={selectedRegions}
                 onToggle={(v) => toggleItem(selectedRegions, v, setSelectedRegions)}
                 cols="grid-cols-4"
@@ -258,7 +322,7 @@ const Preferences = () => {
             <div>
               <SectionTitle icon={<Bell className="w-4 h-4" />} title="Frecuencia de Consumo" />
               <div className="grid grid-cols-4 gap-3">
-                {frequencies.map((opt) => (
+                {frequencyOptions.map((opt) => (
                   <button
                     key={opt.value}
                     onClick={() => !isFree || opt.value !== "realtime" ? setFrequency(opt.value) : null}
@@ -281,7 +345,7 @@ const Preferences = () => {
               <SectionTitle icon={<Palette className="w-4 h-4" />} title="Tono Preferido" />
               {isFree && <p className="text-xs text-muted-foreground mb-2">Disponible en el plan Full.</p>}
               <div className="grid grid-cols-3 gap-3">
-                {tones.map((opt) => (
+                {toneOptions.map((opt) => (
                   <button
                     key={opt.value}
                     onClick={() => setTone(opt.value)}
@@ -302,7 +366,7 @@ const Preferences = () => {
             <div>
               <SectionTitle icon={<Globe className="w-4 h-4" />} title="Idiomas de Lectura" />
               <ChipGrid
-                items={languages}
+                items={languageOptions}
                 selected={selectedLanguages}
                 onToggle={(v) => toggleItem(selectedLanguages, v, setSelectedLanguages)}
                 cols="grid-cols-4"
@@ -341,9 +405,10 @@ const Preferences = () => {
 
             <button
               onClick={handleSave}
-              className="w-full bg-primary text-primary-foreground py-3 rounded-xl text-sm font-semibold hover:bg-primary/90 transition-colors"
+              disabled={saving}
+              className="w-full bg-primary text-primary-foreground py-3 rounded-xl text-sm font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
             >
-              Guardar Preferencias
+              {saving ? <><Loader2 className="w-4 h-4 animate-spin" /> Guardando...</> : "Guardar Preferencias"}
             </button>
 
             {/* Delete Account */}

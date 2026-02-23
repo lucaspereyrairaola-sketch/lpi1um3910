@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
-import { Check, Globe, Zap, BookOpen, Bell, Palette, Crown, Trash2, Loader2 } from "lucide-react";
+import { Check, Globe, Zap, BookOpen, Bell, Palette, Crown, Trash2, Loader2, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -207,6 +207,13 @@ const Preferences = () => {
       <Navbar />
       <div className="max-w-2xl mx-auto px-6 py-12">
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
+          <Link
+            to="/feed"
+            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Volver a eventos
+          </Link>
           <h1 className="text-2xl font-bold text-foreground mb-2">Personaliza tu Feed</h1>
           <p className="text-sm text-muted-foreground mb-10">
             Ajustá todos los detalles de cómo consumís noticias.

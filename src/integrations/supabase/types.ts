@@ -223,6 +223,13 @@ export type Database = {
           depth: string
           frequency: string
           id: string
+          languages: string[] | null
+          notify_breaking: boolean
+          notify_comments: boolean
+          notify_digest: boolean
+          plan: string
+          regions: string[] | null
+          tone: string
           topics: string[] | null
           updated_at: string
           user_id: string
@@ -232,6 +239,13 @@ export type Database = {
           depth?: string
           frequency?: string
           id?: string
+          languages?: string[] | null
+          notify_breaking?: boolean
+          notify_comments?: boolean
+          notify_digest?: boolean
+          plan?: string
+          regions?: string[] | null
+          tone?: string
           topics?: string[] | null
           updated_at?: string
           user_id: string
@@ -241,6 +255,13 @@ export type Database = {
           depth?: string
           frequency?: string
           id?: string
+          languages?: string[] | null
+          notify_breaking?: boolean
+          notify_comments?: boolean
+          notify_digest?: boolean
+          plan?: string
+          regions?: string[] | null
+          tone?: string
           topics?: string[] | null
           updated_at?: string
           user_id?: string

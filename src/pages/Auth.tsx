@@ -126,13 +126,6 @@ const Auth = () => {
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background" />
-                <div className="absolute bottom-3 left-4 flex gap-3">
-                  {["NYT", "Le Monde", "El País", "Guardian", "Folha", "Clarín", "La Nación", "El Universal", "La Tercera"].map((n) => (
-                    <span key={n} className="text-[10px] font-medium text-foreground/70 bg-background/60 backdrop-blur-sm px-2 py-1 rounded-md">
-                      {n}
-                    </span>
-                  ))}
-                </div>
               </div>
             </motion.div>
 

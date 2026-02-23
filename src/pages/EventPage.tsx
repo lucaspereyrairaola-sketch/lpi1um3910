@@ -10,8 +10,8 @@ import { ArrowLeft, Clock, GitCompare, BookOpen } from "lucide-react";
 import type { Tag } from "@/data/mockEvents";
 
 const tagColorMap: Record<Tag, string> = {
-  Politics: "bg-tag-politics/15 text-tag-politics",
-  Economy: "bg-tag-economy/15 text-tag-economy",
+  "Política": "bg-tag-politics/15 text-tag-politics",
+  "Economía": "bg-tag-economy/15 text-tag-economy",
   Social: "bg-tag-social/15 text-tag-social",
   Global: "bg-tag-global/15 text-tag-global",
   Tech: "bg-tag-tech/15 text-tag-tech",
@@ -28,9 +28,9 @@ const EventPage = () => {
       <div className="min-h-screen bg-background">
         <Navbar />
         <div className="max-w-3xl mx-auto px-6 py-20 text-center">
-          <p className="text-muted-foreground">Event not found.</p>
+          <p className="text-muted-foreground">Evento no encontrado.</p>
           <Link to="/" className="text-primary text-sm mt-4 inline-block">
-            ← Back to feed
+            ← Volver al feed
           </Link>
         </div>
       </div>
@@ -56,7 +56,7 @@ const EventPage = () => {
           className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
         >
           <ArrowLeft className="w-4 h-4" />
-          Back to events
+          Volver a eventos
         </Link>
 
         {/* Header */}
@@ -76,7 +76,7 @@ const EventPage = () => {
             ))}
             <span className="text-xs text-muted-foreground flex items-center gap-1 ml-auto">
               <Clock className="w-3 h-3" />
-              {event.readTime} min read
+              {event.readTime} min de lectura
             </span>
           </div>
 
@@ -89,7 +89,7 @@ const EventPage = () => {
           </p>
 
           <span className="text-xs text-muted-foreground">
-            {new Date(event.date).toLocaleDateString("en-US", {
+            {new Date(event.date).toLocaleDateString("es-ES", {
               weekday: "long",
               month: "long",
               day: "numeric",
@@ -109,7 +109,7 @@ const EventPage = () => {
             }`}
           >
             <BookOpen className="w-4 h-4" />
-            Perspectives
+            Perspectivas
           </button>
           <button
             onClick={() => setCompareMode(true)}
@@ -120,7 +120,7 @@ const EventPage = () => {
             }`}
           >
             <GitCompare className="w-4 h-4" />
-            Compare Narratives
+            Comparar Narrativas
           </button>
         </div>
 
@@ -154,7 +154,7 @@ const EventPage = () => {
                       : "text-muted-foreground hover:text-foreground hover:bg-secondary"
                   }`}
                 >
-                  📰 Summary
+                  📰 Resumen
                 </button>
                 {perspectiveTabs.map((tab) => (
                   <button
@@ -184,15 +184,15 @@ const EventPage = () => {
                       className="space-y-4"
                     >
                       <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
-                        📰 Neutral Summary
+                        📰 Resumen Neutral
                       </h3>
                       <p className="text-sm leading-relaxed text-secondary-foreground">
                         {event.neutralSummary}
                       </p>
                       <div className="bg-secondary/30 border border-border/50 rounded-lg p-4 mt-4">
                         <p className="text-xs text-muted-foreground">
-                          This summary is AI-generated from multiple verified sources. 
-                          Explore individual perspectives using the tabs above to understand different angles of this event.
+                          Este resumen es generado por IA a partir de múltiples fuentes verificadas.
+                          Explora las perspectivas individuales usando las pestañas de arriba para entender diferentes ángulos de este evento.
                         </p>
                       </div>
                     </motion.div>
@@ -212,7 +212,7 @@ const EventPage = () => {
         {event.journalists.length > 0 && (
           <div className="mt-12 pt-8 border-t border-border/50">
             <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4">
-              Contributing Journalists
+              Periodistas Contribuyentes
             </h3>
             <div className="space-y-3">
               {event.journalists.map((j) => (

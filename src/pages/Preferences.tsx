@@ -4,15 +4,15 @@ import Navbar from "@/components/Navbar";
 import { Check } from "lucide-react";
 import { toast } from "sonner";
 
-const verticals = ["Economy", "Tech", "Global", "Politics", "Social"] as const;
+const verticals = ["Economía", "Tech", "Global", "Política", "Social"] as const;
 const intensities = [
-  { label: "Quick Read", desc: "~2 min", value: "quick" },
-  { label: "Standard", desc: "~5 min", value: "standard" },
-  { label: "Deep Dive", desc: "~10 min", value: "deep" },
+  { label: "Lectura Rápida", desc: "~2 min", value: "quick" },
+  { label: "Estándar", desc: "~5 min", value: "standard" },
+  { label: "Análisis Profundo", desc: "~10 min", value: "deep" },
 ] as const;
 
 const Preferences = () => {
-  const [selectedVerticals, setSelectedVerticals] = useState<string[]>(["Economy", "Tech"]);
+  const [selectedVerticals, setSelectedVerticals] = useState<string[]>(["Economía", "Tech"]);
   const [intensity, setIntensity] = useState("standard");
 
   const toggleVertical = (v: string) => {
@@ -22,8 +22,8 @@ const Preferences = () => {
   };
 
   const handleSave = () => {
-    toast.success("Preferences saved!", {
-      description: `${selectedVerticals.length} verticals, ${intensity} intensity`,
+    toast.success("¡Preferencias guardadas!", {
+      description: `${selectedVerticals.length} verticales, intensidad ${intensity}`,
     });
   };
 
@@ -36,17 +36,17 @@ const Preferences = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <h1 className="text-2xl font-bold text-foreground mb-2">
-            Personalize Your Feed
+           <h1 className="text-2xl font-bold text-foreground mb-2">
+            Personaliza tu Feed
           </h1>
           <p className="text-sm text-muted-foreground mb-8">
-            Choose your preferred verticals and reading intensity.
+            Elige tus verticales preferidas e intensidad de lectura.
           </p>
 
           {/* Verticals */}
           <div className="mb-8">
             <h2 className="text-sm font-medium text-foreground mb-3">
-              Preferred Verticals
+              Verticales Preferidas
             </h2>
             <div className="flex flex-wrap gap-2">
               {verticals.map((v) => (
@@ -69,7 +69,7 @@ const Preferences = () => {
           {/* Intensity */}
           <div className="mb-10">
             <h2 className="text-sm font-medium text-foreground mb-3">
-              Reading Intensity
+              Intensidad de Lectura
             </h2>
             <div className="grid grid-cols-3 gap-3">
               {intensities.map((opt) => (
@@ -95,7 +95,7 @@ const Preferences = () => {
             onClick={handleSave}
             className="w-full bg-primary text-primary-foreground py-3 rounded-xl text-sm font-semibold hover:bg-primary/90 transition-colors"
           >
-            Save Preferences
+            Guardar Preferencias
           </button>
         </motion.div>
       </div>

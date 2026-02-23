@@ -13,8 +13,8 @@ const JournalistCard = ({ journalist }: JournalistCardProps) => {
 
   const handleTip = () => {
     setTipped(true);
-    toast.success(`Thank you for supporting ${journalist.name}!`, {
-      description: "Tipping simulation — no real payment processed.",
+    toast.success(`¡Gracias por apoyar a ${journalist.name}!`, {
+      description: "Simulación de propina — no se procesó ningún pago real.",
     });
   };
 
@@ -35,7 +35,7 @@ const JournalistCard = ({ journalist }: JournalistCardProps) => {
         </p>
         <span className="text-xs text-muted-foreground flex items-center gap-1">
           <FileText className="w-3 h-3" />
-          {journalist.articlesCount} articles
+          {journalist.articlesCount} artículos
         </span>
       </div>
       <button
@@ -48,7 +48,7 @@ const JournalistCard = ({ journalist }: JournalistCardProps) => {
         }`}
       >
         <Heart className={`w-3.5 h-3.5 ${tipped ? "fill-primary" : ""}`} />
-        {tipped ? "Supported" : "Support"}
+        {tipped ? "Apoyado" : "Apoyar"}
       </button>
     </motion.div>
   );

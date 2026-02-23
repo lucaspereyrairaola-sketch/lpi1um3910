@@ -4,8 +4,8 @@ import type { NewsEvent, Tag } from "@/data/mockEvents";
 import { ArrowRight, Clock } from "lucide-react";
 
 const tagColorMap: Record<Tag, string> = {
-  Politics: "bg-tag-politics/15 text-tag-politics",
-  Economy: "bg-tag-economy/15 text-tag-economy",
+  "Política": "bg-tag-politics/15 text-tag-politics",
+  "Economía": "bg-tag-economy/15 text-tag-economy",
   Social: "bg-tag-social/15 text-tag-social",
   Global: "bg-tag-global/15 text-tag-global",
   Tech: "bg-tag-tech/15 text-tag-tech",
@@ -50,14 +50,14 @@ const EventCard = ({ event, index }: EventCardProps) => {
 
           <div className="flex items-center justify-between">
             <span className="text-xs text-muted-foreground">
-              {new Date(event.date).toLocaleDateString("en-US", {
+              {new Date(event.date).toLocaleDateString("es-ES", {
                 month: "short",
                 day: "numeric",
                 year: "numeric",
               })}
             </span>
             <span className="text-sm text-primary font-medium flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-              View Perspectives
+              Ver Perspectivas
               <ArrowRight className="w-4 h-4" />
             </span>
           </div>

@@ -1,4 +1,4 @@
-export type Tag = "Politics" | "Economy" | "Social" | "Global" | "Tech";
+export type Tag = "Política" | "Economía" | "Social" | "Global" | "Tech";
 
 export interface Perspective {
   id: string;
@@ -39,136 +39,136 @@ export interface NewsEvent {
 export const mockEvents: NewsEvent[] = [
   {
     id: "labor-reform-senate",
-    title: "Labor Reform Approved in Senate",
-    neutralSummary: "The Senate approved a comprehensive labor reform package with 58-42 votes, introducing changes to worker protections, gig economy regulations, and collective bargaining rights.",
+    title: "Reforma Laboral Aprobada en el Senado",
+    neutralSummary: "El Senado aprobó un paquete integral de reforma laboral con 58-42 votos, introduciendo cambios en protecciones laborales, regulación de la economía gig y derechos de negociación colectiva.",
     date: "2026-02-22",
     readTime: 5,
-    tags: ["Politics", "Economy", "Social"],
+    tags: ["Política", "Economía", "Social"],
     perspectives: [
       {
         id: "economic",
-        label: "Economic",
+        label: "Económica",
         icon: "📊",
-        tone: "Analytical",
+        tone: "Analítico",
         content: [
-          "The labor reform is projected to impact approximately 45 million workers across various sectors. Economists from major institutions have offered varied assessments of the potential GDP effects, with estimates ranging from a 0.3% boost to a 0.8% reduction depending on implementation specifics.",
-          "Business groups argue the reform reduces regulatory burden and could encourage hiring, particularly in the small and medium enterprise sector. The Chamber of Commerce estimates potential creation of 200,000 new positions within the first two years.",
-          "However, labor economists point out that similar reforms in other countries have led to increased precarity and wage stagnation. The balance between flexibility and security remains the central economic tension.",
-          "Financial markets responded with cautious optimism, with the S&P 500 rising 0.4% on the day of the vote. Sector-specific impacts were more pronounced, with staffing companies seeing gains of 3-5%."
+          "Se proyecta que la reforma laboral impactará a aproximadamente 45 millones de trabajadores en diversos sectores. Economistas de instituciones importantes han ofrecido evaluaciones variadas sobre los posibles efectos en el PIB, con estimaciones que van desde un impulso del 0,3% hasta una reducción del 0,8% según los detalles de implementación.",
+          "Los grupos empresariales argumentan que la reforma reduce la carga regulatoria y podría fomentar la contratación, particularmente en el sector de pequeñas y medianas empresas. La Cámara de Comercio estima la creación potencial de 200.000 nuevos puestos en los primeros dos años.",
+          "Sin embargo, economistas laborales señalan que reformas similares en otros países han llevado a mayor precariedad y estancamiento salarial. El equilibrio entre flexibilidad y seguridad sigue siendo la tensión económica central.",
+          "Los mercados financieros respondieron con optimismo cauteloso, con el S&P 500 subiendo un 0,4% el día de la votación. Los impactos sectoriales fueron más pronunciados, con empresas de personal viendo ganancias del 3-5%."
         ],
         keyArguments: [
-          "GDP impact estimates vary significantly",
-          "SME sector may benefit most from reduced regulation",
-          "Historical precedents show mixed results on wages",
-          "Markets signaling cautious optimism"
+          "Las estimaciones de impacto en el PIB varían significativamente",
+          "El sector PYME podría beneficiarse más de la reducción regulatoria",
+          "Los precedentes históricos muestran resultados mixtos en salarios",
+          "Los mercados señalan optimismo cauteloso"
         ]
       },
       {
         id: "political",
-        label: "Political",
+        label: "Política",
         icon: "🏛️",
-        tone: "Strategic",
+        tone: "Estratégico",
         content: [
-          "The 58-42 vote revealed fractures within both parties. Six senators crossed party lines, reflecting the complex political calculus ahead of midterm elections. The reform was positioned as a bipartisan achievement, though critics argue the compromises weakened its core provisions.",
-          "For the administration, this represents a significant legislative victory and a fulfillment of campaign promises. Political analysts note it could energize the base while potentially alienating swing voters concerned about worker protections.",
-          "The opposition has signaled plans to challenge specific provisions through judicial channels, setting the stage for a prolonged legal battle that could extend well beyond the current legislative session.",
-          "State-level implementation will vary significantly, creating a patchwork of regulatory environments that could become a major issue in upcoming gubernatorial races."
+          "La votación 58-42 reveló fracturas en ambos partidos. Seis senadores cruzaron líneas partidarias, reflejando el complejo cálculo político ante las elecciones intermedias. La reforma fue presentada como un logro bipartidista, aunque los críticos argumentan que los compromisos debilitaron sus disposiciones centrales.",
+          "Para la administración, esto representa una victoria legislativa significativa y el cumplimiento de promesas de campaña. Los analistas políticos señalan que podría energizar la base mientras potencialmente aliena a votantes indecisos preocupados por las protecciones laborales.",
+          "La oposición ha señalado planes para impugnar disposiciones específicas a través de canales judiciales, preparando el escenario para una batalla legal prolongada que podría extenderse más allá de la sesión legislativa actual.",
+          "La implementación a nivel estatal variará significativamente, creando un mosaico de entornos regulatorios que podría convertirse en un tema importante en próximas elecciones."
         ],
         keyArguments: [
-          "Bipartisan crossover votes signal political complexity",
-          "Administration claims key legislative victory",
-          "Legal challenges expected from opposition",
-          "State-level implementation creates political battlegrounds"
+          "Votos cruzados bipartidistas señalan complejidad política",
+          "La administración reclama una victoria legislativa clave",
+          "Se esperan desafíos legales de la oposición",
+          "La implementación estatal crea campos de batalla políticos"
         ]
       },
       {
         id: "social",
         label: "Social",
         icon: "👥",
-        tone: "Human-centered",
+        tone: "Centrado en las personas",
         content: [
-          "For the estimated 15 million gig economy workers, this reform introduces the first federal framework for benefits and protections. Community organizations have noted both relief and concern — relief at recognition, concern at the specific provisions.",
-          "Workers in traditional employment may see changes to overtime calculations, family leave provisions, and collective bargaining procedures. Union leaders have expressed measured support while highlighting gaps in coverage.",
-          "The reform's impact on marginalized communities is expected to be disproportionate. Civil rights organizations have pointed out that sectors most affected — hospitality, agriculture, domestic work — employ predominantly minority workers.",
-          "Public opinion polls show the country is nearly evenly split, with 48% supporting and 44% opposing the reform. The remaining 8% are undecided, suggesting the messaging battle is far from over."
+          "Para los aproximadamente 15 millones de trabajadores de la economía gig, esta reforma introduce el primer marco federal de beneficios y protecciones. Las organizaciones comunitarias han expresado tanto alivio como preocupación — alivio por el reconocimiento, preocupación por las disposiciones específicas.",
+          "Los trabajadores en empleo tradicional podrían ver cambios en los cálculos de horas extra, provisiones de licencia familiar y procedimientos de negociación colectiva. Los líderes sindicales han expresado apoyo moderado mientras destacan brechas en la cobertura.",
+          "Se espera que el impacto de la reforma en comunidades marginadas sea desproporcionado. Las organizaciones de derechos civiles han señalado que los sectores más afectados — hospitalidad, agricultura, trabajo doméstico — emplean predominantemente a trabajadores minoritarios.",
+          "Las encuestas de opinión pública muestran que el país está casi dividido por igual, con un 48% apoyando y un 44% oponiéndose a la reforma. El 8% restante está indeciso, sugiriendo que la batalla de comunicación está lejos de terminar."
         ],
         keyArguments: [
-          "First federal framework for gig workers",
-          "Disproportionate impact on marginalized communities",
-          "Union response has been measured",
-          "Public opinion nearly evenly split"
+          "Primer marco federal para trabajadores gig",
+          "Impacto desproporcionado en comunidades marginadas",
+          "La respuesta sindical ha sido moderada",
+          "La opinión pública está casi dividida por igual"
         ]
       },
       {
         id: "market",
-        label: "Market",
+        label: "Mercado",
         icon: "📈",
-        tone: "Financial",
+        tone: "Financiero",
         content: [
-          "Equity markets showed sector-specific reactions. Tech companies with large contractor workforces saw initial dips of 1-2% before recovering. Traditional employers in retail and hospitality showed modest gains on expectations of simplified compliance.",
-          "Bond markets remained relatively stable, suggesting institutional investors view the reform as neutral for broader economic fundamentals. The 10-year yield moved less than 2 basis points on the day.",
-          "Venture capital investors are closely watching how the reform affects startup labor costs. Early-stage companies that rely heavily on contract workers may need to adjust their burn rate calculations.",
-          "International investors are monitoring the reform for signals about the broader regulatory direction, with implications for foreign direct investment decisions in the coming quarters."
+          "Los mercados de renta variable mostraron reacciones sectoriales. Las empresas tecnológicas con grandes fuerzas de contratistas vieron caídas iniciales del 1-2% antes de recuperarse. Los empleadores tradicionales en retail y hospitalidad mostraron ganancias modestas ante expectativas de cumplimiento simplificado.",
+          "Los mercados de bonos se mantuvieron relativamente estables, sugiriendo que los inversores institucionales ven la reforma como neutral para los fundamentos económicos más amplios. El rendimiento a 10 años se movió menos de 2 puntos base en el día.",
+          "Los inversores de capital de riesgo están observando de cerca cómo la reforma afecta los costos laborales de las startups. Las empresas en etapa temprana que dependen mucho de trabajadores contratistas podrían necesitar ajustar sus cálculos de burn rate.",
+          "Los inversores internacionales están monitoreando la reforma en busca de señales sobre la dirección regulatoria más amplia, con implicaciones para las decisiones de inversión extranjera directa en los próximos trimestres."
         ],
         keyArguments: [
-          "Tech sector initially dipped on contractor concerns",
-          "Bond markets signaling economic neutrality",
-          "Startup ecosystem may face adjusted labor costs",
-          "FDI implications being monitored globally"
+          "El sector tecnológico cayó inicialmente por preocupaciones sobre contratistas",
+          "Los mercados de bonos señalan neutralidad económica",
+          "El ecosistema startup podría enfrentar costos laborales ajustados",
+          "Las implicaciones de IED están siendo monitoreadas globalmente"
         ]
       },
       {
         id: "international",
-        label: "International",
+        label: "Internacional",
         icon: "🌍",
-        tone: "Comparative",
+        tone: "Comparativo",
         content: [
-          "The reform positions the country closer to European labor models while maintaining distinctly American elements. EU officials have noted the convergence with interest, particularly regarding gig economy provisions that mirror recent EU directives.",
-          "International labor organizations, including the ILO, have offered cautious praise while noting the reform falls short of international standards in several key areas, particularly regarding minimum wage indexing and parental leave.",
-          "Trading partners are assessing potential impacts on competitiveness. Some analysts suggest the reform could level the playing field with countries that already have stronger labor protections, potentially reducing the incentive for offshoring.",
-          "The reform may influence upcoming labor legislation in Canada, Mexico, and the UK, where similar debates are underway. It signals a potential shift in the global consensus on worker protections."
+          "La reforma posiciona al país más cerca de los modelos laborales europeos mientras mantiene elementos distintivamente americanos. Los funcionarios de la UE han notado la convergencia con interés, particularmente respecto a las disposiciones de la economía gig que reflejan directivas recientes de la UE.",
+          "Las organizaciones laborales internacionales, incluyendo la OIT, han ofrecido elogios cautelosos mientras señalan que la reforma no alcanza los estándares internacionales en varias áreas clave, particularmente respecto a la indexación del salario mínimo y la licencia parental.",
+          "Los socios comerciales están evaluando los posibles impactos en la competitividad. Algunos analistas sugieren que la reforma podría nivelar el campo de juego con países que ya tienen protecciones laborales más fuertes, potencialmente reduciendo el incentivo para la deslocalización.",
+          "La reforma podría influir en la próxima legislación laboral en Canadá, México y el Reino Unido, donde debates similares están en curso. Señala un posible cambio en el consenso global sobre protecciones laborales."
         ],
         keyArguments: [
-          "Convergence with European labor models noted",
-          "Falls short of some international standards",
-          "Could impact offshoring incentives",
-          "May influence legislation in allied nations"
+          "Se nota convergencia con modelos laborales europeos",
+          "No alcanza algunos estándares internacionales",
+          "Podría impactar los incentivos de deslocalización",
+          "Puede influir en la legislación de naciones aliadas"
         ]
       },
       {
         id: "ideological",
-        label: "Ideological",
+        label: "Ideológica",
         icon: "⚖️",
-        tone: "Contrasting",
+        tone: "Contrastante",
         content: [
-          "Pro-market advocates frame the reform as a necessary modernization that will unleash economic dynamism. They emphasize the flexibility provisions and argue that reducing rigid labor regulations will benefit workers through increased opportunity and employment growth.",
-          "Progressive voices counter that the reform represents a weakening of hard-won worker protections. They point to historical patterns where deregulation has led to increased inequality and argue that the flexibility provisions primarily benefit employers at workers' expense.",
-          "Centrist analysts note that the reform contains elements that both sides can claim as victories, suggesting it represents the kind of pragmatic compromise necessary in a polarized political environment. The question remains whether such compromises produce meaningful policy or merely dilute competing visions.",
-          "Libertarian perspectives welcome the reduction in government mandates while criticizing remaining regulatory provisions. Socialist commentators argue the reform doesn't go far enough in addressing fundamental power imbalances between capital and labor."
+          "Los defensores del libre mercado enmarcan la reforma como una modernización necesaria que liberará el dinamismo económico. Enfatizan las disposiciones de flexibilidad y argumentan que reducir las regulaciones laborales rígidas beneficiará a los trabajadores a través de mayor oportunidad y crecimiento del empleo.",
+          "Las voces progresistas contraargumentan que la reforma representa un debilitamiento de protecciones laborales ganadas con esfuerzo. Señalan patrones históricos donde la desregulación ha llevado a mayor desigualdad y argumentan que las disposiciones de flexibilidad benefician principalmente a los empleadores a expensas de los trabajadores.",
+          "Los analistas centristas notan que la reforma contiene elementos que ambos lados pueden reclamar como victorias, sugiriendo que representa el tipo de compromiso pragmático necesario en un ambiente político polarizado. La pregunta sigue siendo si tales compromisos producen política significativa o simplemente diluyen visiones contrapuestas.",
+          "Las perspectivas libertarias dan la bienvenida a la reducción de mandatos gubernamentales mientras critican las disposiciones regulatorias restantes. Los comentaristas socialistas argumentan que la reforma no va lo suficientemente lejos en abordar los desequilibrios fundamentales de poder entre capital y trabajo."
         ],
         keyArguments: [
-          "Pro-market: Modernization enables economic dynamism",
-          "Progressive: Weakens essential worker protections",
-          "Centrist: Pragmatic compromise with mixed results",
-          "Radical views: Either too much or too little regulation"
+          "Pro-mercado: La modernización permite el dinamismo económico",
+          "Progresista: Debilita protecciones laborales esenciales",
+          "Centrista: Compromiso pragmático con resultados mixtos",
+          "Radicales: O demasiada o muy poca regulación"
         ]
       }
     ],
     biasAnalysis: {
       framingDifferences: [
-        "Pro-reform outlets frame as 'modernization'; critical outlets frame as 'deregulation'",
-        "Business media emphasizes job creation potential; labor media emphasizes protection erosion",
-        "International media frames as convergence with global standards; domestic media frames as uniquely American solution"
+        "Medios pro-reforma enmarcan como 'modernización'; medios críticos enmarcan como 'desregulación'",
+        "Medios empresariales enfatizan potencial de creación de empleo; medios laborales enfatizan erosión de protecciones",
+        "Medios internacionales enmarcan como convergencia con estándares globales; medios nacionales enmarcan como solución única"
       ],
       wordChoiceBias: [
-        "'Flexibility' vs 'Precarity' when describing reduced employment guarantees",
-        "'Reform' vs 'Overhaul' suggesting different scales of change",
-        "'Bipartisan' vs 'Compromise' carrying different value judgments"
+        "'Flexibilidad' vs 'Precariedad' al describir garantías de empleo reducidas",
+        "'Reforma' vs 'Reestructuración' sugiriendo diferentes escalas de cambio",
+        "'Bipartidista' vs 'Compromiso' con diferentes juicios de valor"
       ],
       omittedElements: [
-        "Pro-reform coverage often omits impact on marginalized communities",
-        "Critical coverage often omits potential benefits for gig workers seeking flexibility",
-        "Most coverage underreports the enforcement mechanism challenges"
+        "La cobertura pro-reforma a menudo omite el impacto en comunidades marginadas",
+        "La cobertura crítica a menudo omite los beneficios potenciales para trabajadores gig que buscan flexibilidad",
+        "La mayoría de la cobertura subreporta los desafíos de los mecanismos de aplicación"
       ]
     },
     journalists: [
@@ -176,152 +176,152 @@ export const mockEvents: NewsEvent[] = [
         id: "j1",
         name: "Elena Vasquez",
         avatar: "EV",
-        bio: "Senior economic correspondent with 15 years covering labor policy and market dynamics.",
-        specialization: "Labor Economics",
+        bio: "Corresponsal económica senior con 15 años cubriendo política laboral y dinámica de mercados.",
+        specialization: "Economía Laboral",
         articlesCount: 342
       },
       {
         id: "j2",
         name: "Marcus Chen",
         avatar: "MC",
-        bio: "Political analyst focusing on legislative strategy and bipartisan dynamics.",
-        specialization: "Political Strategy",
+        bio: "Analista político enfocado en estrategia legislativa y dinámicas bipartidistas.",
+        specialization: "Estrategia Política",
         articlesCount: 218
       }
     ]
   },
   {
     id: "ai-regulation-framework",
-    title: "Global AI Regulation Framework Proposed",
-    neutralSummary: "A coalition of 27 nations proposed the first binding international framework for AI governance, covering autonomous systems, data rights, and algorithmic transparency requirements.",
+    title: "Se Propone Marco Global de Regulación de IA",
+    neutralSummary: "Una coalición de 27 naciones propuso el primer marco internacional vinculante para la gobernanza de la IA, cubriendo sistemas autónomos, derechos de datos y requisitos de transparencia algorítmica.",
     date: "2026-02-21",
     readTime: 7,
-    tags: ["Tech", "Global", "Politics"],
+    tags: ["Tech", "Global", "Política"],
     perspectives: [
       {
         id: "economic",
-        label: "Economic",
+        label: "Económica",
         icon: "📊",
-        tone: "Analytical",
+        tone: "Analítico",
         content: [
-          "The proposed framework could reshape the $800 billion global AI industry. Compliance costs are estimated at 3-8% of revenue for major tech companies, with smaller firms potentially facing proportionally higher burdens.",
-          "Industry leaders have warned that overly prescriptive regulations could drive innovation to non-signatory nations, creating regulatory arbitrage. However, standardization advocates argue unified rules reduce the cost of operating across multiple jurisdictions.",
-          "The framework's data governance provisions could significantly impact business models built on large-scale data collection. Companies relying on behavioral data may need to fundamentally restructure their approaches.",
-          "Investment in AI safety and compliance technology is expected to surge, creating a new sub-sector estimated to reach $50 billion by 2028."
+          "El marco propuesto podría remodelar la industria global de IA de $800 mil millones. Los costos de cumplimiento se estiman en 3-8% de los ingresos para las principales empresas tecnológicas, con empresas más pequeñas enfrentando potencialmente cargas proporcionalmente mayores.",
+          "Líderes de la industria han advertido que regulaciones excesivamente prescriptivas podrían impulsar la innovación hacia naciones no signatarias, creando arbitraje regulatorio. Sin embargo, los defensores de la estandarización argumentan que las reglas unificadas reducen el costo de operar en múltiples jurisdicciones.",
+          "Las disposiciones de gobernanza de datos del marco podrían impactar significativamente los modelos de negocio basados en la recopilación de datos a gran escala. Las empresas que dependen de datos conductuales podrían necesitar reestructurar fundamentalmente sus enfoques.",
+          "Se espera que la inversión en seguridad y cumplimiento de IA aumente, creando un nuevo subsector que se estima alcanzará los $50 mil millones para 2028."
         ],
         keyArguments: [
-          "Compliance costs estimated at 3-8% of revenue",
-          "Risk of innovation migration to non-signatory nations",
-          "Data-dependent business models face restructuring",
-          "AI safety sector expected to boom"
+          "Costos de cumplimiento estimados en 3-8% de ingresos",
+          "Riesgo de migración de innovación a naciones no signatarias",
+          "Modelos de negocio dependientes de datos enfrentan reestructuración",
+          "Se espera un boom en el sector de seguridad de IA"
         ]
       },
       {
         id: "political",
-        label: "Political",
+        label: "Política",
         icon: "🏛️",
-        tone: "Strategic",
+        tone: "Estratégico",
         content: [
-          "The framework represents a rare moment of multilateral consensus, though notable absences from the signatory list — including two of the world's largest AI developers — raise questions about its practical effectiveness.",
-          "Domestic politics in several signatory nations may complicate ratification. Tech industry lobbying groups have already begun mobilizing opposition campaigns in key legislative bodies.",
-          "The framework establishes a new international body for AI governance, raising sovereignty concerns among some nations wary of ceding regulatory authority to multinational institutions.",
-          "Elections in three major signatory nations in the next 18 months could shift political dynamics significantly, potentially undermining commitments made by current governments."
+          "El marco representa un momento raro de consenso multilateral, aunque las ausencias notables de la lista de signatarios — incluyendo dos de los mayores desarrolladores de IA del mundo — plantean preguntas sobre su efectividad práctica.",
+          "La política interna en varios países signatarios podría complicar la ratificación. Los grupos de lobby de la industria tecnológica ya han comenzado a movilizar campañas de oposición en cuerpos legislativos clave.",
+          "El marco establece un nuevo organismo internacional para la gobernanza de IA, planteando preocupaciones de soberanía entre algunas naciones cautelosas de ceder autoridad regulatoria a instituciones multinacionales.",
+          "Las elecciones en tres naciones signatarias importantes en los próximos 18 meses podrían cambiar significativamente las dinámicas políticas, potencialmente socavando los compromisos asumidos por los gobiernos actuales."
         ],
         keyArguments: [
-          "Notable absences weaken framework's reach",
-          "Ratification faces domestic political hurdles",
-          "New governance body raises sovereignty concerns",
-          "Upcoming elections may shift commitments"
+          "Las ausencias notables debilitan el alcance del marco",
+          "La ratificación enfrenta obstáculos políticos internos",
+          "El nuevo organismo de gobernanza plantea preocupaciones de soberanía",
+          "Las próximas elecciones pueden cambiar los compromisos"
         ]
       },
       {
         id: "social",
         label: "Social",
         icon: "👥",
-        tone: "Human-centered",
+        tone: "Centrado en las personas",
         content: [
-          "Civil society organizations have broadly welcomed the framework's provisions on algorithmic transparency, arguing they represent essential protections against automated discrimination and surveillance overreach.",
-          "Workers in AI-affected industries see mixed signals. While the framework includes provisions for workforce transition, critics argue the timelines are insufficient for meaningful retraining and adaptation.",
-          "Digital rights advocates note the framework's data governance provisions could establish a new global standard for personal data protection, going beyond existing frameworks like GDPR.",
-          "Educational institutions face a mandate to incorporate AI literacy into curricula, raising both opportunity and resource concerns across different nations and economic contexts."
+          "Las organizaciones de la sociedad civil han dado una amplia bienvenida a las disposiciones del marco sobre transparencia algorítmica, argumentando que representan protecciones esenciales contra la discriminación automatizada y el exceso de vigilancia.",
+          "Los trabajadores en industrias afectadas por la IA ven señales mixtas. Aunque el marco incluye disposiciones para la transición laboral, los críticos argumentan que los plazos son insuficientes para una reconversión y adaptación significativas.",
+          "Los defensores de derechos digitales notan que las disposiciones de gobernanza de datos del marco podrían establecer un nuevo estándar global para la protección de datos personales, superando marcos existentes como el RGPD.",
+          "Las instituciones educativas enfrentan un mandato para incorporar la alfabetización en IA en los currículos, planteando tanto oportunidades como preocupaciones de recursos en diferentes naciones y contextos económicos."
         ],
         keyArguments: [
-          "Transparency provisions protect against automated discrimination",
-          "Workforce transition timelines may be insufficient",
-          "Potential new global standard for data protection",
-          "AI literacy mandate in education"
+          "Las disposiciones de transparencia protegen contra la discriminación automatizada",
+          "Los plazos de transición laboral pueden ser insuficientes",
+          "Potencial nuevo estándar global para protección de datos",
+          "Mandato de alfabetización en IA en la educación"
         ]
       },
       {
         id: "market",
-        label: "Market",
+        label: "Mercado",
         icon: "📈",
-        tone: "Financial",
+        tone: "Financiero",
         content: [
-          "Tech stocks experienced volatility following the announcement, with the NASDAQ composite falling 1.2% before partially recovering. Companies with strong compliance infrastructure saw relative outperformance.",
-          "The framework creates potential competitive advantages for companies that have already invested in ethical AI practices and transparent algorithms. ESG-focused investors may increase allocations to these firms.",
-          "Venture capital investment in AI startups may shift toward compliance-ready solutions. Due diligence processes are expected to increasingly include regulatory risk assessments.",
-          "Currency markets in signatory nations showed stability, suggesting confidence in the economic management of the regulatory transition."
+          "Las acciones tecnológicas experimentaron volatilidad tras el anuncio, con el compuesto NASDAQ cayendo un 1,2% antes de recuperarse parcialmente. Las empresas con fuerte infraestructura de cumplimiento vieron un rendimiento relativo superior.",
+          "El marco crea ventajas competitivas potenciales para empresas que ya han invertido en prácticas éticas de IA y algoritmos transparentes. Los inversores enfocados en ESG pueden aumentar las asignaciones a estas empresas.",
+          "La inversión de capital de riesgo en startups de IA podría desplazarse hacia soluciones preparadas para el cumplimiento. Se espera que los procesos de due diligence incluyan cada vez más evaluaciones de riesgo regulatorio.",
+          "Los mercados de divisas en las naciones signatarias mostraron estabilidad, sugiriendo confianza en la gestión económica de la transición regulatoria."
         ],
         keyArguments: [
-          "NASDAQ saw initial 1.2% decline",
-          "Early compliance investors may gain advantage",
-          "VC due diligence shifting to include regulatory risk",
-          "Currency stability signals economic confidence"
+          "El NASDAQ vio una caída inicial del 1,2%",
+          "Los inversores tempranos en cumplimiento pueden ganar ventaja",
+          "El due diligence de VC se desplaza para incluir riesgo regulatorio",
+          "La estabilidad cambiaria señala confianza económica"
         ]
       },
       {
         id: "international",
-        label: "International",
+        label: "Internacional",
         icon: "🌍",
-        tone: "Comparative",
+        tone: "Comparativo",
         content: [
-          "The framework builds on the EU's AI Act while incorporating perspectives from the Global South, representing a more inclusive approach to technology governance than previous international agreements.",
-          "Non-signatory nations face a strategic decision: join a framework shaped by others or develop alternative approaches that risk fragmentation of the global AI ecosystem.",
-          "The framework's approach to military AI applications remains deliberately vague, reflecting unresolved tensions between national security interests and the principles of international regulation.",
-          "Developing nations have secured provisions for technology transfer and capacity building, though implementation mechanisms remain underdeveloped."
+          "El marco se basa en la Ley de IA de la UE mientras incorpora perspectivas del Sur Global, representando un enfoque más inclusivo de gobernanza tecnológica que acuerdos internacionales anteriores.",
+          "Las naciones no signatarias enfrentan una decisión estratégica: unirse a un marco moldeado por otros o desarrollar enfoques alternativos que arriesgan la fragmentación del ecosistema global de IA.",
+          "El enfoque del marco sobre aplicaciones militares de IA sigue siendo deliberadamente vago, reflejando tensiones no resueltas entre intereses de seguridad nacional y los principios de regulación internacional.",
+          "Los países en desarrollo han asegurado disposiciones para transferencia de tecnología y desarrollo de capacidades, aunque los mecanismos de implementación siguen siendo subdesarrollados."
         ],
         keyArguments: [
-          "More inclusive than previous tech governance efforts",
-          "Non-signatories face fragmentation risks",
-          "Military AI applications deliberately unaddressed",
-          "Technology transfer provisions need implementation details"
+          "Más inclusivo que esfuerzos previos de gobernanza tecnológica",
+          "Los no signatarios enfrentan riesgos de fragmentación",
+          "Las aplicaciones militares de IA deliberadamente no abordadas",
+          "Las disposiciones de transferencia tecnológica necesitan detalles de implementación"
         ]
       },
       {
         id: "ideological",
-        label: "Ideological",
+        label: "Ideológica",
         icon: "⚖️",
-        tone: "Contrasting",
+        tone: "Contrastante",
         content: [
-          "Tech optimists argue the framework risks stifling the transformative potential of AI. They emphasize that premature regulation of a rapidly evolving technology could lock in current approaches and prevent beneficial breakthroughs.",
-          "Tech skeptics welcome the framework as overdue recognition that AI development without guardrails poses existential risks. They argue self-regulation has demonstrably failed and binding international rules are essential.",
-          "Market-oriented perspectives criticize the framework's top-down approach, arguing that competitive market dynamics and liability frameworks would more efficiently identify and address AI risks than prescriptive regulations.",
-          "Social justice advocates note the framework doesn't adequately address power concentration in AI development, arguing that governance focused on technical standards misses the fundamental question of who benefits from AI advancement."
+          "Los optimistas tecnológicos argumentan que el marco arriesga sofocar el potencial transformador de la IA. Enfatizan que la regulación prematura de una tecnología en rápida evolución podría fijar los enfoques actuales y prevenir avances beneficiosos.",
+          "Los escépticos tecnológicos dan la bienvenida al marco como un reconocimiento tardío de que el desarrollo de IA sin barreras plantea riesgos existenciales. Argumentan que la autorregulación ha fallado demostrablemente y que las reglas internacionales vinculantes son esenciales.",
+          "Las perspectivas orientadas al mercado critican el enfoque de arriba hacia abajo del marco, argumentando que las dinámicas competitivas del mercado y los marcos de responsabilidad identificarían y abordarían los riesgos de la IA de manera más eficiente que las regulaciones prescriptivas.",
+          "Los defensores de la justicia social notan que el marco no aborda adecuadamente la concentración de poder en el desarrollo de IA, argumentando que la gobernanza centrada en estándares técnicos omite la pregunta fundamental de quién se beneficia del avance de la IA."
         ],
         keyArguments: [
-          "Optimists: Premature regulation stifles beneficial innovation",
-          "Skeptics: Self-regulation has failed, binding rules essential",
-          "Market view: Competition better than prescription",
-          "Justice view: Power concentration insufficiently addressed"
+          "Optimistas: La regulación prematura sofoca la innovación beneficiosa",
+          "Escépticos: La autorregulación ha fallado, las reglas vinculantes son esenciales",
+          "Visión de mercado: La competencia es mejor que la prescripción",
+          "Visión de justicia: La concentración de poder insuficientemente abordada"
         ]
       }
     ],
     biasAnalysis: {
       framingDifferences: [
-        "Tech media frames as 'regulatory burden'; public interest media frames as 'essential safeguards'",
-        "Western media emphasizes innovation impact; Global South media emphasizes access and equity",
-        "Industry outlets focus on compliance costs; academic coverage focuses on societal benefits"
+        "Medios tecnológicos enmarcan como 'carga regulatoria'; medios de interés público enmarcan como 'salvaguardas esenciales'",
+        "Medios occidentales enfatizan impacto en innovación; medios del Sur Global enfatizan acceso y equidad",
+        "Medios de la industria se enfocan en costos de cumplimiento; cobertura académica se enfoca en beneficios sociales"
       ],
       wordChoiceBias: [
-        "'Governance' vs 'Control' implying different levels of intervention",
-        "'Innovation-friendly' vs 'Industry-captured' describing the same provisions",
-        "'Binding' vs 'Restrictive' carrying different normative weight"
+        "'Gobernanza' vs 'Control' implicando diferentes niveles de intervención",
+        "'Favorable a la innovación' vs 'Capturado por la industria' describiendo las mismas disposiciones",
+        "'Vinculante' vs 'Restrictivo' con diferente peso normativo"
       ],
       omittedElements: [
-        "Industry coverage often omits consumer protection benefits",
-        "Policy coverage often omits implementation challenges in developing nations",
-        "Most coverage underreports the framework's limitations on military AI"
+        "La cobertura de la industria a menudo omite los beneficios de protección al consumidor",
+        "La cobertura política a menudo omite los desafíos de implementación en países en desarrollo",
+        "La mayoría de la cobertura subreporta las limitaciones del marco sobre IA militar"
       ]
     },
     journalists: [
@@ -329,144 +329,144 @@ export const mockEvents: NewsEvent[] = [
         id: "j3",
         name: "Priya Sharma",
         avatar: "PS",
-        bio: "Technology policy correspondent covering the intersection of AI, governance, and society.",
-        specialization: "AI Policy",
+        bio: "Corresponsal de política tecnológica cubriendo la intersección de IA, gobernanza y sociedad.",
+        specialization: "Política de IA",
         articlesCount: 156
       }
     ]
   },
   {
     id: "climate-investment-surge",
-    title: "Record $4.2 Trillion Climate Investment Announced",
-    neutralSummary: "A coalition of sovereign wealth funds, pension funds, and private investors announced the largest coordinated climate investment in history, targeting renewable energy, carbon capture, and climate adaptation infrastructure.",
+    title: "Anuncian Inversión Climática Récord de $4,2 Billones",
+    neutralSummary: "Una coalición de fondos soberanos, fondos de pensiones e inversores privados anunció la mayor inversión climática coordinada de la historia, dirigida a energía renovable, captura de carbono e infraestructura de adaptación climática.",
     date: "2026-02-20",
     readTime: 6,
-    tags: ["Economy", "Global", "Social"],
+    tags: ["Economía", "Global", "Social"],
     perspectives: [
       {
         id: "economic",
-        label: "Economic",
+        label: "Económica",
         icon: "📊",
-        tone: "Analytical",
+        tone: "Analítico",
         content: [
-          "The $4.2 trillion commitment represents approximately 4% of global GDP allocated over a decade. Economists note this scale of coordinated investment is unprecedented outside of wartime mobilization.",
-          "Return projections vary significantly by sector. Renewable energy investments are expected to yield 8-12% annual returns, while carbon capture technologies carry higher risk profiles with 4-7% projected returns.",
-          "The investment could create an estimated 15 million new jobs globally, though displacement in fossil fuel industries could affect 3-5 million workers. The net employment impact depends heavily on transition program effectiveness.",
-          "Inflationary concerns exist, particularly in construction and raw materials sectors. Demand for critical minerals like lithium, cobalt, and rare earth elements is projected to increase 300-500% over the investment period."
+          "El compromiso de $4,2 billones representa aproximadamente el 4% del PIB global asignado durante una década. Los economistas notan que esta escala de inversión coordinada no tiene precedentes fuera de la movilización en tiempos de guerra.",
+          "Las proyecciones de retorno varían significativamente por sector. Se espera que las inversiones en energía renovable rindan 8-12% de retorno anual, mientras que las tecnologías de captura de carbono tienen perfiles de riesgo más altos con retornos proyectados del 4-7%.",
+          "La inversión podría crear un estimado de 15 millones de nuevos empleos globalmente, aunque el desplazamiento en industrias de combustibles fósiles podría afectar a 3-5 millones de trabajadores. El impacto neto en el empleo depende en gran medida de la efectividad de los programas de transición.",
+          "Existen preocupaciones inflacionarias, particularmente en los sectores de construcción y materias primas. Se proyecta que la demanda de minerales críticos como litio, cobalto y tierras raras aumente 300-500% durante el período de inversión."
         ],
         keyArguments: [
-          "4% of global GDP over a decade — unprecedented scale",
-          "Varied return profiles across investment sectors",
-          "Net positive employment if transition managed well",
-          "Significant inflationary pressure on critical materials"
+          "4% del PIB global durante una década — escala sin precedentes",
+          "Perfiles de retorno variados entre sectores de inversión",
+          "Empleo neto positivo si la transición se gestiona bien",
+          "Presión inflacionaria significativa en materiales críticos"
         ]
       },
       {
         id: "political",
-        label: "Political",
+        label: "Política",
         icon: "🏛️",
-        tone: "Strategic",
+        tone: "Estratégico",
         content: [
-          "The announcement strategically bypasses traditional government channels, allowing sovereign wealth funds to commit capital without legislative approval in most jurisdictions.",
-          "Political leaders in fossil fuel-dependent economies face pressure from both sides — environmental constituencies demanding faster action and energy sector workers fearing displacement.",
-          "The coalition's structure creates new power dynamics in climate negotiations, with financial institutions potentially wielding more influence than some national governments.",
-          "Opposition parties in several countries have framed the investment as an overreach by unelected financial elites, setting the stage for populist counter-narratives."
+          "El anuncio estratégicamente evita los canales gubernamentales tradicionales, permitiendo a los fondos soberanos comprometer capital sin aprobación legislativa en la mayoría de jurisdicciones.",
+          "Los líderes políticos en economías dependientes de combustibles fósiles enfrentan presión de ambos lados — constituyentes ambientales demandando acción más rápida y trabajadores del sector energético temiendo el desplazamiento.",
+          "La estructura de la coalición crea nuevas dinámicas de poder en las negociaciones climáticas, con instituciones financieras potencialmente ejerciendo más influencia que algunos gobiernos nacionales.",
+          "Partidos de oposición en varios países han enmarcado la inversión como un exceso de élites financieras no electas, preparando el escenario para contra-narrativas populistas."
         ],
         keyArguments: [
-          "Bypasses legislative processes through financial channels",
-          "Creates pressure on fossil fuel-dependent politicians",
-          "Shifts power dynamics in climate governance",
-          "Populist backlash narrative emerging"
+          "Evita procesos legislativos a través de canales financieros",
+          "Crea presión sobre políticos dependientes de combustibles fósiles",
+          "Cambia las dinámicas de poder en la gobernanza climática",
+          "Emergiendo narrativa de reacción populista"
         ]
       },
       {
         id: "social",
         label: "Social",
         icon: "👥",
-        tone: "Human-centered",
+        tone: "Centrado en las personas",
         content: [
-          "Communities most vulnerable to climate change — coastal populations, agricultural workers, indigenous groups — stand to benefit from the adaptation infrastructure investments, though equitable distribution remains uncertain.",
-          "The transition's impact on workers in carbon-intensive industries raises justice concerns. Historical precedents suggest displaced workers in declining industries face prolonged unemployment and social disruption.",
-          "Environmental justice organizations note the investment's geographic distribution favors developed nations, potentially exacerbating global inequalities in climate resilience.",
-          "Public health benefits from reduced fossil fuel use are estimated at $1.2 trillion in avoided healthcare costs over the investment period."
+          "Las comunidades más vulnerables al cambio climático — poblaciones costeras, trabajadores agrícolas, grupos indígenas — podrían beneficiarse de las inversiones en infraestructura de adaptación, aunque la distribución equitativa sigue siendo incierta.",
+          "El impacto de la transición en los trabajadores de industrias intensivas en carbono plantea preocupaciones de justicia. Los precedentes históricos sugieren que los trabajadores desplazados en industrias en declive enfrentan desempleo prolongado y disrupción social.",
+          "Las organizaciones de justicia ambiental señalan que la distribución geográfica de la inversión favorece a las naciones desarrolladas, potencialmente exacerbando las desigualdades globales en resiliencia climática.",
+          "Los beneficios de salud pública por la reducción del uso de combustibles fósiles se estiman en $1,2 billones en costos de atención médica evitados durante el período de inversión."
         ],
         keyArguments: [
-          "Vulnerable communities may benefit from adaptation spending",
-          "Worker displacement concerns in carbon-intensive regions",
-          "Geographic equity questions remain unresolved",
-          "Significant public health co-benefits projected"
+          "Las comunidades vulnerables pueden beneficiarse del gasto en adaptación",
+          "Preocupaciones por desplazamiento laboral en regiones intensivas en carbono",
+          "Las preguntas de equidad geográfica siguen sin resolverse",
+          "Se proyectan co-beneficios significativos de salud pública"
         ]
       },
       {
         id: "market",
-        label: "Market",
+        label: "Mercado",
         icon: "📈",
-        tone: "Financial",
+        tone: "Financiero",
         content: [
-          "Clean energy stocks surged 5-8% on the announcement. Solar and wind ETFs saw record inflows. Fossil fuel stocks declined 2-4%, with coal companies experiencing the sharpest drops.",
-          "Green bond markets are expected to expand dramatically to accommodate the investment flow. Current green bond issuance of $500 billion annually may need to triple.",
-          "Insurance companies are reassessing climate risk models in light of the increased adaptation investment, potentially reducing premiums in areas targeted for infrastructure upgrades.",
-          "The announcement triggered a reassessment of stranded asset risks in fossil fuel portfolios, with several major pension funds accelerating their divestment timelines."
+          "Las acciones de energía limpia subieron 5-8% con el anuncio. Los ETF de solar y eólica vieron flujos récord. Las acciones de combustibles fósiles cayeron 2-4%, con las empresas de carbón experimentando las caídas más pronunciadas.",
+          "Se espera que los mercados de bonos verdes se expandan dramáticamente para acomodar el flujo de inversión. La emisión actual de bonos verdes de $500 mil millones anuales podría necesitar triplicarse.",
+          "Las compañías de seguros están reevaluando los modelos de riesgo climático a la luz de la mayor inversión en adaptación, potencialmente reduciendo primas en áreas destinadas a mejoras de infraestructura.",
+          "El anuncio desencadenó una reevaluación de los riesgos de activos varados en carteras de combustibles fósiles, con varios grandes fondos de pensiones acelerando sus cronogramas de desinversión."
         ],
         keyArguments: [
-          "Clean energy stocks surged 5-8%",
-          "Green bond market expansion required",
-          "Insurance risk models being reassessed",
-          "Accelerated fossil fuel divestment"
+          "Las acciones de energía limpia subieron 5-8%",
+          "Se requiere expansión del mercado de bonos verdes",
+          "Los modelos de riesgo de seguros están siendo reevaluados",
+          "Desinversión acelerada de combustibles fósiles"
         ]
       },
       {
         id: "international",
-        label: "International",
+        label: "Internacional",
         icon: "🌍",
-        tone: "Comparative",
+        tone: "Comparativo",
         content: [
-          "The coalition spans 34 countries across six continents, representing the broadest financial alliance for climate action to date. Notable participants include funds from oil-producing nations, signaling a strategic pivot.",
-          "Developing nations have been promised 40% of the total allocation, though the terms of investment — loans versus grants — remain contentious in ongoing negotiations.",
-          "The investment scale dwarfs existing multilateral climate funds, potentially rendering institutions like the Green Climate Fund less relevant in the evolving landscape.",
-          "Geopolitical implications include reduced dependence on fossil fuel-exporting nations and potential shifts in global energy trade patterns."
+          "La coalición abarca 34 países en seis continentes, representando la alianza financiera más amplia para la acción climática hasta la fecha. Los participantes notables incluyen fondos de naciones productoras de petróleo, señalando un giro estratégico.",
+          "Se ha prometido a las naciones en desarrollo el 40% de la asignación total, aunque los términos de inversión — préstamos versus donaciones — siguen siendo contenciosos en negociaciones en curso.",
+          "La escala de inversión eclipsa los fondos climáticos multilaterales existentes, potencialmente volviendo menos relevantes a instituciones como el Fondo Verde del Clima en el panorama en evolución.",
+          "Las implicaciones geopolíticas incluyen menor dependencia de naciones exportadoras de combustibles fósiles y posibles cambios en los patrones de comercio energético global."
         ],
         keyArguments: [
-          "Oil-producing nations joining signals strategic shift",
-          "40% developing nation allocation under negotiation",
-          "May render existing climate funds less relevant",
-          "Could reshape global energy geopolitics"
+          "La unión de naciones petroleras señala un cambio estratégico",
+          "El 40% de asignación para naciones en desarrollo bajo negociación",
+          "Puede volver menos relevantes los fondos climáticos existentes",
+          "Podría remodelar la geopolítica energética global"
         ]
       },
       {
         id: "ideological",
-        label: "Ideological",
+        label: "Ideológica",
         icon: "⚖️",
-        tone: "Contrasting",
+        tone: "Contrastante",
         content: [
-          "Market environmentalists celebrate the investment as proof that capitalism can drive climate solutions. They argue market-based approaches will deliver results faster and more efficiently than government-led alternatives.",
-          "Climate justice advocates express concern that the financialization of climate action prioritizes returns over impact, potentially directing resources to profitable projects in wealthy nations rather than urgent needs in vulnerable communities.",
-          "Conservative critics argue the scale of coordinated investment distorts markets, crowds out organic private investment, and represents a form of central planning disguised as market activity.",
-          "Degrowth advocates question whether investment-driven solutions can address a crisis rooted in overconsumption, arguing that technological fixes perpetuate the growth paradigm causing climate change."
+          "Los ambientalistas de mercado celebran la inversión como prueba de que el capitalismo puede impulsar soluciones climáticas. Argumentan que los enfoques basados en el mercado darán resultados más rápido y eficientemente que las alternativas lideradas por gobiernos.",
+          "Los defensores de la justicia climática expresan preocupación por que la financiarización de la acción climática prioriza los retornos sobre el impacto, potencialmente dirigiendo recursos a proyectos rentables en naciones ricas en lugar de necesidades urgentes en comunidades vulnerables.",
+          "Los críticos conservadores argumentan que la escala de inversión coordinada distorsiona los mercados, desplaza la inversión privada orgánica y representa una forma de planificación central disfrazada de actividad de mercado.",
+          "Los defensores del decrecimiento cuestionan si las soluciones impulsadas por inversión pueden abordar una crisis enraizada en el sobreconsumo, argumentando que las soluciones tecnológicas perpetúan el paradigma de crecimiento que causa el cambio climático."
         ],
         keyArguments: [
-          "Market view: Capitalism solving climate crisis",
-          "Justice view: Financialization prioritizes returns over equity",
-          "Conservative: Market distortion and disguised planning",
-          "Degrowth: Technology cannot fix a consumption problem"
+          "Visión de mercado: El capitalismo resolviendo la crisis climática",
+          "Visión de justicia: La financiarización prioriza retornos sobre equidad",
+          "Conservador: Distorsión de mercado y planificación encubierta",
+          "Decrecimiento: La tecnología no puede arreglar un problema de consumo"
         ]
       }
     ],
     biasAnalysis: {
       framingDifferences: [
-        "Financial media frames as 'historic opportunity'; environmental media frames as 'long overdue minimum'",
-        "Business outlets emphasize investment returns; justice outlets emphasize equity gaps",
-        "Western media celebrates scale; Global South media questions distribution"
+        "Medios financieros enmarcan como 'oportunidad histórica'; medios ambientales enmarcan como 'mínimo largamente atrasado'",
+        "Medios empresariales enfatizan retornos de inversión; medios de justicia enfatizan brechas de equidad",
+        "Medios occidentales celebran la escala; medios del Sur Global cuestionan la distribución"
       ],
       wordChoiceBias: [
-        "'Investment' vs 'Financialization' implying different relationships to profit",
-        "'Transition' vs 'Displacement' describing impacts on fossil fuel workers",
-        "'Historic' vs 'Insufficient' framing the scale of commitment"
+        "'Inversión' vs 'Financiarización' implicando diferentes relaciones con el beneficio",
+        "'Transición' vs 'Desplazamiento' describiendo impactos en trabajadores de combustibles fósiles",
+        "'Histórico' vs 'Insuficiente' enmarcando la escala del compromiso"
       ],
       omittedElements: [
-        "Financial coverage often omits equity and distribution concerns",
-        "Environmental coverage often omits legitimate economic transition challenges",
-        "Most coverage underreports the governance and accountability mechanisms"
+        "La cobertura financiera a menudo omite preocupaciones de equidad y distribución",
+        "La cobertura ambiental a menudo omite desafíos legítimos de transición económica",
+        "La mayoría de la cobertura subreporta los mecanismos de gobernanza y rendición de cuentas"
       ]
     },
     journalists: [
@@ -474,152 +474,152 @@ export const mockEvents: NewsEvent[] = [
         id: "j4",
         name: "Amara Okonkwo",
         avatar: "AO",
-        bio: "Climate finance journalist with expertise in international development and environmental economics.",
-        specialization: "Climate Finance",
+        bio: "Periodista de finanzas climáticas con experiencia en desarrollo internacional y economía ambiental.",
+        specialization: "Finanzas Climáticas",
         articlesCount: 203
       },
       {
         id: "j5",
         name: "David Larsson",
         avatar: "DL",
-        bio: "Environmental policy reporter covering the intersection of markets, energy, and sustainability.",
-        specialization: "Energy Markets",
+        bio: "Reportero de política ambiental cubriendo la intersección de mercados, energía y sostenibilidad.",
+        specialization: "Mercados Energéticos",
         articlesCount: 178
       }
     ]
   },
   {
     id: "digital-currency-launch",
-    title: "Central Bank Digital Currency Launches in 3 Major Economies",
-    neutralSummary: "Three of the world's largest economies simultaneously launched central bank digital currencies (CBDCs), marking the most significant change to monetary infrastructure in decades and raising questions about privacy, financial inclusion, and monetary sovereignty.",
+    title: "Moneda Digital de Banco Central se Lanza en 3 Grandes Economías",
+    neutralSummary: "Tres de las economías más grandes del mundo lanzaron simultáneamente monedas digitales de bancos centrales (CBDC), marcando el cambio más significativo en infraestructura monetaria en décadas y planteando preguntas sobre privacidad, inclusión financiera y soberanía monetaria.",
     date: "2026-02-19",
     readTime: 8,
-    tags: ["Economy", "Tech", "Global"],
+    tags: ["Economía", "Tech", "Global"],
     perspectives: [
       {
         id: "economic",
-        label: "Economic",
+        label: "Económica",
         icon: "📊",
-        tone: "Analytical",
+        tone: "Analítico",
         content: [
-          "The simultaneous CBDC launches represent a coordinated effort to reshape global monetary infrastructure. Combined, the three economies account for 45% of global GDP, making this a systemic shift rather than an experiment.",
-          "Traditional banking intermediaries face potential disintermediation as CBDCs offer direct central bank accounts to citizens. Banks' deposit bases could shrink by 15-25%, fundamentally altering their business models.",
-          "Cross-border payment costs are expected to decrease by 60-80%, potentially unlocking significant economic value for international trade and remittances.",
-          "Monetary policy transmission is expected to become more direct and effective, with central banks gaining real-time visibility into economic activity and the ability to implement targeted stimulus."
+          "Los lanzamientos simultáneos de CBDC representan un esfuerzo coordinado para remodelar la infraestructura monetaria global. Combinadas, las tres economías representan el 45% del PIB global, convirtiendo esto en un cambio sistémico en lugar de un experimento.",
+          "Los intermediarios bancarios tradicionales enfrentan una potencial desintermediación ya que las CBDC ofrecen cuentas directas del banco central a los ciudadanos. Las bases de depósitos de los bancos podrían reducirse en un 15-25%, alterando fundamentalmente sus modelos de negocio.",
+          "Se espera que los costos de pagos transfronterizos disminuyan un 60-80%, potencialmente desbloqueando un valor económico significativo para el comercio internacional y las remesas.",
+          "Se espera que la transmisión de política monetaria sea más directa y efectiva, con los bancos centrales obteniendo visibilidad en tiempo real de la actividad económica y la capacidad de implementar estímulos dirigidos."
         ],
         keyArguments: [
-          "45% of global GDP now operating CBDCs",
-          "Banking disintermediation risk significant",
-          "Cross-border costs could drop 60-80%",
-          "More direct monetary policy transmission"
+          "El 45% del PIB global ahora opera con CBDC",
+          "El riesgo de desintermediación bancaria es significativo",
+          "Los costos transfronterizos podrían caer 60-80%",
+          "Transmisión de política monetaria más directa"
         ]
       },
       {
         id: "political",
-        label: "Political",
+        label: "Política",
         icon: "🏛️",
-        tone: "Strategic",
+        tone: "Estratégico",
         content: [
-          "The coordinated launch is seen as a geopolitical counter to the growing influence of decentralized cryptocurrencies and private digital currencies from tech companies.",
-          "Privacy advocates have raised alarm about the surveillance capabilities inherent in CBDC systems, where every transaction can potentially be monitored by government authorities.",
-          "Political opposition in all three countries has framed CBDCs as tools of financial control, resonating with libertarian constituencies concerned about government overreach.",
-          "The launches may accelerate CBDC development in other nations, creating pressure on holdout economies to participate or risk being excluded from the new monetary infrastructure."
+          "El lanzamiento coordinado es visto como una respuesta geopolítica a la creciente influencia de las criptomonedas descentralizadas y las monedas digitales privadas de empresas tecnológicas.",
+          "Los defensores de la privacidad han dado la alarma sobre las capacidades de vigilancia inherentes en los sistemas CBDC, donde cada transacción puede ser potencialmente monitoreada por autoridades gubernamentales.",
+          "La oposición política en los tres países ha enmarcado las CBDC como herramientas de control financiero, resonando con sectores libertarios preocupados por el exceso gubernamental.",
+          "Los lanzamientos pueden acelerar el desarrollo de CBDC en otras naciones, creando presión sobre economías rezagadas para participar o arriesgarse a ser excluidas de la nueva infraestructura monetaria."
         ],
         keyArguments: [
-          "Geopolitical response to crypto and big tech",
-          "Surveillance capabilities raise privacy concerns",
-          "Opposition framing as financial control tools",
-          "Pressure on non-participating economies"
+          "Respuesta geopolítica a cripto y big tech",
+          "Las capacidades de vigilancia plantean preocupaciones de privacidad",
+          "La oposición enmarca como herramientas de control financiero",
+          "Presión sobre economías no participantes"
         ]
       },
       {
         id: "social",
         label: "Social",
         icon: "👥",
-        tone: "Human-centered",
+        tone: "Centrado en las personas",
         content: [
-          "Financial inclusion is a primary justification, with an estimated 1.4 billion unbanked adults potentially gaining access to digital financial services through CBDC infrastructure.",
-          "Digital literacy requirements create a new barrier, potentially excluding elderly and technologically marginalized populations from the financial system.",
-          "Social welfare distribution could become more efficient and targeted through programmable CBDC features, though this raises concerns about government control over spending behavior.",
-          "Community banking and local financial institutions face existential challenges as CBDCs reduce the need for traditional intermediation in underserved areas."
+          "La inclusión financiera es una justificación principal, con un estimado de 1.400 millones de adultos sin bancarizar potencialmente ganando acceso a servicios financieros digitales a través de la infraestructura CBDC.",
+          "Los requisitos de alfabetización digital crean una nueva barrera, potencialmente excluyendo a poblaciones mayores y tecnológicamente marginadas del sistema financiero.",
+          "La distribución de asistencia social podría ser más eficiente y dirigida a través de características programables de CBDC, aunque esto plantea preocupaciones sobre el control gubernamental sobre el comportamiento de gasto.",
+          "La banca comunitaria y las instituciones financieras locales enfrentan desafíos existenciales ya que las CBDC reducen la necesidad de intermediación tradicional en áreas desatendidas."
         ],
         keyArguments: [
-          "1.4 billion unbanked could gain access",
-          "Digital literacy creates new exclusion risks",
-          "Programmable money enables but also controls",
-          "Community banking model threatened"
+          "1.400 millones de no bancarizados podrían ganar acceso",
+          "La alfabetización digital crea nuevos riesgos de exclusión",
+          "El dinero programable habilita pero también controla",
+          "El modelo de banca comunitaria amenazado"
         ]
       },
       {
         id: "market",
-        label: "Market",
+        label: "Mercado",
         icon: "📈",
-        tone: "Financial",
+        tone: "Financiero",
         content: [
-          "Bank stocks in the launching countries fell 3-7% on concerns about deposit flight and business model disruption. Fintech stocks showed mixed performance depending on CBDC integration potential.",
-          "Cryptocurrency markets experienced unusual volatility, with Bitcoin dropping 8% before recovering to a 2% loss. Stablecoins saw the largest outflows as CBDC alternatives became available.",
-          "Payment processing companies face disruption as CBDC rails could replace existing card networks for domestic transactions, threatening fee-based business models.",
-          "Government bond markets showed slight strengthening as CBDCs are expected to enhance monetary policy effectiveness and economic stability."
+          "Las acciones bancarias en los países lanzadores cayeron 3-7% por preocupaciones sobre fuga de depósitos y disrupción del modelo de negocio. Las acciones fintech mostraron rendimiento mixto según el potencial de integración con CBDC.",
+          "Los mercados de criptomonedas experimentaron volatilidad inusual, con Bitcoin cayendo un 8% antes de recuperarse a una pérdida del 2%. Las stablecoins vieron las mayores salidas a medida que las alternativas CBDC estuvieron disponibles.",
+          "Las empresas de procesamiento de pagos enfrentan disrupción ya que los rieles CBDC podrían reemplazar las redes de tarjetas existentes para transacciones domésticas, amenazando modelos de negocio basados en comisiones.",
+          "Los mercados de bonos gubernamentales mostraron un ligero fortalecimiento ya que se espera que las CBDC mejoren la efectividad de la política monetaria y la estabilidad económica."
         ],
         keyArguments: [
-          "Bank stocks fell 3-7% on disruption fears",
-          "Crypto markets saw significant volatility",
-          "Payment processors face existential threat",
-          "Bond markets strengthened slightly"
+          "Las acciones bancarias cayeron 3-7% por temores de disrupción",
+          "Los mercados cripto vieron volatilidad significativa",
+          "Los procesadores de pagos enfrentan amenaza existencial",
+          "Los mercados de bonos se fortalecieron ligeramente"
         ]
       },
       {
         id: "international",
-        label: "International",
+        label: "Internacional",
         icon: "🌍",
-        tone: "Comparative",
+        tone: "Comparativo",
         content: [
-          "The three-economy launch creates a de facto CBDC standard that other nations may be pressured to adopt, potentially limiting monetary sovereignty for smaller economies.",
-          "Dollar dominance in international trade faces its most significant challenge as CBDCs facilitate bilateral trade settlement without USD intermediation.",
-          "International organizations including the IMF and BIS have offered cautious support while warning about fragmentation risks if CBDC systems lack interoperability.",
-          "Developing nations face a strategic choice between adopting dominant CBDC platforms or developing independent systems, with significant implications for economic sovereignty."
+          "El lanzamiento de tres economías crea un estándar de facto de CBDC que otras naciones podrían verse presionadas a adoptar, potencialmente limitando la soberanía monetaria de economías más pequeñas.",
+          "La dominancia del dólar en el comercio internacional enfrenta su desafío más significativo ya que las CBDC facilitan la liquidación de comercio bilateral sin intermediación del USD.",
+          "Organizaciones internacionales incluyendo el FMI y el BIS han ofrecido apoyo cauteloso mientras advierten sobre riesgos de fragmentación si los sistemas CBDC carecen de interoperabilidad.",
+          "Las naciones en desarrollo enfrentan una elección estratégica entre adoptar plataformas CBDC dominantes o desarrollar sistemas independientes, con implicaciones significativas para la soberanía económica."
         ],
         keyArguments: [
-          "De facto standard may pressure smaller nations",
-          "USD dominance in trade challenged",
-          "Interoperability essential to avoid fragmentation",
-          "Developing nations face sovereignty dilemma"
+          "El estándar de facto puede presionar a naciones más pequeñas",
+          "La dominancia del USD en el comercio desafiada",
+          "La interoperabilidad es esencial para evitar fragmentación",
+          "Las naciones en desarrollo enfrentan un dilema de soberanía"
         ]
       },
       {
         id: "ideological",
-        label: "Ideological",
+        label: "Ideológica",
         icon: "⚖️",
-        tone: "Contrasting",
+        tone: "Contrastante",
         content: [
-          "Modernizers view CBDCs as an inevitable and positive evolution of money, combining the stability of central bank backing with the efficiency of digital technology.",
-          "Libertarian critics see CBDCs as the ultimate surveillance tool, enabling governments to monitor, control, and potentially freeze any citizen's financial activity at will.",
-          "Progressive advocates hope CBDCs can be designed to reduce financial inequality through features like negative interest rates on large holdings and universal basic income distribution.",
-          "Crypto advocates argue CBDCs miss the point of digital currency innovation by centralizing control rather than distributing it, calling them 'digital fiat' rather than genuine innovation."
+          "Los modernizadores ven las CBDC como una evolución inevitable y positiva del dinero, combinando la estabilidad del respaldo del banco central con la eficiencia de la tecnología digital.",
+          "Los críticos libertarios ven las CBDC como la herramienta de vigilancia definitiva, permitiendo a los gobiernos monitorear, controlar y potencialmente congelar la actividad financiera de cualquier ciudadano a voluntad.",
+          "Los defensores progresistas esperan que las CBDC puedan diseñarse para reducir la desigualdad financiera a través de características como tasas de interés negativas en grandes tenencias y distribución de renta básica universal.",
+          "Los defensores cripto argumentan que las CBDC pierden el punto de la innovación de la moneda digital al centralizar el control en lugar de distribuirlo, llamándolas 'fiat digital' en lugar de innovación genuina."
         ],
         keyArguments: [
-          "Modernizers: Natural evolution of money",
-          "Libertarians: Ultimate financial surveillance tool",
-          "Progressives: Potential for equality-enhancing features",
-          "Crypto: Centralization defeats the purpose"
+          "Modernizadores: Evolución natural del dinero",
+          "Libertarios: Herramienta definitiva de vigilancia financiera",
+          "Progresistas: Potencial para características que mejoren la igualdad",
+          "Cripto: La centralización derrota el propósito"
         ]
       }
     ],
     biasAnalysis: {
       framingDifferences: [
-        "Government media frames as 'financial innovation'; privacy outlets frame as 'surveillance infrastructure'",
-        "Tech media emphasizes efficiency gains; banking media emphasizes disruption risks",
-        "Developed nation media focuses on modernization; developing nation media focuses on sovereignty"
+        "Medios gubernamentales enmarcan como 'innovación financiera'; medios de privacidad enmarcan como 'infraestructura de vigilancia'",
+        "Medios tecnológicos enfatizan ganancias de eficiencia; medios bancarios enfatizan riesgos de disrupción",
+        "Medios de naciones desarrolladas se enfocan en modernización; medios de naciones en desarrollo se enfocan en soberanía"
       ],
       wordChoiceBias: [
-        "'Digital currency' vs 'Surveillance coin' carrying vastly different implications",
-        "'Financial inclusion' vs 'Forced digitization' framing the same process differently",
-        "'Innovation' vs 'Control' describing identical CBDC features"
+        "'Moneda digital' vs 'Moneda de vigilancia' con implicaciones vastamente diferentes",
+        "'Inclusión financiera' vs 'Digitalización forzada' enmarcando el mismo proceso diferentemente",
+        "'Innovación' vs 'Control' describiendo características idénticas de CBDC"
       ],
       omittedElements: [
-        "Government coverage underreports privacy and surveillance risks",
-        "Privacy coverage often omits genuine financial inclusion benefits",
-        "Most coverage underreports the technical vulnerabilities and cybersecurity risks"
+        "La cobertura gubernamental subreporta riesgos de privacidad y vigilancia",
+        "La cobertura de privacidad a menudo omite los genuinos beneficios de inclusión financiera",
+        "La mayoría de la cobertura subreporta las vulnerabilidades técnicas y riesgos de ciberseguridad"
       ]
     },
     journalists: [
@@ -627,8 +627,8 @@ export const mockEvents: NewsEvent[] = [
         id: "j6",
         name: "Yuki Tanaka",
         avatar: "YT",
-        bio: "Financial technology correspondent specializing in digital currencies and monetary policy.",
-        specialization: "Digital Finance",
+        bio: "Corresponsal de tecnología financiera especializada en monedas digitales y política monetaria.",
+        specialization: "Finanzas Digitales",
         articlesCount: 267
       }
     ]
@@ -636,8 +636,8 @@ export const mockEvents: NewsEvent[] = [
 ];
 
 export const tagColors: Record<Tag, string> = {
-  Politics: "tag-politics",
-  Economy: "tag-economy",
+  "Política": "tag-politics",
+  "Economía": "tag-economy",
   Social: "tag-social",
   Global: "tag-global",
   Tech: "tag-tech",

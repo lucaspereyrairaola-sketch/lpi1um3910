@@ -31,8 +31,8 @@ const App = () => (
       <BrowserRouter>
         <AuthProvider>
           <Routes>
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/" element={<Index />} />
+            <Route path="/" element={<Auth />} />
+            <Route path="/feed" element={<Index />} />
             <Route path="/event/:id" element={<EventPage />} />
             <Route path="/preferences" element={<ProtectedRoute><Preferences /></ProtectedRoute>} />
             <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />

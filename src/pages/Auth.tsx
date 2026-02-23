@@ -33,7 +33,7 @@ const Auth = () => {
       if (isLogin) {
         await signIn(email, password);
         toast.success("¡Bienvenido de vuelta!");
-        navigate("/");
+        navigate("/feed");
       } else {
         await signUp(email, password, displayName, selectedRole);
         const { data: { session } } = await supabase.auth.getSession();

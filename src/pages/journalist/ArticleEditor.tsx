@@ -50,7 +50,7 @@ const ArticleEditor = () => {
           setAccessLevel(data.access_level as any);
           setPrice(String(data.price || 0));
           if (data.perspectives) {
-            setPerspectives(data.perspectives as Perspective[]);
+            setPerspectives(data.perspectives as unknown as Perspective[]);
             setShowPerspectives(true);
           }
         }

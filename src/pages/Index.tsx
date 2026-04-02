@@ -1,10 +1,15 @@
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
+import ArticleCard from "@/components/ArticleCard";
 import EventCard from "@/components/EventCard";
 import { mockEvents } from "@/data/mockEvents";
+import { useArticles } from "@/hooks/useArticles";
 import { Layers } from "lucide-react";
 
 const Index = () => {
+  const { data: articles, isLoading } = useArticles();
+  const hasRealArticles = articles && articles.length > 0;
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -32,22 +37,38 @@ const Index = () => {
         </motion.div>
       </section>
 
-      {/* Event Feed */}
+      {/* Feed */}
       <section className="max-w-3xl mx-auto px-6 pb-20">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
-            Últimos Eventos
+            Últimos Artículos
           </h2>
-          <span className="text-xs text-muted-foreground">
-            {mockEvents.length} eventos
-          </span>
+          {!isLoading && (
+            <span className="text-xs text-muted-foreground">
+              {hasRealArticles ? articles.length : mockEvents.length} artículos
+            </span>
+          )}
         </div>
 
-        <div className="space-y-4">
-          {mockEvents.map((event, i) => (
-            <EventCard key={event.id} event={event} index={i} />
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="space-y-4">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="h-40 rounded-xl bg-secondary/30 animate-pulse" />
+            ))}
+          </div>
+        ) : hasRealArticles ? (
+          <div className="space-y-4">
+            {articles.map((article, i) => (
+              <ArticleCard key={article.id} article={article} index={i} />
+            ))}
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {mockEvents.map((event, i) => (
+              <EventCard key={event.id} event={event} index={i} />
+            ))}
+          </div>
+        )}
       </section>
     </div>
   );

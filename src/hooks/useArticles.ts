@@ -25,7 +25,7 @@ export function useArticles() {
       const { data: profiles } = await supabase
         .from("profiles")
         .select("id, display_name")
-        .in("id", journalistIds);
+        .in("id", journalistIds as string[]);
 
       const profileMap = new Map(profiles?.map((p) => [p.id, p.display_name]) ?? []);
 

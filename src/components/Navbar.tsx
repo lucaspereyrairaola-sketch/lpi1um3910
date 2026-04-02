@@ -46,7 +46,7 @@ const Navbar = () => {
                       Lector
                     </button>
                     <button
-                      onClick={() => switchMode("journalist")}
+                      onClick={() => { switchMode("journalist"); navigate("/journalist/dashboard"); }}
                       className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
                         activeMode === "journalist"
                           ? "bg-primary text-primary-foreground shadow-sm"

@@ -1,13 +1,22 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { ArrowLeft, Save, Send, Trash2 } from "lucide-react";
+import { ArrowLeft, Save, Send, Trash2, Sparkles, ChevronDown, ChevronUp } from "lucide-react";
 
 const AVAILABLE_TAGS = ["política", "economía", "deportes", "cultura", "tech", "ciencia", "salud", "internacional", "medio-ambiente", "educación"];
+
+export interface Perspective {
+  id: string;
+  label: string;
+  icon: string;
+  tone: string;
+  content: string[];
+  keyArguments: string[];
+}
 
 const ArticleEditor = () => {
   const { id } = useParams();
@@ -21,6 +30,9 @@ const ArticleEditor = () => {
   const [accessLevel, setAccessLevel] = useState<"free" | "micropay" | "premium">("free");
   const [price, setPrice] = useState("0");
   const [saving, setSaving] = useState(false);
+  const [perspectives, setPerspectives] = useState<Perspective[] | null>(null);
+  const [generating, setGenerating] = useState(false);
+  const [showPerspectives, setShowPerspectives] = useState(false);
 
   useEffect(() => {
     if (!id || !user) return;
@@ -37,12 +49,41 @@ const ArticleEditor = () => {
           setTags(data.tags || []);
           setAccessLevel(data.access_level as any);
           setPrice(String(data.price || 0));
+          if (data.perspectives) {
+            setPerspectives(data.perspectives as Perspective[]);
+            setShowPerspectives(true);
+          }
         }
       });
   }, [id, user]);
 
   const toggleTag = (tag: string) => {
     setTags((prev) => (prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]));
+  };
+
+  const handleGeneratePerspectives = async () => {
+    if (!title.trim() || body.trim().length < 100) {
+      toast.error("El artículo necesita título y al menos 100 caracteres para generar perspectivas.");
+      return;
+    }
+
+    setGenerating(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("generate-perspectives", {
+        body: { title: title.trim(), body: body.trim() },
+      });
+
+      if (error) throw error;
+      if (!data?.perspectives) throw new Error("Respuesta inválida del servidor");
+
+      setPerspectives(data.perspectives);
+      setShowPerspectives(true);
+      toast.success("¡Perspectivas generadas!");
+    } catch (err: any) {
+      toast.error(err.message || "Error generando perspectivas");
+    } finally {
+      setGenerating(false);
+    }
   };
 
   const handleSave = async (publish: boolean) => {
@@ -61,6 +102,7 @@ const ArticleEditor = () => {
         published: publish,
         published_at: publish ? new Date().toISOString() : null,
         journalist_id: user.id,
+        perspectives: perspectives ?? null,
       };
 
       if (isEditing) {
@@ -128,6 +170,76 @@ const ArticleEditor = () => {
                 className="w-full bg-secondary/50 border border-border/50 rounded-xl px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none"
                 placeholder="Escribe tu artículo aquí..."
               />
+              <p className="text-xs text-muted-foreground mt-1 text-right">
+                {body.trim().split(/\s+/).filter(Boolean).length} palabras
+              </p>
+            </div>
+
+            {/* Generate perspectives */}
+            <div className="border border-dashed border-primary/40 rounded-xl p-5 bg-primary/5">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-primary" />
+                    Perspectivas con IA
+                  </h3>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    {perspectives
+                      ? `${perspectives.length} perspectivas generadas`
+                      : "Generá 3 perspectivas automáticamente con Claude"}
+                  </p>
+                </div>
+                <div className="flex items-center gap-2">
+                  {perspectives && (
+                    <button
+                      onClick={() => setShowPerspectives(!showPerspectives)}
+                      className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1"
+                    >
+                      {showPerspectives ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                      {showPerspectives ? "Ocultar" : "Ver"}
+                    </button>
+                  )}
+                  <button
+                    onClick={handleGeneratePerspectives}
+                    disabled={generating || body.trim().length < 100}
+                    className="flex items-center gap-1.5 bg-primary text-primary-foreground px-4 py-2 rounded-lg text-xs font-semibold hover:bg-primary/90 disabled:opacity-50 transition-colors"
+                  >
+                    <Sparkles className="w-3.5 h-3.5" />
+                    {generating ? "Generando..." : perspectives ? "Regenerar" : "Generar"}
+                  </button>
+                </div>
+              </div>
+
+              <AnimatePresence>
+                {showPerspectives && perspectives && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="mt-4 space-y-3 overflow-hidden"
+                  >
+                    {perspectives.map((p) => (
+                      <div key={p.id} className="bg-background/60 rounded-lg p-4 border border-border/50">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span>{p.icon}</span>
+                          <span className="text-sm font-medium text-foreground">{p.label}</span>
+                          <span className="text-xs text-muted-foreground ml-auto">{p.tone}</span>
+                        </div>
+                        <p className="text-xs text-muted-foreground leading-relaxed mb-2">
+                          {p.content[0]}
+                        </p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {p.keyArguments.map((arg, i) => (
+                            <span key={i} className="text-xs bg-secondary px-2 py-0.5 rounded-full text-secondary-foreground">
+                              {arg}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Tags */}

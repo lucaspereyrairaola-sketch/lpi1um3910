@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import { useArticle } from "@/hooks/useArticles";
-import { ArrowLeft, Clock, User, Lock } from "lucide-react";
+import type { Perspective } from "@/types/article";
+import { ArrowLeft, Clock, User, Lock, Sparkles } from "lucide-react";
 
 const tagColorMap: Record<string, string> = {
   política: "bg-tag-politics/15 text-tag-politics",
@@ -15,9 +17,53 @@ const tagColorMap: Record<string, string> = {
 
 const defaultTagColor = "bg-secondary text-secondary-foreground";
 
+const PerspectiveView = ({ perspective }: { perspective: Perspective }) => (
+  <motion.div
+    key={perspective.id}
+    initial={{ opacity: 0, y: 12 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0 }}
+    transition={{ duration: 0.25 }}
+    className="space-y-4"
+  >
+    <div className="flex items-center gap-2 mb-4">
+      <span className="text-2xl">{perspective.icon}</span>
+      <div>
+        <h3 className="text-base font-semibold text-foreground">{perspective.label}</h3>
+        <span className="text-xs text-muted-foreground">{perspective.tone}</span>
+      </div>
+    </div>
+
+    <div className="space-y-3">
+      {perspective.content.map((paragraph, i) => (
+        <p key={i} className="text-base text-secondary-foreground leading-relaxed">
+          {paragraph}
+        </p>
+      ))}
+    </div>
+
+    {perspective.keyArguments.length > 0 && (
+      <div className="mt-4 pt-4 border-t border-border/50">
+        <p className="text-xs font-medium text-muted-foreground mb-2 uppercase tracking-wider">
+          Argumentos clave
+        </p>
+        <ul className="space-y-1.5">
+          {perspective.keyArguments.map((arg, i) => (
+            <li key={i} className="flex items-start gap-2 text-sm text-secondary-foreground">
+              <span className="text-primary mt-0.5">•</span>
+              {arg}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+  </motion.div>
+);
+
 const ArticlePage = () => {
   const { id } = useParams<{ id: string }>();
   const { data: article, isLoading } = useArticle(id ?? "");
+  const [activeTab, setActiveTab] = useState<string>("body");
 
   if (isLoading) {
     return (
@@ -47,6 +93,7 @@ const ArticlePage = () => {
   }
 
   const date = article.published_at ?? article.created_at;
+  const hasPerspectives = article.perspectives && article.perspectives.length > 0;
 
   return (
     <div className="min-h-screen bg-background">
@@ -66,7 +113,7 @@ const ArticlePage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          {/* Tags + meta */}
+          {/* Tags + acceso */}
           <div className="flex items-center gap-2 mb-4 flex-wrap">
             {article.tags.map((tag) => (
               <span
@@ -92,7 +139,7 @@ const ArticlePage = () => {
           </h1>
 
           {/* Byline */}
-          <div className="flex items-center gap-4 text-xs text-muted-foreground mb-8 pb-6 border-b border-border/50">
+          <div className="flex items-center gap-4 text-xs text-muted-foreground mb-6 pb-6 border-b border-border/50 flex-wrap">
             {article.journalist_name && (
               <span className="flex items-center gap-1.5">
                 <User className="w-3.5 h-3.5" />
@@ -113,21 +160,74 @@ const ArticlePage = () => {
             </span>
           </div>
 
-          {/* Body */}
-          <div className="prose prose-sm prose-invert max-w-none text-foreground leading-relaxed space-y-4">
-            {article.body.split("\n").filter(Boolean).map((paragraph, i) => (
-              <p key={i} className="text-base text-secondary-foreground leading-relaxed">
-                {paragraph}
-              </p>
-            ))}
+          {/* Tabs: solo si hay perspectivas */}
+          {hasPerspectives && (
+            <div className="flex gap-1 overflow-x-auto pb-2 mb-6 scrollbar-none">
+              <button
+                onClick={() => setActiveTab("body")}
+                className={`flex-shrink-0 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  activeTab === "body"
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+                }`}
+              >
+                📰 Artículo
+              </button>
+              {article.perspectives!.map((p) => (
+                <button
+                  key={p.id}
+                  onClick={() => setActiveTab(p.id)}
+                  className={`flex-shrink-0 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    activeTab === p.id
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+                  }`}
+                >
+                  {p.icon} {p.label}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Content */}
+          <div className="min-h-[300px]">
+            <AnimatePresence mode="wait">
+              {activeTab === "body" || !hasPerspectives ? (
+                <motion.div
+                  key="body"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className="space-y-4"
+                >
+                  {article.body.split("\n").filter(Boolean).map((paragraph, i) => (
+                    <p key={i} className="text-base text-secondary-foreground leading-relaxed">
+                      {paragraph}
+                    </p>
+                  ))}
+                </motion.div>
+              ) : (
+                <AnimatePresence mode="wait">
+                  {article.perspectives!
+                    .filter((p) => p.id === activeTab)
+                    .map((p) => (
+                      <PerspectiveView key={p.id} perspective={p} />
+                    ))}
+                </AnimatePresence>
+              )}
+            </AnimatePresence>
           </div>
 
           {/* Footer */}
-          <div className="mt-12 pt-6 border-t border-border/50 bg-secondary/20 rounded-xl p-4">
-            <p className="text-xs text-muted-foreground text-center">
-              Este artículo fue publicado en MIDIA. Las perspectivas múltiples estarán disponibles próximamente.
-            </p>
-          </div>
+          {!hasPerspectives && (
+            <div className="mt-10 bg-primary/5 border border-dashed border-primary/30 rounded-xl p-4 flex items-center gap-3">
+              <Sparkles className="w-4 h-4 text-primary shrink-0" />
+              <p className="text-xs text-muted-foreground">
+                Las perspectivas múltiples con IA estarán disponibles cuando el periodista las genere desde el editor.
+              </p>
+            </div>
+          )}
         </motion.article>
       </div>
     </div>

@@ -1,3 +1,12 @@
+export interface Perspective {
+  id: string;
+  label: string;
+  icon: string;
+  tone: string;
+  content: string[];
+  keyArguments: string[];
+}
+
 export interface ArticleFeed {
   id: string;
   title: string;
@@ -9,4 +18,5 @@ export interface ArticleFeed {
   journalist_id: string;
   journalist_name: string | null;
   read_time: number;
+  perspectives: Perspective[] | null;
 }

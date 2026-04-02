@@ -13,7 +13,7 @@ export function useArticles() {
     queryFn: async () => {
       const { data: articles, error } = await supabase
         .from("articles")
-        .select("id, title, body, tags, access_level, published_at, created_at, journalist_id")
+        .select("id, title, body, tags, access_level, published_at, created_at, journalist_id, perspectives")
         .eq("published", true)
         .order("published_at", { ascending: false })
         .limit(50);
@@ -40,6 +40,7 @@ export function useArticles() {
         journalist_id: a.journalist_id,
         journalist_name: profileMap.get(a.journalist_id) ?? null,
         read_time: estimateReadTime(a.body ?? ""),
+        perspectives: (a as any).perspectives ?? null,
       }));
     },
   });
@@ -51,7 +52,7 @@ export function useArticle(id: string) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("articles")
-        .select("id, title, body, tags, access_level, published_at, created_at, journalist_id")
+        .select("id, title, body, tags, access_level, published_at, created_at, journalist_id, perspectives")
         .eq("id", id)
         .eq("published", true)
         .maybeSingle();
@@ -76,6 +77,7 @@ export function useArticle(id: string) {
         journalist_id: data.journalist_id,
         journalist_name: profile?.display_name ?? null,
         read_time: estimateReadTime(data.body ?? ""),
+        perspectives: (data as any).perspectives ?? null,
       };
     },
     enabled: !!id,

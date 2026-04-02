@@ -16,7 +16,7 @@ export function useArticles() {
         .select("id, title, body, tags, access_level, published_at, created_at, journalist_id, perspectives")
         .eq("published", true)
         .order("published_at", { ascending: false })
-        .limit(50);
+        .limit(50) as any;
 
       if (error) throw error;
       if (!articles || articles.length === 0) return [];

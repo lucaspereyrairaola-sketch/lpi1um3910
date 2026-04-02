@@ -102,7 +102,7 @@ const ArticleEditor = () => {
         published: publish,
         published_at: publish ? new Date().toISOString() : null,
         journalist_id: user.id,
-        perspectives: perspectives ?? null,
+        perspectives: (perspectives as unknown as any) ?? null,
       };
 
       if (isEditing) {

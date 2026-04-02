@@ -55,7 +55,7 @@ export function useArticle(id: string) {
         .select("id, title, body, tags, access_level, published_at, created_at, journalist_id, perspectives")
         .eq("id", id)
         .eq("published", true)
-        .maybeSingle();
+        .maybeSingle() as any;
 
       if (error) throw error;
       if (!data) return null;

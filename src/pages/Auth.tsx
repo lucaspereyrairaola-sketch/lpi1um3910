@@ -46,6 +46,11 @@ const Auth = () => {
           }
         }
         toast.success("¡Cuenta creada! Revisa tu email para verificar tu cuenta.");
+        if (selectedRole === "reader") {
+          navigate("/onboarding");
+        } else {
+          navigate("/journalist/dashboard");
+        }
       }
     } catch (err: any) {
       toast.error(err.message || "Error de autenticación");

@@ -74,7 +74,7 @@ const Onboarding = () => {
 
       if (error) throw error;
       toast.success("¡Tu perfil de lectura está listo!");
-      navigate("/");
+      navigate("/feed");
     } catch (err: any) {
       toast.error(err.message || "Error guardando preferencias");
     } finally {

@@ -18,8 +18,8 @@ const queryClient = new QueryClient();
 const ProtectedRoute = ({ children, requiredRole }: { children: React.ReactNode; requiredRole?: string }) => {
   const { user, loading, role } = useAuth();
   if (loading) return <div className="min-h-screen bg-background flex items-center justify-center text-muted-foreground text-sm">Cargando...</div>;
-  if (!user) return <Navigate to="/auth" replace />;
-  if (requiredRole && role !== requiredRole) return <Navigate to="/" replace />;
+  if (!user) return <Navigate to="/" replace />;
+  if (requiredRole && role !== requiredRole) return <Navigate to="/feed" replace />;
   return <>{children}</>;
 };
 
@@ -32,8 +32,8 @@ const App = () => (
         <AuthProvider>
           <Routes>
             <Route path="/" element={<Auth />} />
-            <Route path="/feed" element={<Index />} />
-            <Route path="/event/:id" element={<EventPage />} />
+            <Route path="/feed" element={<ProtectedRoute><Index /></ProtectedRoute>} />
+            <Route path="/event/:id" element={<ProtectedRoute><EventPage /></ProtectedRoute>} />
             <Route path="/preferences" element={<ProtectedRoute><Preferences /></ProtectedRoute>} />
             <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
             <Route path="/journalist/dashboard" element={<ProtectedRoute requiredRole="journalist"><Dashboard /></ProtectedRoute>} />

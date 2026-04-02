@@ -16,7 +16,7 @@ export function useArticles() {
         .select("id, title, body, tags, access_level, published_at, created_at, journalist_id, perspectives")
         .eq("published", true)
         .order("published_at", { ascending: false })
-        .limit(50);
+        .limit(50) as any;
 
       if (error) throw error;
       if (!articles || articles.length === 0) return [];
@@ -25,7 +25,7 @@ export function useArticles() {
       const { data: profiles } = await supabase
         .from("profiles")
         .select("id, display_name")
-        .in("id", journalistIds);
+        .in("id", journalistIds as string[]);
 
       const profileMap = new Map(profiles?.map((p) => [p.id, p.display_name]) ?? []);
 
@@ -55,7 +55,7 @@ export function useArticle(id: string) {
         .select("id, title, body, tags, access_level, published_at, created_at, journalist_id, perspectives")
         .eq("id", id)
         .eq("published", true)
-        .maybeSingle();
+        .maybeSingle() as any;
 
       if (error) throw error;
       if (!data) return null;

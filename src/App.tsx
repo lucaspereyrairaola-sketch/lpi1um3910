@@ -11,16 +11,30 @@ import Auth from "./pages/Auth";
 import Onboarding from "./pages/Onboarding";
 import Dashboard from "./pages/journalist/Dashboard";
 import ArticleEditor from "./pages/journalist/ArticleEditor";
+import JournalistOnboarding from "./pages/journalist/JournalistOnboarding";
 import ArticlePage from "./pages/ArticlePage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-const ProtectedRoute = ({ children, requiredRole }: { children: React.ReactNode; requiredRole?: string }) => {
-  const { user, loading, role } = useAuth();
-  if (loading) return <div className="min-h-screen bg-background flex items-center justify-center text-muted-foreground text-sm">Cargando...</div>;
+const ProtectedRoute = ({
+  children,
+  requiredRole,
+}: {
+  children: React.ReactNode;
+  requiredRole?: string;
+}) => {
+  const { user, loading, roles } = useAuth();
+  if (loading)
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center text-muted-foreground text-sm">
+        Cargando...
+      </div>
+    );
   if (!user) return <Navigate to="/" replace />;
-  if (requiredRole && role !== requiredRole) return <Navigate to="/feed" replace />;
+  // Check against the full roles array so dual-role users aren't blocked
+  if (requiredRole && !roles.includes(requiredRole as "reader" | "journalist" | "admin"))
+    return <Navigate to="/feed" replace />;
   return <>{children}</>;
 };
 
@@ -38,9 +52,24 @@ const App = () => (
             <Route path="/event/:id" element={<ProtectedRoute><EventPage /></ProtectedRoute>} />
             <Route path="/preferences" element={<ProtectedRoute><Preferences /></ProtectedRoute>} />
             <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
-            <Route path="/journalist/dashboard" element={<ProtectedRoute requiredRole="journalist"><Dashboard /></ProtectedRoute>} />
-            <Route path="/journalist/editor" element={<ProtectedRoute requiredRole="journalist"><ArticleEditor /></ProtectedRoute>} />
-            <Route path="/journalist/editor/:id" element={<ProtectedRoute requiredRole="journalist"><ArticleEditor /></ProtectedRoute>} />
+            {/* Journalist onboarding — accessible to any logged-in user */}
+            <Route
+              path="/journalist/onboarding"
+              element={<ProtectedRoute><JournalistOnboarding /></ProtectedRoute>}
+            />
+            {/* Journalist-only routes */}
+            <Route
+              path="/journalist/dashboard"
+              element={<ProtectedRoute requiredRole="journalist"><Dashboard /></ProtectedRoute>}
+            />
+            <Route
+              path="/journalist/editor"
+              element={<ProtectedRoute requiredRole="journalist"><ArticleEditor /></ProtectedRoute>}
+            />
+            <Route
+              path="/journalist/editor/:id"
+              element={<ProtectedRoute requiredRole="journalist"><ArticleEditor /></ProtectedRoute>}
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>

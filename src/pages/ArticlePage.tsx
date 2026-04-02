@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import { useArticle } from "@/hooks/useArticles";
 import type { Perspective } from "@/types/article";
-import { ArrowLeft, Clock, User, Lock, Sparkles } from "lucide-react";
+import { ArrowLeft, Clock, User, Lock, Sparkles, Layers, ChevronRight } from "lucide-react";
 
 const tagColorMap: Record<string, string> = {
   política: "bg-tag-politics/15 text-tag-politics",
@@ -14,10 +14,27 @@ const tagColorMap: Record<string, string> = {
   tech: "bg-tag-tech/15 text-tag-tech",
   tecnología: "bg-tag-tech/15 text-tag-tech",
 };
-
 const defaultTagColor = "bg-secondary text-secondary-foreground";
 
-const PerspectiveView = ({ perspective }: { perspective: Perspective }) => (
+// Color accent per perspective index
+const perspectiveAccents = [
+  "border-l-tag-politics text-tag-politics bg-tag-politics/5",
+  "border-l-tag-economy text-tag-economy bg-tag-economy/5",
+  "border-l-tag-global text-tag-global bg-tag-global/5",
+];
+const perspectiveTabActive = [
+  "bg-tag-politics/20 text-tag-politics border border-tag-politics/30",
+  "bg-tag-economy/20 text-tag-economy border border-tag-economy/30",
+  "bg-tag-global/20 text-tag-global border border-tag-global/30",
+];
+
+const PerspectiveView = ({
+  perspective,
+  accentClass,
+}: {
+  perspective: Perspective;
+  accentClass: string;
+}) => (
   <motion.div
     key={perspective.id}
     initial={{ opacity: 0, y: 12 }}
@@ -26,7 +43,7 @@ const PerspectiveView = ({ perspective }: { perspective: Perspective }) => (
     transition={{ duration: 0.25 }}
     className="space-y-4"
   >
-    <div className="flex items-center gap-2 mb-4">
+    <div className={`flex items-center gap-3 p-4 rounded-xl border-l-4 ${accentClass} mb-6`}>
       <span className="text-2xl">{perspective.icon}</span>
       <div>
         <h3 className="text-base font-semibold text-foreground">{perspective.label}</h3>
@@ -34,7 +51,7 @@ const PerspectiveView = ({ perspective }: { perspective: Perspective }) => (
       </div>
     </div>
 
-    <div className="space-y-3">
+    <div className="space-y-4">
       {perspective.content.map((paragraph, i) => (
         <p key={i} className="text-base text-secondary-foreground leading-relaxed">
           {paragraph}
@@ -43,14 +60,14 @@ const PerspectiveView = ({ perspective }: { perspective: Perspective }) => (
     </div>
 
     {perspective.keyArguments.length > 0 && (
-      <div className="mt-4 pt-4 border-t border-border/50">
-        <p className="text-xs font-medium text-muted-foreground mb-2 uppercase tracking-wider">
+      <div className="mt-6 pt-5 border-t border-border/50">
+        <p className="text-xs font-semibold text-muted-foreground mb-3 uppercase tracking-wider">
           Argumentos clave
         </p>
-        <ul className="space-y-1.5">
+        <ul className="space-y-2">
           {perspective.keyArguments.map((arg, i) => (
-            <li key={i} className="flex items-start gap-2 text-sm text-secondary-foreground">
-              <span className="text-primary mt-0.5">•</span>
+            <li key={i} className="flex items-start gap-2.5 text-sm text-secondary-foreground">
+              <ChevronRight className="w-4 h-4 text-primary shrink-0 mt-0.5" />
               {arg}
             </li>
           ))}
@@ -64,6 +81,19 @@ const ArticlePage = () => {
   const { id } = useParams<{ id: string }>();
   const { data: article, isLoading } = useArticle(id ?? "");
   const [activeTab, setActiveTab] = useState<string>("body");
+  const [readProgress, setReadProgress] = useState(0);
+
+  // Reading progress bar
+  useEffect(() => {
+    const updateProgress = () => {
+      const el = document.documentElement;
+      const scrolled = el.scrollTop;
+      const height = el.scrollHeight - el.clientHeight;
+      setReadProgress(height > 0 ? Math.min(100, (scrolled / height) * 100) : 0);
+    };
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    return () => window.removeEventListener("scroll", updateProgress);
+  }, []);
 
   if (isLoading) {
     return (
@@ -97,6 +127,15 @@ const ArticlePage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Reading progress bar */}
+      <div className="fixed top-0 left-0 right-0 z-[60] h-0.5 bg-border/20">
+        <motion.div
+          className="h-full bg-primary"
+          style={{ width: `${readProgress}%` }}
+          transition={{ duration: 0.1 }}
+        />
+      </div>
+
       <Navbar />
 
       <div className="max-w-3xl mx-auto px-6 py-8">
@@ -125,6 +164,12 @@ const ArticlePage = () => {
                 {tag}
               </span>
             ))}
+            {hasPerspectives && (
+              <span className="flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full bg-primary/10 text-primary">
+                <Layers className="w-3 h-3" />
+                {article.perspectives!.length} perspectivas
+              </span>
+            )}
             {article.access_level !== "free" && (
               <span className="flex items-center gap-1 text-xs text-amber-500 ml-auto">
                 <Lock className="w-3 h-3" />
@@ -143,7 +188,7 @@ const ArticlePage = () => {
             {article.journalist_name && (
               <span className="flex items-center gap-1.5">
                 <User className="w-3.5 h-3.5" />
-                {article.journalist_name}
+                <span className="font-medium text-foreground">{article.journalist_name}</span>
               </span>
             )}
             <span>
@@ -158,34 +203,44 @@ const ArticlePage = () => {
               <Clock className="w-3.5 h-3.5" />
               {article.read_time} min de lectura
             </span>
+            {readProgress > 5 && (
+              <span className="ml-auto text-xs text-primary font-medium">
+                {Math.round(readProgress)}% leído
+              </span>
+            )}
           </div>
 
-          {/* Tabs: solo si hay perspectivas */}
+          {/* Perspective tabs */}
           {hasPerspectives && (
-            <div className="flex gap-1 overflow-x-auto pb-2 mb-6 scrollbar-none">
-              <button
-                onClick={() => setActiveTab("body")}
-                className={`flex-shrink-0 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  activeTab === "body"
-                    ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground hover:bg-secondary"
-                }`}
-              >
-                📰 Artículo
-              </button>
-              {article.perspectives!.map((p) => (
+            <div className="mb-6">
+              <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2 font-medium">
+                Elegí cómo leerlo
+              </p>
+              <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none flex-wrap">
                 <button
-                  key={p.id}
-                  onClick={() => setActiveTab(p.id)}
-                  className={`flex-shrink-0 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    activeTab === p.id
+                  onClick={() => setActiveTab("body")}
+                  className={`flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-medium transition-all ${
+                    activeTab === "body"
                       ? "bg-primary text-primary-foreground"
                       : "text-muted-foreground hover:text-foreground hover:bg-secondary"
                   }`}
                 >
-                  {p.icon} {p.label}
+                  📰 Artículo original
                 </button>
-              ))}
+                {article.perspectives!.map((p, i) => (
+                  <button
+                    key={p.id}
+                    onClick={() => setActiveTab(p.id)}
+                    className={`flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-medium transition-all ${
+                      activeTab === p.id
+                        ? perspectiveTabActive[i % perspectiveTabActive.length]
+                        : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+                    }`}
+                  >
+                    {p.icon} {p.label}
+                  </button>
+                ))}
+              </div>
             </div>
           )}
 
@@ -211,15 +266,48 @@ const ArticlePage = () => {
                 <AnimatePresence mode="wait">
                   {article.perspectives!
                     .filter((p) => p.id === activeTab)
-                    .map((p) => (
-                      <PerspectiveView key={p.id} perspective={p} />
+                    .map((p, i) => (
+                      <PerspectiveView
+                        key={p.id}
+                        perspective={p}
+                        accentClass={perspectiveAccents[i % perspectiveAccents.length]}
+                      />
                     ))}
                 </AnimatePresence>
               )}
             </AnimatePresence>
           </div>
 
-          {/* Footer */}
+          {/* Compare perspectives CTA */}
+          {hasPerspectives && activeTab !== "body" && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="mt-10 grid grid-cols-1 gap-2"
+            >
+              <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2 font-medium">
+                Otras perspectivas
+              </p>
+              {article.perspectives!
+                .filter((p) => p.id !== activeTab)
+                .map((p, i) => (
+                  <button
+                    key={p.id}
+                    onClick={() => setActiveTab(p.id)}
+                    className="flex items-center gap-3 p-3.5 bg-secondary/30 hover:bg-secondary/50 border border-border/50 rounded-xl text-left transition-colors group"
+                  >
+                    <span className="text-lg">{p.icon}</span>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-foreground">{p.label}</p>
+                      <p className="text-xs text-muted-foreground truncate">{p.tone}</p>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                  </button>
+                ))}
+            </motion.div>
+          )}
+
+          {/* No perspectives yet */}
           {!hasPerspectives && (
             <div className="mt-10 bg-primary/5 border border-dashed border-primary/30 rounded-xl p-4 flex items-center gap-3">
               <Sparkles className="w-4 h-4 text-primary shrink-0" />

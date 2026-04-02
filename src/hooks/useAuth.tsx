@@ -168,6 +168,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 export const useAuth = () => {
   const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error("useAuth must be used within AuthProvider");
+  if (!ctx) {
+    // During HMR or initial render, return safe defaults instead of throwing
+    return {
+      user: null,
+      session: null,
+      loading: true,
+      role: null,
+      roles: [],
+      activeMode: "reader" as ActiveMode,
+      switchMode: () => {},
+      journalistProfileComplete: false,
+      journalistProfile: null,
+      refreshRoles: async () => {},
+      signUp: async () => {},
+      signIn: async () => {},
+      signOut: async () => {},
+    } as AuthContextType;
+  }
   return ctx;
 };

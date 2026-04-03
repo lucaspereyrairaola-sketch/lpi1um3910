@@ -11,8 +11,8 @@ export function useBookmarks() {
     queryKey: ["bookmarks", user?.id],
     enabled: !!user,
     queryFn: async () => {
-      const { data } = await supabase
-        .from("saved_articles")
+      const { data } = await (supabase
+        .from("saved_articles") as any)
         .select("article_id")
         .eq("user_id", user!.id);
       return (data ?? []).map((r: { article_id: string }) => r.article_id);
@@ -22,14 +22,14 @@ export function useBookmarks() {
   const toggle = useMutation({
     mutationFn: async (articleId: string) => {
       if (savedIds.includes(articleId)) {
-        await supabase
-          .from("saved_articles")
+        await (supabase
+          .from("saved_articles") as any)
           .delete()
           .eq("user_id", user!.id)
           .eq("article_id", articleId);
       } else {
-        await supabase
-          .from("saved_articles")
+        await (supabase
+          .from("saved_articles") as any)
           .insert({ user_id: user!.id, article_id: articleId });
       }
     },
@@ -54,8 +54,8 @@ export function useSavedArticles() {
     queryKey: ["saved-articles", user?.id],
     enabled: !!user,
     queryFn: async () => {
-      const { data } = await supabase
-        .from("saved_articles")
+      const { data } = await (supabase
+        .from("saved_articles") as any)
         .select("article_id, saved_at, articles(*)")
         .eq("user_id", user!.id)
         .order("saved_at", { ascending: false });

@@ -9,8 +9,8 @@ export function usePerspectivePoll(articleId: string) {
   const { data: results = {} } = useQuery({
     queryKey: ["poll-results", articleId],
     queryFn: async () => {
-      const { data } = await supabase
-        .from("perspective_polls")
+      const { data } = await (supabase
+        .from("perspective_polls") as any)
         .select("chosen_perspective")
         .eq("article_id", articleId);
       const map: Record<string, number> = {};
@@ -25,8 +25,8 @@ export function usePerspectivePoll(articleId: string) {
     queryKey: ["my-poll", articleId, user?.id],
     enabled: !!user,
     queryFn: async () => {
-      const { data } = await supabase
-        .from("perspective_polls")
+      const { data } = await (supabase
+        .from("perspective_polls") as any)
         .select("chosen_perspective")
         .eq("article_id", articleId)
         .eq("user_id", user!.id)
@@ -38,8 +38,8 @@ export function usePerspectivePoll(articleId: string) {
   const choose = useMutation({
     mutationFn: async (perspectiveId: string) => {
       if (!user) return;
-      await supabase
-        .from("perspective_polls")
+      await (supabase
+        .from("perspective_polls") as any)
         .upsert({ user_id: user.id, article_id: articleId, chosen_perspective: perspectiveId },
           { onConflict: "user_id,article_id" });
     },

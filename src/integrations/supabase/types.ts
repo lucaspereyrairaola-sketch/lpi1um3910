@@ -196,6 +196,73 @@ export type Database = {
           },
         ]
       }
+      perspective_polls: {
+        Row: {
+          article_id: string
+          chosen_perspective: string
+          created_at: string | null
+          id: string
+          user_id: string
+        }
+        Insert: {
+          article_id: string
+          chosen_perspective: string
+          created_at?: string | null
+          id?: string
+          user_id: string
+        }
+        Update: {
+          article_id?: string
+          chosen_perspective?: string
+          created_at?: string | null
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "perspective_polls_article_id_fkey"
+            columns: ["article_id"]
+            isOneToOne: false
+            referencedRelation: "articles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      perspective_votes: {
+        Row: {
+          article_id: string
+          created_at: string | null
+          id: string
+          perspective_id: string
+          user_id: string
+          vote: number
+        }
+        Insert: {
+          article_id: string
+          created_at?: string | null
+          id?: string
+          perspective_id: string
+          user_id: string
+          vote: number
+        }
+        Update: {
+          article_id?: string
+          created_at?: string | null
+          id?: string
+          perspective_id?: string
+          user_id?: string
+          vote?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "perspective_votes_article_id_fkey"
+            columns: ["article_id"]
+            isOneToOne: false
+            referencedRelation: "articles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -296,6 +363,35 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "reading_sessions_article_id_fkey"
+            columns: ["article_id"]
+            isOneToOne: false
+            referencedRelation: "articles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      saved_articles: {
+        Row: {
+          article_id: string
+          id: string
+          saved_at: string
+          user_id: string
+        }
+        Insert: {
+          article_id: string
+          id?: string
+          saved_at?: string
+          user_id: string
+        }
+        Update: {
+          article_id?: string
+          id?: string
+          saved_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "saved_articles_article_id_fkey"
             columns: ["article_id"]
             isOneToOne: false
             referencedRelation: "articles"

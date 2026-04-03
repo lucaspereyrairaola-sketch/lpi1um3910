@@ -3,8 +3,28 @@ import { useParams, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import { useArticle } from "@/hooks/useArticles";
+import { useAuth } from "@/hooks/useAuth";
 import type { Perspective } from "@/types/article";
-import { ArrowLeft, Clock, User, Lock, Sparkles, Layers, ChevronRight } from "lucide-react";
+import { ArrowLeft, Clock, User, Lock, Sparkles, Layers, ChevronRight, Zap, BookMarked, Library, PenSquare } from "lucide-react";
+
+// ─── Selector de tiempo de lectura ───────────────────────
+type ReadMode = "2" | "5" | "10" | "full";
+
+const READ_MODES: { id: ReadMode; label: string; icon: React.ReactNode; desc: string }[] = [
+  { id: "2",    label: "2 min",    icon: <Zap className="w-3.5 h-3.5" />,        desc: "Lo esencial" },
+  { id: "5",    label: "5 min",    icon: <Clock className="w-3.5 h-3.5" />,      desc: "Resumen" },
+  { id: "10",   label: "10 min",   icon: <BookMarked className="w-3.5 h-3.5" />, desc: "Análisis" },
+  { id: "full", label: "Completo", icon: <Library className="w-3.5 h-3.5" />,    desc: "Todo" },
+];
+
+function adaptPerspective(p: Perspective, mode: ReadMode): Perspective {
+  switch (mode) {
+    case "2":  return { ...p, content: [],                  keyArguments: p.keyArguments.slice(0, 2) };
+    case "5":  return { ...p, content: p.content.slice(0,1), keyArguments: p.keyArguments.slice(0, 3) };
+    case "10": return { ...p, content: p.content.slice(0,2), keyArguments: p.keyArguments };
+    default:   return p;
+  }
+}
 
 const tagColorMap: Record<string, string> = {
   política: "bg-tag-politics/15 text-tag-politics",
@@ -82,6 +102,8 @@ const ArticlePage = () => {
   const { data: article, isLoading } = useArticle(id ?? "");
   const [activeTab, setActiveTab] = useState<string>("body");
   const [readProgress, setReadProgress] = useState(0);
+  const [readMode, setReadMode] = useState<ReadMode>("5");
+  const { roles } = useAuth();
 
   // Reading progress bar
   useEffect(() => {
@@ -210,11 +232,37 @@ const ArticlePage = () => {
             )}
           </div>
 
+          {/* Selector de tiempo de lectura */}
+          <div className="mb-5">
+            <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2 font-medium">
+              ¿Cuánto tiempo tenés?
+            </p>
+            <div className="flex gap-2 flex-wrap">
+              {READ_MODES.map((m) => (
+                <button
+                  key={m.id}
+                  onClick={() => setReadMode(m.id)}
+                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-medium transition-all border ${
+                    readMode === m.id
+                      ? "bg-primary text-primary-foreground border-primary"
+                      : "border-border/50 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                  }`}
+                >
+                  {m.icon}
+                  {m.label}
+                  <span className={`text-[10px] ${readMode === m.id ? "text-primary-foreground/70" : "text-muted-foreground"}`}>
+                    · {m.desc}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* Perspective tabs */}
           {hasPerspectives && (
             <div className="mb-6">
               <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2 font-medium">
-                Elegí cómo leerlo
+                Elegí el enfoque
               </p>
               <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none flex-wrap">
                 <button
@@ -225,7 +273,7 @@ const ArticlePage = () => {
                       : "text-muted-foreground hover:text-foreground hover:bg-secondary"
                   }`}
                 >
-                  📰 Artículo original
+                  📰 Original
                 </button>
                 {article.perspectives!.map((p, i) => (
                   <button
@@ -268,8 +316,8 @@ const ArticlePage = () => {
                     .filter((p) => p.id === activeTab)
                     .map((p, i) => (
                       <PerspectiveView
-                        key={p.id}
-                        perspective={p}
+                        key={`${p.id}-${readMode}`}
+                        perspective={adaptPerspective(p, readMode)}
                         accentClass={perspectiveAccents[i % perspectiveAccents.length]}
                       />
                     ))}
@@ -309,11 +357,25 @@ const ArticlePage = () => {
 
           {/* No perspectives yet */}
           {!hasPerspectives && (
-            <div className="mt-10 bg-primary/5 border border-dashed border-primary/30 rounded-xl p-4 flex items-center gap-3">
-              <Sparkles className="w-4 h-4 text-primary shrink-0" />
-              <p className="text-xs text-muted-foreground">
-                Las perspectivas múltiples con IA estarán disponibles cuando el periodista las genere desde el editor.
-              </p>
+            <div className="mt-10 bg-primary/5 border border-dashed border-primary/30 rounded-xl p-5 flex items-start gap-4">
+              <Sparkles className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <p className="text-sm font-medium text-foreground mb-1">
+                  Las perspectivas aún no están generadas
+                </p>
+                <p className="text-xs text-muted-foreground mb-3">
+                  El periodista puede generar los enfoques (Político, Económico, Social...) desde el editor con un click.
+                </p>
+                {roles.includes("journalist") && (
+                  <Link
+                    to={`/journalist/editor/${article.id}`}
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:text-primary/80 transition-colors"
+                  >
+                    <PenSquare className="w-3.5 h-3.5" />
+                    Ir al editor y generar perspectivas
+                  </Link>
+                )}
+              </div>
             </div>
           )}
         </motion.article>

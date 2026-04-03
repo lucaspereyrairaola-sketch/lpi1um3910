@@ -10,11 +10,12 @@ import { useSavedArticles } from "@/hooks/useBookmarks";
 import type { ArticleFeed } from "@/types/article";
 import {
   Clock, User, Layers, Lock, Settings,
-  Sparkles, Hash, Users, AlarmClock, PenTool, Bookmark,
+  Sparkles, Hash, Users, AlarmClock, PenTool, Bookmark, History,
 } from "lucide-react";
+import { useReadingHistory } from "@/hooks/useReadingHistory";
 
 // ─── Types ────────────────────────────────────────────────
-type Section   = "foryou" | "topics" | "authors" | "recent" | "saved";
+type Section   = "foryou" | "topics" | "authors" | "recent" | "saved" | "history";
 type DepthLevel = "minimal" | "brief" | "full";
 
 const SECTIONS: { id: Section; label: string; icon: React.ReactNode }[] = [
@@ -23,6 +24,7 @@ const SECTIONS: { id: Section; label: string; icon: React.ReactNode }[] = [
   { id: "authors", label: "Autores",   icon: <Users className="w-3.5 h-3.5" /> },
   { id: "recent",  label: "Recientes", icon: <AlarmClock className="w-3.5 h-3.5" /> },
   { id: "saved",   label: "Guardados", icon: <Bookmark className="w-3.5 h-3.5" /> },
+  { id: "history", label: "Historial", icon: <History className="w-3.5 h-3.5" /> },
 ];
 
 // ─── Depth config ─────────────────────────────────────────
@@ -737,6 +739,48 @@ function DailyBrief({ articles, mockEvts }: { articles: ArticleFeed[]; mockEvts:
   );
 }
 
+// ─── Section: Historial ───────────────────────────────────
+function HistorySection() {
+  const { history } = useReadingHistory();
+
+  if (history.length === 0) {
+    return (
+      <div className="text-center py-16 space-y-2">
+        <History className="w-8 h-8 text-muted-foreground/40 mx-auto" />
+        <p className="text-sm text-muted-foreground">Todavía no leíste artículos.</p>
+        <p className="text-xs text-muted-foreground">Tu historial aparece acá automáticamente.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-2">
+      {history.map((a: any, i: number) => (
+        <motion.div key={a.id} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}>
+          <Link to={`/article/${a.id}`} className="block group">
+            <div className="flex items-center gap-4 px-4 py-3.5 bg-[hsl(var(--surface))] hover:bg-[hsl(var(--surface-hover))] border border-border/50 hover:border-primary/30 rounded-xl transition-all">
+              <div className="flex-1 min-w-0">
+                <div className="flex gap-1.5 mb-1 flex-wrap">
+                  {(a.tags ?? []).slice(0, 2).map((t: string) => <TagBadge key={t} tag={t} />)}
+                </div>
+                <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors line-clamp-2">{a.title}</p>
+                {/* Progress bar */}
+                <div className="mt-2 h-1 bg-secondary/40 rounded-full overflow-hidden w-24">
+                  <div className="h-full bg-primary rounded-full transition-all" style={{ width: `${a.progress}%` }} />
+                </div>
+              </div>
+              <div className="shrink-0 flex flex-col items-end gap-1">
+                <span className="text-[10px] text-muted-foreground flex items-center gap-1"><Clock className="w-3 h-3" />{a.read_time} min</span>
+                <span className="text-[10px] text-primary font-medium">{a.progress}% leído</span>
+              </div>
+            </div>
+          </Link>
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
 // ─── Empty state ──────────────────────────────────────────
 function EmptyState({ message }: { message: string }) {
   return (
@@ -919,6 +963,9 @@ const Index = () => {
 
               {/* Guardados */}
               {activeSection === "saved" && <SavedSection />}
+
+              {/* Historial */}
+              {activeSection === "history" && <HistorySection />}
             </motion.div>
           </AnimatePresence>
         )}

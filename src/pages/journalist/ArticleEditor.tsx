@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import {
   ArrowLeft, Save, Send, Trash2, Sparkles, ChevronDown, ChevronUp,
   Eye, EyeOff, Clock, BarChart2, AlertCircle, CheckCircle2, Tag,
-  DollarSign, Layers, FileText,
+  DollarSign, Layers, FileText, SplitSquareHorizontal,
 } from "lucide-react";
 
 const AVAILABLE_TAGS = [

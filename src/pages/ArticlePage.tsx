@@ -10,6 +10,7 @@ import CompareNarratives from "@/components/CompareNarratives";
 import { useBookmarks } from "@/hooks/useBookmarks";
 import { usePerspectiveVotes } from "@/hooks/usePerspectiveVotes";
 import { ContextualBody } from "@/components/ContextTooltip";
+import { useReadingHistory } from "@/hooks/useReadingHistory";
 
 // ─── Selector de tiempo de lectura ───────────────────────
 type ReadMode = "2" | "5" | "10" | "full";
@@ -113,6 +114,7 @@ const ArticlePage = () => {
   const { roles } = useAuth();
   const { isSaved, toggle: toggleBookmark } = useBookmarks();
   const { counts, myVotes, vote: votePerspective } = usePerspectiveVotes(article?.id ?? "");
+  const { trackProgress } = useReadingHistory();
 
   // Reading progress bar
   useEffect(() => {
@@ -121,10 +123,13 @@ const ArticlePage = () => {
       const scrolled = el.scrollTop;
       const height = el.scrollHeight - el.clientHeight;
       setReadProgress(height > 0 ? Math.min(100, (scrolled / height) * 100) : 0);
+      if (id && height > 0) {
+        trackProgress.mutate({ articleId: id, progress: Math.min(100, Math.round((scrolled / height) * 100)) });
+      }
     };
     window.addEventListener("scroll", updateProgress, { passive: true });
     return () => window.removeEventListener("scroll", updateProgress);
-  }, []);
+  }, [id, trackProgress]);
 
   // Read perspective from URL on mount
   useEffect(() => {

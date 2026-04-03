@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
-import { Plus, FileText, Eye, DollarSign, TrendingUp, Clock, BarChart3, PenTool, Send, Archive } from "lucide-react";
+import { Plus, FileText, Eye, DollarSign, TrendingUp, Clock, BarChart3, PenTool, Send, Archive, ThumbsUp, Bookmark, Star } from "lucide-react";
+import { useJournalistMetrics } from "@/hooks/useJournalistMetrics";
 
 interface Article {
   id: string;
@@ -25,6 +26,7 @@ interface Stats {
 
 const Dashboard = () => {
   const { user } = useAuth();
+  const { data: metrics } = useJournalistMetrics();
   const [articles, setArticles] = useState<Article[]>([]);
   const [stats, setStats] = useState<Stats>({ totalArticles: 0, totalReads: 0, totalEarnings: 0, published: 0, drafts: 0 });
   const [loading, setLoading] = useState(true);
@@ -95,6 +97,32 @@ const Dashboard = () => {
               Nuevo Artículo
             </Link>
           </div>
+
+          {/* Engagement metrics */}
+          {metrics && (
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+              {[
+                { label: "Artículos", value: metrics.totalArticles, icon: <FileText className="w-4 h-4" /> },
+                { label: "Votos positivos", value: metrics.totalVotes, icon: <ThumbsUp className="w-4 h-4" /> },
+                { label: "Guardados", value: metrics.totalSaved, icon: <Bookmark className="w-4 h-4" /> },
+                { label: "Perspectiva top", value: metrics.topPerspective ?? "—", icon: <Star className="w-4 h-4" /> },
+              ].map((stat, i) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.07 }}
+                  className="bg-[hsl(var(--surface))] border border-border/50 rounded-xl p-4"
+                >
+                  <div className="flex items-center gap-2 text-muted-foreground mb-2">
+                    {stat.icon}
+                    <span className="text-xs">{stat.label}</span>
+                  </div>
+                  <p className="text-2xl font-bold text-foreground capitalize">{stat.value}</p>
+                </motion.div>
+              ))}
+            </div>
+          )}
 
           {/* Stats */}
           <div className="grid grid-cols-5 gap-4 mb-8">

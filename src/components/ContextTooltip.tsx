@@ -27,8 +27,12 @@ interface ContextTooltipProps {
 
 function highlightTerms(text: string, onTermClick: (term: string) => void): React.ReactNode[] {
   const terms = Object.keys(GLOSSARY);
-  // Build regex that matches any term (case insensitive)
-  const pattern = new RegExp(`\\b(${terms.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})\\b`, 'gi');
+  // Use Unicode-aware boundaries — \b doesn't work with Spanish accented chars
+  const escaped = terms.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const pattern = new RegExp(
+    `(?<![\\wáéíóúüñÁÉÍÓÚÜÑ])(${escaped.join('|')})(?![\\wáéíóúüñÁÉÍÓÚÜÑ])`,
+    'gi'
+  );
 
   const parts: React.ReactNode[] = [];
   let lastIndex = 0;

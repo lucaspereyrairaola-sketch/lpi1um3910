@@ -9,7 +9,6 @@ import { ArrowLeft, Clock, User, Lock, Sparkles, Layers, ChevronRight, Zap, Book
 import CompareNarratives from "@/components/CompareNarratives";
 import { useBookmarks } from "@/hooks/useBookmarks";
 import { usePerspectiveVotes } from "@/hooks/usePerspectiveVotes";
-import { usePerspectivePoll } from "@/hooks/usePerspectivePoll";
 import { ContextualBody } from "@/components/ContextTooltip";
 
 // ─── Selector de tiempo de lectura ───────────────────────
@@ -114,7 +113,6 @@ const ArticlePage = () => {
   const { roles } = useAuth();
   const { isSaved, toggle: toggleBookmark } = useBookmarks();
   const { counts, myVotes, vote: votePerspective } = usePerspectiveVotes(article?.id ?? "");
-  const { results: pollResults, myChoice, choose, total: pollTotal } = usePerspectivePoll(article?.id ?? "");
 
   // Reading progress bar
   useEffect(() => {
@@ -460,56 +458,6 @@ const ArticlePage = () => {
                     <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
                   </button>
                 ))}
-            </motion.div>
-          )}
-
-          {/* Poll — ¿Desde qué perspectiva ves este tema? */}
-          {hasPerspectives && !compareMode && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="mt-10 border border-border/40 rounded-2xl p-5 space-y-4"
-            >
-              <div>
-                <p className="text-sm font-semibold text-foreground">¿Desde qué perspectiva ves este tema?</p>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  {myChoice ? `Votaste: ${article.perspectives!.find(p => p.id === myChoice)?.label ?? myChoice}` : "Elegí una para ver cómo piensan otros lectores"}
-                </p>
-              </div>
-              <div className="space-y-2">
-                {article.perspectives!.map((p) => {
-                  const count = pollResults[p.id] ?? 0;
-                  const pct = pollTotal > 0 ? Math.round((count / pollTotal) * 100) : 0;
-                  const isChosen = myChoice === p.id;
-                  return (
-                    <button
-                      key={p.id}
-                      onClick={() => choose.mutate(p.id)}
-                      className={`w-full text-left rounded-xl border transition-all overflow-hidden ${
-                        isChosen ? "border-primary" : "border-border/50 hover:border-primary/40"
-                      }`}
-                    >
-                      <div className="flex items-center gap-3 px-4 py-2.5 relative">
-                        {/* Background bar */}
-                        {myChoice && (
-                          <div
-                            className={`absolute inset-0 transition-all duration-500 ${isChosen ? "bg-primary/10" : "bg-secondary/30"}`}
-                            style={{ width: `${pct}%` }}
-                          />
-                        )}
-                        <span className="relative z-10 text-base">{p.icon}</span>
-                        <span className={`relative z-10 text-sm font-medium flex-1 ${isChosen ? "text-primary" : "text-foreground"}`}>{p.label}</span>
-                        {myChoice && (
-                          <span className="relative z-10 text-xs text-muted-foreground font-medium">{pct}%</span>
-                        )}
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-              {myChoice && pollTotal > 0 && (
-                <p className="text-[10px] text-muted-foreground text-center">{pollTotal} {pollTotal === 1 ? "lector votó" : "lectores votaron"}</p>
-              )}
             </motion.div>
           )}
 

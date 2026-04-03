@@ -6,8 +6,31 @@ import PerspectivePanel from "@/components/PerspectivePanel";
 import CompareNarratives from "@/components/CompareNarratives";
 import JournalistCard from "@/components/JournalistCard";
 import { mockEvents } from "@/data/mockEvents";
-import { ArrowLeft, Clock, GitCompare, BookOpen } from "lucide-react";
-import type { Tag } from "@/data/mockEvents";
+import { ArrowLeft, Clock, GitCompare, BookOpen, Zap, BookMarked, Library } from "lucide-react";
+import type { Tag, Perspective } from "@/data/mockEvents";
+
+// ─── Lectura adaptativa ───────────────────────────────────
+type ReadTime = "2" | "5" | "10" | "full";
+
+const READ_MODES: { id: ReadTime; label: string; icon: React.ReactNode; desc: string }[] = [
+  { id: "2",    label: "2 min",    icon: <Zap className="w-3.5 h-3.5" />,        desc: "Lo esencial" },
+  { id: "5",    label: "5 min",    icon: <Clock className="w-3.5 h-3.5" />,      desc: "Resumen" },
+  { id: "10",   label: "10 min",   icon: <BookMarked className="w-3.5 h-3.5" />, desc: "Análisis" },
+  { id: "full", label: "Completo", icon: <Library className="w-3.5 h-3.5" />,    desc: "Todo" },
+];
+
+function adaptedPerspective(p: Perspective, mode: ReadTime): Perspective {
+  switch (mode) {
+    case "2":
+      return { ...p, content: [], keyArguments: p.keyArguments.slice(0, 2) };
+    case "5":
+      return { ...p, content: p.content.slice(0, 1), keyArguments: p.keyArguments.slice(0, 3) };
+    case "10":
+      return { ...p, content: p.content.slice(0, 2), keyArguments: p.keyArguments };
+    default:
+      return p;
+  }
+}
 
 const tagColorMap: Record<Tag, string> = {
   "Política": "bg-tag-politics/15 text-tag-politics",
@@ -22,6 +45,7 @@ const EventPage = () => {
   const event = mockEvents.find((e) => e.id === id);
   const [activeTab, setActiveTab] = useState<string>("summary");
   const [compareMode, setCompareMode] = useState(false);
+  const [readMode, setReadMode] = useState<ReadTime>("5");
 
   if (!event) {
     return (
@@ -98,8 +122,34 @@ const EventPage = () => {
           </span>
         </motion.div>
 
+        {/* ── Selector de tiempo de lectura ── */}
+        <div className="mt-8 mb-2">
+          <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2 font-medium">
+            ¿Cuánto tiempo tenés?
+          </p>
+          <div className="flex gap-2 flex-wrap">
+            {READ_MODES.map((m) => (
+              <button
+                key={m.id}
+                onClick={() => setReadMode(m.id)}
+                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-medium transition-all border ${
+                  readMode === m.id
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : "border-border/50 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                }`}
+              >
+                {m.icon}
+                {m.label}
+                <span className={`text-[10px] ${readMode === m.id ? "text-primary-foreground/70" : "text-muted-foreground"}`}>
+                  · {m.desc}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* Mode toggle */}
-        <div className="flex items-center gap-3 mt-8 mb-6">
+        <div className="flex items-center gap-3 mt-6 mb-6">
           <button
             onClick={() => setCompareMode(false)}
             className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
@@ -198,8 +248,8 @@ const EventPage = () => {
                     </motion.div>
                   ) : activePerspective ? (
                     <PerspectivePanel
-                      key={activePerspective.id}
-                      perspective={activePerspective}
+                      key={`${activePerspective.id}-${readMode}`}
+                      perspective={adaptedPerspective(activePerspective, readMode)}
                     />
                   ) : null}
                 </AnimatePresence>

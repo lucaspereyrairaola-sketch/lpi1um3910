@@ -507,6 +507,152 @@ function RecentSection({ articles }: { articles: ArticleFeed[] }) {
   );
 }
 
+// ─── Mock sections (fallback cuando no hay artículos reales) ──
+function MockTopicsSection() {
+  const [activeTopic, setActiveTopic] = useState<string | null>(null);
+  const allTags = [...new Set(mockEvents.flatMap((e) => e.tags))];
+  const filtered = activeTopic
+    ? mockEvents.filter((e) => e.tags.includes(activeTopic as never))
+    : [];
+
+  return (
+    <div className="space-y-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+        {allTags.map((tag, i) => {
+          const count = mockEvents.filter((e) => e.tags.includes(tag)).length;
+          const active = activeTopic === tag;
+          return (
+            <motion.button
+              key={tag}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.05 }}
+              onClick={() => setActiveTopic(active ? null : tag)}
+              className={`flex items-center gap-3 p-4 rounded-xl border text-left transition-all ${
+                active
+                  ? "border-primary bg-primary/10"
+                  : "border-border/50 bg-[hsl(var(--surface))] hover:bg-[hsl(var(--surface-hover))] hover:border-primary/30"
+              }`}
+            >
+              <span className="text-2xl">{TOPIC_ICONS[tag.toLowerCase()] ?? "📰"}</span>
+              <div>
+                <p className="text-sm font-semibold text-foreground capitalize">{tag}</p>
+                <p className="text-[10px] text-muted-foreground">{count} evento{count !== 1 ? "s" : ""}</p>
+              </div>
+            </motion.button>
+          );
+        })}
+      </div>
+      <AnimatePresence mode="wait">
+        {activeTopic && (
+          <motion.div key={activeTopic} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+            <div className="flex items-center gap-2 mb-4">
+              <span className="text-lg">{TOPIC_ICONS[activeTopic.toLowerCase()] ?? "📰"}</span>
+              <h2 className="text-base font-semibold text-foreground">{activeTopic}</h2>
+            </div>
+            <div className="space-y-3">
+              {filtered.map((e, i) => <EventCard key={e.id} event={e} index={i} />)}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      {!activeTopic && <p className="text-xs text-muted-foreground text-center py-4">Seleccioná un tema para ver sus eventos</p>}
+    </div>
+  );
+}
+
+function MockAuthorsSection() {
+  const [activeAuthor, setActiveAuthor] = useState<string | null>(null);
+  const authors = [...new Map(
+    mockEvents.flatMap((e) => e.journalists).map((j) => [j.id, j])
+  ).values()];
+  const filtered = activeAuthor
+    ? mockEvents.filter((e) => e.journalists.some((j) => j.id === activeAuthor))
+    : [];
+
+  return (
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {authors.map((author, i) => {
+          const active = activeAuthor === author.id;
+          const count = mockEvents.filter((e) => e.journalists.some((j) => j.id === author.id)).length;
+          return (
+            <motion.button
+              key={author.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.05 }}
+              onClick={() => setActiveAuthor(active ? null : author.id)}
+              className={`text-left p-5 rounded-xl border transition-all ${
+                active
+                  ? "border-primary bg-primary/10"
+                  : "border-border/50 bg-[hsl(var(--surface))] hover:bg-[hsl(var(--surface-hover))] hover:border-primary/30"
+              }`}
+            >
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
+                  <span className="text-sm font-bold text-primary">
+                    {author.name.split(" ").map((n) => n[0]).slice(0, 2).join("").toUpperCase()}
+                  </span>
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold text-foreground truncate">{author.name}</p>
+                  <p className="text-[10px] text-muted-foreground">{author.specialization} · {count} evento{count !== 1 ? "s" : ""}</p>
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground line-clamp-2">{author.bio}</p>
+            </motion.button>
+          );
+        })}
+      </div>
+      <AnimatePresence mode="wait">
+        {activeAuthor && (
+          <motion.div key={activeAuthor} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+            <div className="flex items-center gap-2 mb-4">
+              <PenTool className="w-4 h-4 text-primary" />
+              <h2 className="text-base font-semibold text-foreground">
+                {authors.find((a) => a.id === activeAuthor)?.name}
+              </h2>
+            </div>
+            <div className="space-y-3">
+              {filtered.map((e, i) => <EventCard key={e.id} event={e} index={i} />)}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      {!activeAuthor && <p className="text-xs text-muted-foreground text-center py-4">Seleccioná un autor para ver sus eventos</p>}
+    </div>
+  );
+}
+
+function MockRecentSection() {
+  const sorted = [...mockEvents].sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
+  const grouped = new Map<string, typeof mockEvents>();
+  sorted.forEach((e) => {
+    const key = new Date(e.date).toLocaleDateString("es-ES", { weekday: "long", day: "numeric", month: "long" });
+    if (!grouped.has(key)) grouped.set(key, []);
+    grouped.get(key)!.push(e);
+  });
+
+  return (
+    <div className="space-y-8">
+      {[...grouped.entries()].map(([dateLabel, events]) => (
+        <div key={dateLabel}>
+          <div className="flex items-center gap-3 mb-3">
+            <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-widest capitalize">{dateLabel}</h2>
+            <div className="flex-1 h-px bg-border/30" />
+          </div>
+          <div className="space-y-3">
+            {events.map((e, i) => <EventCard key={e.id} event={e} index={i} />)}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 // ─── Empty state ──────────────────────────────────────────
 function EmptyState({ message }: { message: string }) {
   return (
@@ -665,21 +811,21 @@ const Index = () => {
               {activeSection === "topics" && (
                 hasArticles
                   ? <TopicsSection articles={allArticles} preferredTopics={preferredTopics} />
-                  : <EmptyState message="No hay artículos todavía." />
+                  : <MockTopicsSection />
               )}
 
               {/* Autores */}
               {activeSection === "authors" && (
                 hasArticles
                   ? <AuthorsSection articles={allArticles} />
-                  : <EmptyState message="No hay autores todavía." />
+                  : <MockAuthorsSection />
               )}
 
               {/* Recientes */}
               {activeSection === "recent" && (
                 hasArticles
                   ? <RecentSection articles={allArticles} />
-                  : <EmptyState message="No hay artículos publicados todavía." />
+                  : <MockRecentSection />
               )}
             </motion.div>
           </AnimatePresence>

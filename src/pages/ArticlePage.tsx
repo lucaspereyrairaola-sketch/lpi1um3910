@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import { useArticle } from "@/hooks/useArticles";
 import { useAuth } from "@/hooks/useAuth";
 import type { Perspective } from "@/types/article";
-import { ArrowLeft, Clock, User, Lock, Sparkles, Layers, ChevronRight, Zap, BookMarked, Library, PenSquare, GitCompare, BookOpen } from "lucide-react";
+import { ArrowLeft, Clock, User, Lock, Sparkles, Layers, ChevronRight, Zap, BookMarked, Library, PenSquare, GitCompare, BookOpen, Bookmark, BookmarkCheck, Share2, Check } from "lucide-react";
 import CompareNarratives from "@/components/CompareNarratives";
+import { useBookmarks } from "@/hooks/useBookmarks";
 
 // ─── Selector de tiempo de lectura ───────────────────────
 type ReadMode = "2" | "5" | "10" | "full";
@@ -100,12 +101,15 @@ const PerspectiveView = ({
 
 const ArticlePage = () => {
   const { id } = useParams<{ id: string }>();
+  const [searchParams] = useSearchParams();
   const { data: article, isLoading } = useArticle(id ?? "");
   const [activeTab, setActiveTab] = useState<string>("body");
   const [readProgress, setReadProgress] = useState(0);
   const [readMode, setReadMode] = useState<ReadMode>("5");
   const [compareMode, setCompareMode] = useState(false);
+  const [copied, setCopied] = useState(false);
   const { roles } = useAuth();
+  const { isSaved, toggle: toggleBookmark } = useBookmarks();
 
   // Reading progress bar
   useEffect(() => {
@@ -118,6 +122,14 @@ const ArticlePage = () => {
     window.addEventListener("scroll", updateProgress, { passive: true });
     return () => window.removeEventListener("scroll", updateProgress);
   }, []);
+
+  // Read perspective from URL on mount
+  useEffect(() => {
+    const perspective = searchParams.get("perspective");
+    if (perspective !== null) {
+      setActiveTab(perspective);
+    }
+  }, [searchParams]);
 
   if (isLoading) {
     return (
@@ -228,10 +240,18 @@ const ArticlePage = () => {
               {article.read_time} min de lectura
             </span>
             {readProgress > 5 && (
-              <span className="ml-auto text-xs text-primary font-medium">
+              <span className="text-xs text-primary font-medium">
                 {Math.round(readProgress)}% leído
               </span>
             )}
+            <button
+              onClick={() => toggleBookmark.mutate(article.id)}
+              className="ml-auto flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors"
+            >
+              {isSaved(article.id)
+                ? <><BookmarkCheck className="w-4 h-4 text-primary" /> Guardado</>
+                : <><Bookmark className="w-4 h-4" /> Guardar</>}
+            </button>
           </div>
 
           {/* Selector de tiempo de lectura */}
@@ -324,6 +344,23 @@ const ArticlePage = () => {
                   </button>
                 ))}
               </div>
+            </div>
+          )}
+
+          {/* Share perspective button */}
+          {activeTab !== "body" && hasPerspectives && !compareMode && (
+            <div className="flex justify-end mb-4">
+              <button
+                onClick={() => {
+                  const url = `${window.location.origin}/article/${article.id}?perspective=${activeTab}`;
+                  navigator.clipboard.writeText(url);
+                  setCopied(true);
+                  setTimeout(() => setCopied(false), 2000);
+                }}
+                className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors border border-border/40 rounded-full px-3 py-1.5"
+              >
+                {copied ? <><Check className="w-3.5 h-3.5 text-green-500" /> Copiado</> : <><Share2 className="w-3.5 h-3.5" /> Compartir esta perspectiva</>}
+              </button>
             </div>
           )}
 

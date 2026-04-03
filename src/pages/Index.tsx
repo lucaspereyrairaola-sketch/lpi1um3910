@@ -6,14 +6,15 @@ import EventCard from "@/components/EventCard";
 import { mockEvents } from "@/data/mockEvents";
 import { useArticles } from "@/hooks/useArticles";
 import { useReaderProfile } from "@/hooks/useReaderProfile";
+import { useSavedArticles } from "@/hooks/useBookmarks";
 import type { ArticleFeed } from "@/types/article";
 import {
   Clock, User, Layers, Lock, Settings,
-  Sparkles, Hash, Users, AlarmClock, PenTool,
+  Sparkles, Hash, Users, AlarmClock, PenTool, Bookmark,
 } from "lucide-react";
 
 // ─── Types ────────────────────────────────────────────────
-type Section   = "foryou" | "topics" | "authors" | "recent";
+type Section   = "foryou" | "topics" | "authors" | "recent" | "saved";
 type DepthLevel = "minimal" | "brief" | "full";
 
 const SECTIONS: { id: Section; label: string; icon: React.ReactNode }[] = [
@@ -21,6 +22,7 @@ const SECTIONS: { id: Section; label: string; icon: React.ReactNode }[] = [
   { id: "topics",  label: "Temas",     icon: <Hash className="w-3.5 h-3.5" /> },
   { id: "authors", label: "Autores",   icon: <Users className="w-3.5 h-3.5" /> },
   { id: "recent",  label: "Recientes", icon: <AlarmClock className="w-3.5 h-3.5" /> },
+  { id: "saved",   label: "Guardados", icon: <Bookmark className="w-3.5 h-3.5" /> },
 ];
 
 // ─── Depth config ─────────────────────────────────────────
@@ -655,6 +657,86 @@ function MockRecentSection() {
   );
 }
 
+// ─── Section: Guardados ───────────────────────────────────
+function SavedSection() {
+  const { data: articles, isLoading } = useSavedArticles();
+
+  if (isLoading) return <div className="space-y-2">{[...Array(3)].map((_, i) => <div key={i} className="h-16 rounded-xl bg-secondary/20 animate-pulse" />)}</div>;
+  if (!articles || articles.length === 0) {
+    return (
+      <div className="text-center py-16 space-y-2">
+        <Bookmark className="w-8 h-8 text-muted-foreground/40 mx-auto" />
+        <p className="text-sm text-muted-foreground">Todavía no guardaste artículos.</p>
+        <p className="text-xs text-muted-foreground">Usá el botón Guardar dentro de cualquier noticia.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-2">
+      {articles.map((a: any, i: number) => (
+        <motion.div key={a.id} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}>
+          <Link to={`/article/${a.id}`} className="block group">
+            <div className="flex items-center gap-4 px-4 py-3.5 bg-[hsl(var(--surface))] hover:bg-[hsl(var(--surface-hover))] border border-border/50 hover:border-primary/30 rounded-xl transition-all">
+              <div className="flex-1 min-w-0">
+                <div className="flex gap-1.5 mb-1 flex-wrap">
+                  {(a.tags ?? []).slice(0, 2).map((t: string) => <TagBadge key={t} tag={t} />)}
+                </div>
+                <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors line-clamp-2">{a.title}</p>
+              </div>
+              <div className="shrink-0 flex flex-col items-end gap-1">
+                <span className="text-[10px] text-muted-foreground flex items-center gap-1"><Clock className="w-3 h-3" />{a.read_time} min</span>
+                <Bookmark className="w-3.5 h-3.5 text-primary fill-primary" />
+              </div>
+            </div>
+          </Link>
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
+// ─── Daily Brief ──────────────────────────────────────────
+function DailyBrief({ articles, mockEvts }: { articles: ArticleFeed[]; mockEvts: typeof mockEvents }) {
+  const today = new Date().toLocaleDateString("es-ES", { weekday: "long", day: "numeric", month: "long" });
+  const [open, setOpen] = useState(true);
+
+  // Get top 3: prefer real articles, fallback to mock events
+  const items = articles.length >= 3
+    ? articles.slice(0, 3).map(a => ({ id: a.id, title: a.title, tags: a.tags, readTime: a.read_time, href: `/article/${a.id}`, summary: a.body.slice(0, 100).replace(/[#*_`]/g, "") + "…" }))
+    : mockEvts.slice(0, 3).map(e => ({ id: e.id, title: e.title, tags: e.tags as string[], readTime: e.readTime, href: `/event/${e.id}`, summary: e.neutralSummary.slice(0, 100) + "…" }));
+
+  if (!open) return null;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -8 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="mb-6 rounded-2xl border border-primary/20 bg-primary/5 p-5"
+    >
+      <div className="flex items-center justify-between mb-3">
+        <div>
+          <p className="text-[10px] uppercase tracking-widest text-primary font-bold">⚡ El Minuto MIDIA</p>
+          <p className="text-xs text-muted-foreground capitalize">{today}</p>
+        </div>
+        <button onClick={() => setOpen(false)} className="text-muted-foreground hover:text-foreground text-xs">✕</button>
+      </div>
+      <div className="space-y-3">
+        {items.map((item, i) => (
+          <Link key={item.id} to={item.href} className="flex items-start gap-3 group">
+            <span className="text-xs font-bold text-primary/50 w-4 shrink-0 mt-0.5">{i + 1}</span>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-snug">{item.title}</p>
+              <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">{item.summary}</p>
+            </div>
+            <span className="text-[10px] text-muted-foreground shrink-0 flex items-center gap-0.5 mt-0.5"><Clock className="w-3 h-3" />{item.readTime}m</span>
+          </Link>
+        ))}
+      </div>
+    </motion.div>
+  );
+}
+
 // ─── Empty state ──────────────────────────────────────────
 function EmptyState({ message }: { message: string }) {
   return (
@@ -732,6 +814,11 @@ const Index = () => {
             Ajustar
           </Link>
         </motion.div>
+
+        {/* ── Daily Brief ── */}
+        {activeSection === "foryou" && !isLoading && (
+          <DailyBrief articles={forYouArticles} mockEvts={mockEvents} />
+        )}
 
         {/* ── Section nav bar (sticky) ── */}
         <motion.div
@@ -829,6 +916,9 @@ const Index = () => {
                   ? <RecentSection articles={allArticles} />
                   : <MockRecentSection />
               )}
+
+              {/* Guardados */}
+              {activeSection === "saved" && <SavedSection />}
             </motion.div>
           </AnimatePresence>
         )}

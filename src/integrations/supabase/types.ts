@@ -338,6 +338,38 @@ export type Database = {
         }
         Relationships: []
       }
+      reading_history: {
+        Row: {
+          article_id: string
+          id: string
+          last_read: string
+          progress: number
+          user_id: string
+        }
+        Insert: {
+          article_id: string
+          id?: string
+          last_read?: string
+          progress?: number
+          user_id: string
+        }
+        Update: {
+          article_id?: string
+          id?: string
+          last_read?: string
+          progress?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reading_history_article_id_fkey"
+            columns: ["article_id"]
+            isOneToOne: false
+            referencedRelation: "articles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       reading_sessions: {
         Row: {
           article_id: string

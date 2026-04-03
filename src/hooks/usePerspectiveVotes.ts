@@ -6,12 +6,11 @@ export function usePerspectiveVotes(articleId: string) {
   const { user } = useAuth();
   const qc = useQueryClient();
 
-  // Get aggregated vote counts for all perspectives in this article
   const { data: counts = {} } = useQuery({
     queryKey: ["perspective-vote-counts", articleId],
     queryFn: async () => {
-      const { data } = await supabase
-        .from("perspective_votes")
+      const { data } = await (supabase
+        .from("perspective_votes") as any)
         .select("perspective_id, vote")
         .eq("article_id", articleId);
       const map: Record<string, { up: number; down: number }> = {};
@@ -24,13 +23,12 @@ export function usePerspectiveVotes(articleId: string) {
     },
   });
 
-  // Get user's own votes
   const { data: myVotes = {} } = useQuery({
     queryKey: ["my-perspective-votes", articleId, user?.id],
     enabled: !!user,
     queryFn: async () => {
-      const { data } = await supabase
-        .from("perspective_votes")
+      const { data } = await (supabase
+        .from("perspective_votes") as any)
         .select("perspective_id, vote")
         .eq("article_id", articleId)
         .eq("user_id", user!.id);
@@ -47,16 +45,15 @@ export function usePerspectiveVotes(articleId: string) {
       if (!user) return;
       const existing = myVotes[perspectiveId];
       if (existing === value) {
-        // Toggle off — remove vote
-        await supabase
-          .from("perspective_votes")
+        await (supabase
+          .from("perspective_votes") as any)
           .delete()
           .eq("user_id", user.id)
           .eq("article_id", articleId)
           .eq("perspective_id", perspectiveId);
       } else {
-        await supabase
-          .from("perspective_votes")
+        await (supabase
+          .from("perspective_votes") as any)
           .upsert({ user_id: user.id, article_id: articleId, perspective_id: perspectiveId, vote: value },
             { onConflict: "user_id,article_id,perspective_id" });
       }

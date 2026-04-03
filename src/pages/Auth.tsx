@@ -5,6 +5,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Layers, Eye, EyeOff, ArrowRight, Newspaper, Globe, Users } from "lucide-react";
+import { lovable } from "@/integrations/lovable/index";
 import newspapersHero from "@/assets/newspapers-hero.jpg";
 import newspapersDetail from "@/assets/newspapers-detail.jpg";
 

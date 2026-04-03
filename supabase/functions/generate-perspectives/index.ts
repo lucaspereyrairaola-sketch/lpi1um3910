@@ -50,9 +50,9 @@ serve(async (req) => {
   }
 
   try {
-    const apiKey = Deno.env.get("ANTHROPIC_API_KEY");
+    const apiKey = Deno.env.get("LOVABLE_API_KEY");
     if (!apiKey) {
-      return new Response(JSON.stringify({ error: "ANTHROPIC_API_KEY no configurada" }), {
+      return new Response(JSON.stringify({ error: "LOVABLE_API_KEY no configurada" }), {
         status: 500,
         headers: { ...CORS, "Content-Type": "application/json" },
       });
@@ -66,42 +66,98 @@ serve(async (req) => {
       });
     }
 
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
+    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
-        "content-type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "claude-haiku-4-5-20251001",
-        max_tokens: 2000,
-        system: SYSTEM_PROMPT,
+        model: "google/gemini-3-flash-preview",
         messages: [
+          { role: "system", content: SYSTEM_PROMPT },
+          { role: "user", content: `Título: ${title}\n\nArtículo:\n${body}` },
+        ],
+        tools: [
           {
-            role: "user",
-            content: `Título: ${title}\n\nArtículo:\n${body}`,
+            type: "function",
+            function: {
+              name: "return_perspectives",
+              description: "Return the 3 perspectives analysis as structured JSON",
+              parameters: {
+                type: "object",
+                properties: {
+                  perspectives: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      properties: {
+                        id: { type: "string" },
+                        label: { type: "string" },
+                        icon: { type: "string" },
+                        tone: { type: "string" },
+                        content: { type: "array", items: { type: "string" } },
+                        keyArguments: { type: "array", items: { type: "string" } },
+                      },
+                      required: ["id", "label", "icon", "tone", "content", "keyArguments"],
+                      additionalProperties: false,
+                    },
+                  },
+                },
+                required: ["perspectives"],
+                additionalProperties: false,
+              },
+            },
           },
         ],
+        tool_choice: { type: "function", function: { name: "return_perspectives" } },
       }),
     });
 
     if (!response.ok) {
       const err = await response.text();
-      throw new Error(`Claude API error: ${err}`);
+      console.error("AI gateway error:", response.status, err);
+      
+      if (response.status === 429) {
+        return new Response(JSON.stringify({ error: "Demasiadas solicitudes, intenta de nuevo en unos momentos." }), {
+          status: 429,
+          headers: { ...CORS, "Content-Type": "application/json" },
+        });
+      }
+      if (response.status === 402) {
+        return new Response(JSON.stringify({ error: "Créditos insuficientes. Agrega fondos en Settings → Cloud & AI balance." }), {
+          status: 402,
+          headers: { ...CORS, "Content-Type": "application/json" },
+        });
+      }
+      
+      throw new Error(`AI gateway error: ${err}`);
     }
 
-    const claudeData = await response.json();
-    const rawText = claudeData.content[0].text.trim();
+    const data = await response.json();
+    
+    // Extract from tool call response
+    const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
+    if (toolCall?.function?.arguments) {
+      const parsed = JSON.parse(toolCall.function.arguments);
+      return new Response(JSON.stringify(parsed), {
+        headers: { ...CORS, "Content-Type": "application/json" },
+      });
+    }
 
-    // Parsear JSON de la respuesta
-    const parsed = JSON.parse(rawText);
+    // Fallback: try parsing content directly
+    const content = data.choices?.[0]?.message?.content;
+    if (content) {
+      const parsed = JSON.parse(content);
+      return new Response(JSON.stringify(parsed), {
+        headers: { ...CORS, "Content-Type": "application/json" },
+      });
+    }
 
-    return new Response(JSON.stringify(parsed), {
-      headers: { ...CORS, "Content-Type": "application/json" },
-    });
+    throw new Error("No valid response from AI");
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err);
+    console.error("generate-perspectives error:", message);
     return new Response(JSON.stringify({ error: message }), {
       status: 500,
       headers: { ...CORS, "Content-Type": "application/json" },

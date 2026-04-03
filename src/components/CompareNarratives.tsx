@@ -5,7 +5,7 @@ import { AlertTriangle, ArrowLeftRight, Eye } from "lucide-react";
 
 interface CompareNarrativesProps {
   perspectives: Perspective[];
-  biasAnalysis: BiasAnalysis;
+  biasAnalysis?: BiasAnalysis;
 }
 
 const CompareNarratives = ({ perspectives, biasAnalysis }: CompareNarrativesProps) => {
@@ -83,55 +83,51 @@ const CompareNarratives = ({ perspectives, biasAnalysis }: CompareNarrativesProp
         )}
       </div>
 
-      {/* Bias Analysis */}
-      <div className="space-y-4 pt-4">
-        <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
-          <Eye className="w-4 h-4 text-primary" />
-          Análisis de Sesgo IA
-        </h4>
+      {/* Bias Analysis — solo si está disponible */}
+      {biasAnalysis && (
+        <div className="space-y-4 pt-4">
+          <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
+            <Eye className="w-4 h-4 text-primary" />
+            Análisis de Sesgo IA
+          </h4>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-secondary/30 border border-border/50 rounded-lg p-4">
-            <h5 className="text-xs font-medium text-primary mb-2 uppercase tracking-wider">
-              Diferencias de Encuadre
-            </h5>
-            <ul className="space-y-2">
-              {biasAnalysis.framingDifferences.map((item, i) => (
-                <li key={i} className="text-xs text-muted-foreground leading-relaxed">
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-secondary/30 border border-border/50 rounded-lg p-4">
+              <h5 className="text-xs font-medium text-primary mb-2 uppercase tracking-wider">
+                Diferencias de Encuadre
+              </h5>
+              <ul className="space-y-2">
+                {biasAnalysis.framingDifferences.map((item, i) => (
+                  <li key={i} className="text-xs text-muted-foreground leading-relaxed">{item}</li>
+                ))}
+              </ul>
+            </div>
 
-          <div className="bg-secondary/30 border border-border/50 rounded-lg p-4">
-            <h5 className="text-xs font-medium text-tag-economy mb-2 uppercase tracking-wider flex items-center gap-1">
-              <AlertTriangle className="w-3 h-3" />
-              Sesgo en Elección de Palabras
-            </h5>
-            <ul className="space-y-2">
-              {biasAnalysis.wordChoiceBias.map((item, i) => (
-                <li key={i} className="text-xs text-muted-foreground leading-relaxed">
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
+            <div className="bg-secondary/30 border border-border/50 rounded-lg p-4">
+              <h5 className="text-xs font-medium text-tag-economy mb-2 uppercase tracking-wider flex items-center gap-1">
+                <AlertTriangle className="w-3 h-3" />
+                Sesgo en Palabras
+              </h5>
+              <ul className="space-y-2">
+                {biasAnalysis.wordChoiceBias.map((item, i) => (
+                  <li key={i} className="text-xs text-muted-foreground leading-relaxed">{item}</li>
+                ))}
+              </ul>
+            </div>
 
-          <div className="bg-secondary/30 border border-border/50 rounded-lg p-4">
-            <h5 className="text-xs font-medium text-tag-social mb-2 uppercase tracking-wider">
-              Elementos Omitidos
-            </h5>
-            <ul className="space-y-2">
-              {biasAnalysis.omittedElements.map((item, i) => (
-                <li key={i} className="text-xs text-muted-foreground leading-relaxed">
-                  {item}
-                </li>
-              ))}
-            </ul>
+            <div className="bg-secondary/30 border border-border/50 rounded-lg p-4">
+              <h5 className="text-xs font-medium text-tag-social mb-2 uppercase tracking-wider">
+                Elementos Omitidos
+              </h5>
+              <ul className="space-y-2">
+                {biasAnalysis.omittedElements.map((item, i) => (
+                  <li key={i} className="text-xs text-muted-foreground leading-relaxed">{item}</li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </motion.div>
   );
 };

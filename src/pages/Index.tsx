@@ -234,9 +234,11 @@ function ForYouSection({ articles, depth, isPriority }: { articles: ArticleFeed[
 
 // ─── Section: Temas ───────────────────────────────────────
 const TOPIC_ICONS: Record<string, string> = {
-  política: "🏛️", economía: "📊", deportes: "⚽", cultura: "🎭",
+  política: "🏛️", economía: "📊", deportes: "⚽", deporte: "⚽",
+  cultura: "🎭", cultural: "🎭", chimentos: "🌟", espectáculos: "🌟",
   tech: "💻", tecnología: "💻", ciencia: "🔬", salud: "🏥",
   internacional: "🌍", "medio-ambiente": "🌱", educación: "📚", social: "🤝",
+  independiente: "🔴", arte: "🎨", música: "🎵", cine: "🎬",
 };
 
 function TopicsSection({ articles, preferredTopics }: { articles: ArticleFeed[]; preferredTopics: string[] }) {

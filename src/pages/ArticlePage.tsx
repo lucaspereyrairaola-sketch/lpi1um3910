@@ -5,7 +5,8 @@ import Navbar from "@/components/Navbar";
 import { useArticle } from "@/hooks/useArticles";
 import { useAuth } from "@/hooks/useAuth";
 import type { Perspective } from "@/types/article";
-import { ArrowLeft, Clock, User, Lock, Sparkles, Layers, ChevronRight, Zap, BookMarked, Library, PenSquare } from "lucide-react";
+import { ArrowLeft, Clock, User, Lock, Sparkles, Layers, ChevronRight, Zap, BookMarked, Library, PenSquare, GitCompare, BookOpen } from "lucide-react";
+import CompareNarratives from "@/components/CompareNarratives";
 
 // ─── Selector de tiempo de lectura ───────────────────────
 type ReadMode = "2" | "5" | "10" | "full";
@@ -103,6 +104,7 @@ const ArticlePage = () => {
   const [activeTab, setActiveTab] = useState<string>("body");
   const [readProgress, setReadProgress] = useState(0);
   const [readMode, setReadMode] = useState<ReadMode>("5");
+  const [compareMode, setCompareMode] = useState(false);
   const { roles } = useAuth();
 
   // Reading progress bar
@@ -258,8 +260,41 @@ const ArticlePage = () => {
             </div>
           </div>
 
-          {/* Perspective tabs */}
+          {/* Perspectivas / Comparar toggle */}
           {hasPerspectives && (
+            <div className="flex items-center gap-2 mb-5">
+              <button
+                onClick={() => setCompareMode(false)}
+                className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  !compareMode ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                }`}
+              >
+                <BookOpen className="w-4 h-4" />
+                Perspectivas
+              </button>
+              <button
+                onClick={() => setCompareMode(true)}
+                className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  compareMode ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                }`}
+              >
+                <GitCompare className="w-4 h-4" />
+                Comparar
+              </button>
+            </div>
+          )}
+
+          {/* Modo Comparar */}
+          {hasPerspectives && compareMode && (
+            <AnimatePresence mode="wait">
+              <motion.div key="compare" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                <CompareNarratives perspectives={article.perspectives!} />
+              </motion.div>
+            </AnimatePresence>
+          )}
+
+          {/* Perspective tabs */}
+          {hasPerspectives && !compareMode && (
             <div className="mb-6">
               <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2 font-medium">
                 Elegí el enfoque
@@ -293,7 +328,7 @@ const ArticlePage = () => {
           )}
 
           {/* Content */}
-          <div className="min-h-[300px]">
+          {!compareMode && <div className="min-h-[300px]">
             <AnimatePresence mode="wait">
               {activeTab === "body" || !hasPerspectives ? (
                 <motion.div
@@ -324,7 +359,7 @@ const ArticlePage = () => {
                 </AnimatePresence>
               )}
             </AnimatePresence>
-          </div>
+          </div>}
 
           {/* Compare perspectives CTA */}
           {hasPerspectives && activeTab !== "body" && (

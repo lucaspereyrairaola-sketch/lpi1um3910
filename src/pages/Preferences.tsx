@@ -133,7 +133,6 @@ const Preferences = () => {
         depth: intensity,
         frequency,
         regions: selectedRegions,
-        plan: selectedPlan,
         tone,
         languages: selectedLanguages,
         notify_breaking: notifications.breaking,

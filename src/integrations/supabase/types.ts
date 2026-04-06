@@ -20,11 +20,15 @@ export type Database = {
           body: string
           created_at: string
           id: string
+          image_url: string | null
           journalist_id: string
+          layout: string | null
+          notes: Json | null
           perspectives: Json | null
           price: number | null
           published: boolean | null
           published_at: string | null
+          subtitle: string | null
           tags: string[] | null
           title: string
           updated_at: string
@@ -34,11 +38,15 @@ export type Database = {
           body?: string
           created_at?: string
           id?: string
+          image_url?: string | null
           journalist_id: string
+          layout?: string | null
+          notes?: Json | null
           perspectives?: Json | null
           price?: number | null
           published?: boolean | null
           published_at?: string | null
+          subtitle?: string | null
           tags?: string[] | null
           title: string
           updated_at?: string
@@ -48,11 +56,15 @@ export type Database = {
           body?: string
           created_at?: string
           id?: string
+          image_url?: string | null
           journalist_id?: string
+          layout?: string | null
+          notes?: Json | null
           perspectives?: Json | null
           price?: number | null
           published?: boolean | null
           published_at?: string | null
+          subtitle?: string | null
           tags?: string[] | null
           title?: string
           updated_at?: string

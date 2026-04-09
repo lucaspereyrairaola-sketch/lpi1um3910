@@ -241,8 +241,13 @@ const TOPIC_ICONS: Record<string, string> = {
   política: "🏛️", economía: "📊", deportes: "⚽", deporte: "⚽",
   cultura: "🎭", cultural: "🎭", chimentos: "🌟", espectáculos: "🌟",
   tech: "💻", tecnología: "💻", ciencia: "🔬", salud: "🏥",
-  internacional: "🌍", "medio-ambiente": "🌱", educación: "📚", social: "🤝",
+  internacional: "🌍", "medio-ambiente": "🌱", ambiente: "🌱", educación: "📚", social: "🤝",
   independiente: "🔴", arte: "🎨", música: "🎵", cine: "🎬",
+};
+
+const TOPIC_LABELS: Record<string, string> = {
+  "medio-ambiente": "Medio Ambiente",
+  ambiente: "Medio Ambiente",
 };
 
 function TopicsSection({ articles, preferredTopics }: { articles: ArticleFeed[]; preferredTopics: string[] }) {
@@ -287,7 +292,7 @@ function TopicsSection({ articles, preferredTopics }: { articles: ArticleFeed[];
             >
               <span className="text-2xl">{TOPIC_ICONS[topic] ?? "📰"}</span>
               <div className="min-w-0">
-                <p className="text-sm font-semibold text-foreground capitalize truncate">{topic}</p>
+                <p className="text-sm font-semibold text-foreground capitalize truncate">{TOPIC_LABELS[topic] ?? topic}</p>
                 <p className="text-[10px] text-muted-foreground">{count} artículo{count !== 1 ? "s" : ""}</p>
                 {isPref && <p className="text-[10px] text-primary font-medium mt-0.5">★ Tu tema</p>}
               </div>
@@ -302,7 +307,7 @@ function TopicsSection({ articles, preferredTopics }: { articles: ArticleFeed[];
           <motion.div key={activeTopic} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
             <div className="flex items-center gap-3 mb-4">
               <span className="text-lg">{TOPIC_ICONS[activeTopic] ?? "📰"}</span>
-              <h2 className="text-base font-semibold text-foreground capitalize">{activeTopic}</h2>
+              <h2 className="text-base font-semibold text-foreground capitalize">{TOPIC_LABELS[activeTopic] ?? activeTopic}</h2>
               <span className="text-xs text-muted-foreground">({filtered.length} artículos)</span>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">

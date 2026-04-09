@@ -9,6 +9,7 @@ const tagColorMap: Record<Tag, string> = {
   Social: "bg-tag-social/15 text-tag-social",
   Global: "bg-tag-global/15 text-tag-global",
   Tech: "bg-tag-tech/15 text-tag-tech",
+  Ambiente: "bg-tag-social/15 text-tag-social",
 };
 
 interface EventCardProps {

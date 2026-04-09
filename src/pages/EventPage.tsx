@@ -20,15 +20,17 @@ const READ_MODES: { id: ReadTime; label: string; icon: React.ReactNode; desc: st
 ];
 
 function adaptedPerspective(p: Perspective, mode: ReadTime): Perspective {
+  const content = p.content ?? [];
+  const keyArgs = p.keyArguments ?? [];
   switch (mode) {
     case "2":
-      return { ...p, content: [], keyArguments: p.keyArguments.slice(0, 2) };
+      return { ...p, content: [], keyArguments: keyArgs.slice(0, 2) };
     case "5":
-      return { ...p, content: p.content.slice(0, 1), keyArguments: p.keyArguments.slice(0, 3) };
+      return { ...p, content: content.slice(0, 1), keyArguments: keyArgs.slice(0, 3) };
     case "10":
-      return { ...p, content: p.content.slice(0, 2), keyArguments: p.keyArguments };
+      return { ...p, content: content.slice(0, 2), keyArguments: keyArgs };
     default:
-      return p;
+      return { ...p, content, keyArguments: keyArgs };
   }
 }
 
@@ -38,6 +40,7 @@ const tagColorMap: Record<Tag, string> = {
   Social: "bg-tag-social/15 text-tag-social",
   Global: "bg-tag-global/15 text-tag-global",
   Tech: "bg-tag-tech/15 text-tag-tech",
+  Ambiente: "bg-tag-social/15 text-tag-social",
 };
 
 const EventPage = () => {

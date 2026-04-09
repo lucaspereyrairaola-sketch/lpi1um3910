@@ -241,13 +241,14 @@ const TOPIC_ICONS: Record<string, string> = {
   política: "🏛️", economía: "📊", deportes: "⚽", deporte: "⚽",
   cultura: "🎭", cultural: "🎭", chimentos: "🌟", espectáculos: "🌟",
   tech: "💻", tecnología: "💻", ciencia: "🔬", salud: "🏥",
-  internacional: "🌍", "medio-ambiente": "🌱", ambiente: "🌱", educación: "📚", social: "🤝",
+  internacional: "🌍", "medio-ambiente": "🌱", ambiente: "🌱", Ambiente: "🌱", educación: "📚", social: "🤝",
   independiente: "🔴", arte: "🎨", música: "🎵", cine: "🎬",
 };
 
 const TOPIC_LABELS: Record<string, string> = {
   "medio-ambiente": "Medio Ambiente",
   ambiente: "Medio Ambiente",
+  Ambiente: "Medio Ambiente",
 };
 
 function TopicsSection({ articles, preferredTopics }: { articles: ArticleFeed[]; preferredTopics: string[] }) {

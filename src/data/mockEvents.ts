@@ -1,4 +1,4 @@
-export type Tag = "Política" | "Economía" | "Social" | "Global" | "Tech";
+export type Tag = "Política" | "Economía" | "Social" | "Global" | "Tech" | "Ambiente";
 
 export interface Perspective {
   id: string;
@@ -633,6 +633,123 @@ export const mockEvents: NewsEvent[] = [
       }
     ]
   }
+  ,{
+    id: "ley-glaciares-argentina",
+    title: "Ley de Glaciares en Argentina: tensión entre minería y protección ambiental",
+    neutralSummary: "La Ley de Glaciares (26.639), sancionada en 2010, vuelve al centro del debate. El gobierno analiza modificaciones que permitirían minería en zonas periglaciales, generando movilización de comunidades y organizaciones ambientalistas en Mendoza, San Juan y Jujuy.",
+    date: "2026-04-09",
+    readTime: 6,
+    tags: ["Ambiente", "Política", "Economía"],
+    perspectives: [
+      {
+        id: "economica",
+        label: "Económica",
+        icon: "📈",
+        tone: "Analítico",
+        content: [
+          "Los proyectos mineros en zonas glaciares representan inversiones potenciales de más de $20.000 millones en divisas para Argentina, un recurso crítico en el contexto de escasez de reservas del Banco Central.",
+          "El litio y el oro de las regiones cordilleranas son codiciados por mercados globales: la transición energética disparó la demanda de litio un 300% en cinco años, transformando el subsuelo andino en activo estratégico.",
+          "Economistas ambientales advierten que el costo de largo plazo es incalculable: los glaciares regulan el ciclo hídrico de cuencas que irrigan millones de hectáreas agrícolas. Destruir ese capital natural es hipotecar el futuro productivo del país."
+        ],
+        keyArguments: [
+          "Divisas vs. sustentabilidad hídrica a largo plazo",
+          "Litio como recurso estratégico para la transición energética global",
+          "Riesgo de destruir capital natural irreemplazable"
+        ]
+      },
+      {
+        id: "politica",
+        label: "Política",
+        icon: "🏛️",
+        tone: "Contextual",
+        content: [
+          "La presión para modificar la Ley de Glaciares proviene de gobernadores de provincias mineras como San Juan y Mendoza, que ven en la norma un freno a inversiones que necesitan para financiar sus presupuestos.",
+          "El gobierno de Milei enfrenta una tensión interna: su agenda desreguladora choca con la Ley de Glaciares, que goza de amplio consenso social y respaldo judicial tras dos vetos presidenciales históricos.",
+          "La Corte Suprema deberá resolver amparos de comunidades indígenas y organizaciones ambientalistas que bloquean judicialmente cualquier modificación que debilite la protección actual."
+        ],
+        keyArguments: [
+          "Gobernadores mineros presionan por desregulación",
+          "Agenda libertaria vs. consenso social amplio",
+          "Litigación judicial como freno a cambios legislativos"
+        ]
+      },
+      {
+        id: "social",
+        label: "Social",
+        icon: "👥",
+        tone: "Humano",
+        content: [
+          "Para los agricultores de Mendoza y San Juan, los glaciares son el origen del agua que llega a sus acequias, riega sus viñedos y sostiene una economía agrícola centenaria.",
+          "Las comunidades huarpe y diaguita calchaquí llevan décadas resistiendo la expansión minera. Para ellos, los glaciares son seres vivos: su destrucción es también la destrucción de su identidad cultural.",
+          "En Mendoza, el movimiento 'Agua vale más que el oro' movilizó más de 300.000 personas, convirtiendo la defensa del agua en causa transversal a toda la sociedad."
+        ],
+        keyArguments: [
+          "Economía agrícola centenaria en riesgo",
+          "Derechos de comunidades indígenas afectadas",
+          "Movimiento social transversal y masivo"
+        ]
+      },
+      {
+        id: "internacional",
+        label: "Internacional",
+        icon: "🌍",
+        tone: "Geopolítico",
+        content: [
+          "Argentina forma parte del Triángulo del Litio junto a Chile y Bolivia, concentrando más del 60% de las reservas mundiales del mineral clave para baterías eléctricas.",
+          "El Acuerdo de Escazú, ratificado por Argentina en 2021, obliga a garantizar la participación de comunidades en decisiones ambientales, en tensión directa con la modificación de la Ley.",
+          "Chile y Perú observan el debate argentino: la jurisprudencia que se genere puede convertirse en precedente regional para la protección o explotación de glaciares."
+        ],
+        keyArguments: [
+          "Triángulo del Litio y demanda global de baterías",
+          "Compromisos internacionales del Acuerdo de Escazú",
+          "Precedente regional para políticas de glaciares"
+        ]
+      },
+      {
+        id: "cultural",
+        label: "Cultural",
+        icon: "🎭",
+        tone: "Reflexivo",
+        content: [
+          "El glaciar Perito Moreno es uno de los símbolos más reconocibles de Argentina. La discusión toca algo profundo: ¿qué tipo de país somos y qué le dejamos a las generaciones futuras?",
+          "La defensa de los glaciares se convirtió en el primer movimiento ambientalista masivo de Argentina, un cambio cultural generacional que la política todavía no refleja del todo.",
+          "Hay una paradoja simbólica: Argentina debate destruir glaciares para financiar la transición energética global. El país que sacrifica su agua para que el mundo tenga baterías limpias condensa todas las contradicciones del desarrollo en el siglo XXI."
+        ],
+        keyArguments: [
+          "Identidad nacional ligada al patrimonio glaciar",
+          "Primer ambientalismo masivo de la historia argentina",
+          "Paradoja de destruir naturaleza para la 'energía verde' global"
+        ]
+      }
+    ],
+    biasAnalysis: {
+      framingDifferences: [
+        "Medios pro-minería enmarcan la Ley como 'obstáculo al desarrollo' mientras que medios ambientalistas la presentan como 'escudo protector irrenunciable'",
+        "La cobertura económica destaca el potencial en divisas; la cobertura ambiental enfatiza el valor hídrico de los glaciares como reservas de agua dulce",
+        "Las comunidades indígenas aparecen como 'afectados' en medios mainstream pero como 'guardianes' en medios alternativos y regionales"
+      ],
+      wordChoiceBias: [
+        "'Trabas regulatorias' vs. 'protecciones ambientales' para describir la misma legislación",
+        "'Potencial minero desaprovechado' vs. 'ecosistemas en peligro' frente al mismo territorio",
+        "'Activistas' vs. 'comunidades afectadas' para nombrar a los mismos grupos"
+      ],
+      omittedElements: [
+        "La cobertura pro-minería raramente menciona los impactos hídricos sobre la agricultura en el largo plazo",
+        "La cobertura ambiental suele omitir el peso real de la deuda externa y la urgencia de divisas en el contexto macro",
+        "Casi ningún medio cuantifica el valor económico del agua glaciar para las economías regionales"
+      ]
+    },
+    journalists: [
+      {
+        id: "j-env-1",
+        name: "Valentina Rosas",
+        avatar: "VR",
+        bio: "Periodista ambiental especializada en conflictos por recursos naturales en América del Sur.",
+        specialization: "Ambiente y Territorio",
+        articlesCount: 142
+      }
+    ]
+  }
 ];
 
 export const tagColors: Record<Tag, string> = {
@@ -641,4 +758,5 @@ export const tagColors: Record<Tag, string> = {
   Social: "tag-social",
   Global: "tag-global",
   Tech: "tag-tech",
+  Ambiente: "tag-social",
 };

@@ -23,11 +23,13 @@ const READ_MODES: { id: ReadMode; label: string; icon: React.ReactNode; desc: st
 ];
 
 function adaptPerspective(p: Perspective, mode: ReadMode): Perspective {
+  const content = p.content ?? [];
+  const keyArgs = p.keyArguments ?? [];
   switch (mode) {
-    case "2":  return { ...p, content: [],                  keyArguments: p.keyArguments.slice(0, 2) };
-    case "5":  return { ...p, content: p.content.slice(0,1), keyArguments: p.keyArguments.slice(0, 3) };
-    case "10": return { ...p, content: p.content.slice(0,2), keyArguments: p.keyArguments };
-    default:   return p;
+    case "2":  return { ...p, content: [],                keyArguments: keyArgs.slice(0, 2) };
+    case "5":  return { ...p, content: content.slice(0,1), keyArguments: keyArgs.slice(0, 3) };
+    case "10": return { ...p, content: content.slice(0,2), keyArguments: keyArgs };
+    default:   return { ...p, content, keyArguments: keyArgs };
   }
 }
 

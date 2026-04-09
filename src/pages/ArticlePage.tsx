@@ -11,6 +11,7 @@ import { useBookmarks } from "@/hooks/useBookmarks";
 import { usePerspectiveVotes } from "@/hooks/usePerspectiveVotes";
 import { ContextualBody } from "@/components/ContextTooltip";
 import { useReadingHistory } from "@/hooks/useReadingHistory";
+import { useAnalytics, EVENTS } from "@/hooks/useAnalytics";
 
 // ─── Selector de tiempo de lectura ───────────────────────
 type ReadMode = "2" | "5" | "10" | "full";
@@ -117,6 +118,7 @@ const ArticlePage = () => {
   const { isSaved, toggle: toggleBookmark } = useBookmarks();
   const { counts, myVotes, vote: votePerspective } = usePerspectiveVotes(article?.id ?? "");
   const { trackProgress } = useReadingHistory();
+  const { track } = useAnalytics();
 
   // Reading progress bar
   useEffect(() => {
@@ -255,7 +257,7 @@ const ArticlePage = () => {
               </span>
             )}
             <button
-              onClick={() => toggleBookmark.mutate(article.id)}
+              onClick={() => { toggleBookmark.mutate(article.id); track(EVENTS.ARTICLE_BOOKMARKED, { article_id: article.id }); }}
               className="ml-auto flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors"
             >
               {isSaved(article.id)
@@ -273,7 +275,7 @@ const ArticlePage = () => {
               {READ_MODES.map((m) => (
                 <button
                   key={m.id}
-                  onClick={() => setReadMode(m.id)}
+                  onClick={() => { setReadMode(m.id); track(EVENTS.READ_MODE_CHANGED, { mode: m.id, article_id: id }); }}
                   className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-medium transition-all border ${
                     readMode === m.id
                       ? "bg-primary text-primary-foreground border-primary"
@@ -303,7 +305,7 @@ const ArticlePage = () => {
                 Perspectivas
               </button>
               <button
-                onClick={() => setCompareMode(true)}
+                onClick={() => { setCompareMode(true); track(EVENTS.COMPARE_MODE_OPENED, { article_id: id }); }}
                 className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                   compareMode ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
                 }`}
@@ -343,7 +345,7 @@ const ArticlePage = () => {
                 {article.perspectives!.map((p, i) => (
                   <button
                     key={p.id}
-                    onClick={() => setActiveTab(p.id)}
+                    onClick={() => { setActiveTab(p.id); track(EVENTS.PERSPECTIVE_CHANGED, { perspective: p.id, article_id: id }); }}
                     className={`flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-medium transition-all ${
                       activeTab === p.id
                         ? perspectiveTabActive[i % perspectiveTabActive.length]

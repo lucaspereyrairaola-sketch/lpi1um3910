@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import EventPage from "./pages/EventPage";
 import Preferences from "./pages/Preferences";
 import Auth from "./pages/Auth";
+import Landing from "./pages/Landing";
 import Onboarding from "./pages/Onboarding";
 import Dashboard from "./pages/journalist/Dashboard";
 import ArticleEditor from "./pages/journalist/ArticleEditor";
@@ -46,7 +47,8 @@ const App = () => (
       <BrowserRouter>
         <AuthProvider>
           <Routes>
-            <Route path="/" element={<Auth />} />
+            <Route path="/" element={<Landing />} />
+            <Route path="/auth" element={<Auth />} />
             <Route path="/feed" element={<ProtectedRoute><Index /></ProtectedRoute>} />
             <Route path="/article/:id" element={<ProtectedRoute><ArticlePage /></ProtectedRoute>} />
             <Route path="/event/:id" element={<ProtectedRoute><EventPage /></ProtectedRoute>} />

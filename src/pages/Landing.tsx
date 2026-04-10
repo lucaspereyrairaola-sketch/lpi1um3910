@@ -75,7 +75,7 @@ export default function Landing() {
     if (!email) return;
     setSubmitting(true);
     try {
-      const { error } = await (supabase.from("waitlist") as any).insert({ email });
+      const { error } = await supabase.from("waitlist" as any).insert({ email });
       if (error && !error.message.includes("duplicate")) throw error;
       setSubmitted(true);
       toast.success("¡Te anotamos! Te avisamos cuando abramos el acceso.");

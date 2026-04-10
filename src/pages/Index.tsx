@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
+import { EconTicker } from "@/components/EconTicker";
 import EventCard from "@/components/EventCard";
 import { mockEvents } from "@/data/mockEvents";
 import { useArticles } from "@/hooks/useArticles";
@@ -836,6 +837,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
+      <EconTicker />
 
       <div className="max-w-6xl mx-auto px-6 pt-8 pb-20">
 

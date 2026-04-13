@@ -54,7 +54,42 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex" style={{ fontFamily: "'Inter', sans-serif" }}>
+    <div className="min-h-screen bg-background flex relative overflow-hidden" style={{ fontFamily: "'Inter', sans-serif" }}>
+      {/* Background newspaper logos */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
+        {/* Top-left cluster */}
+        <div className="absolute top-[10%] left-[5%] opacity-[0.03] rotate-[-12deg]">
+          <svg width="120" height="40" viewBox="0 0 120 40" fill="currentColor" className="text-white"><text x="0" y="30" fontSize="28" fontWeight="900" fontFamily="Georgia, serif">Clarín</text></svg>
+        </div>
+        <div className="absolute top-[20%] left-[15%] opacity-[0.025] rotate-[8deg]">
+          <svg width="100" height="35" viewBox="0 0 100 35" fill="currentColor" className="text-white"><text x="0" y="28" fontSize="24" fontWeight="800" fontFamily="Times, serif">La Nación</text></svg>
+        </div>
+        {/* Top-right cluster */}
+        <div className="absolute top-[8%] right-[10%] opacity-[0.03] rotate-[15deg]">
+          <svg width="80" height="35" viewBox="0 0 80 35" fill="currentColor" className="text-white"><text x="0" y="28" fontSize="22" fontWeight="700" fontFamily="Helvetica, sans-serif">NYT</text></svg>
+        </div>
+        <div className="absolute top-[25%] right-[5%] opacity-[0.025] rotate-[-5deg]">
+          <svg width="90" height="35" viewBox="0 0 90 35" fill="currentColor" className="text-white"><text x="0" y="28" fontSize="20" fontWeight="800" fontFamily="Georgia, serif">Le Monde</text></svg>
+        </div>
+        {/* Bottom-left cluster */}
+        <div className="absolute bottom-[30%] left-[8%] opacity-[0.02] rotate-[5deg]">
+          <svg width="110" height="35" viewBox="0 0 110 35" fill="currentColor" className="text-white"><text x="0" y="28" fontSize="26" fontWeight="900" fontFamily="Times, serif">Página 12</text></svg>
+        </div>
+        <div className="absolute bottom-[15%] left-[20%] opacity-[0.025] rotate-[-8deg]">
+          <svg width="100" height="35" viewBox="0 0 100 35" fill="currentColor" className="text-white"><text x="0" y="28" fontSize="22" fontWeight="700" fontFamily="Helvetica, sans-serif">El País</text></svg>
+        </div>
+        {/* Bottom-right cluster */}
+        <div className="absolute bottom-[20%] right-[15%] opacity-[0.02] rotate-[10deg]">
+          <svg width="100" height="35" viewBox="0 0 100 35" fill="currentColor" className="text-white"><text x="0" y="28" fontSize="22" fontWeight="800" fontFamily="Georgia, serif">Folha</text></svg>
+        </div>
+        <div className="absolute bottom-[35%] right-[8%] opacity-[0.025] rotate-[-15deg]">
+          <svg width="120" height="35" viewBox="0 0 120 35" fill="currentColor" className="text-white"><text x="0" y="28" fontSize="24" fontWeight="700" fontFamily="Times, serif">El Mercurio</text></svg>
+        </div>
+        <div className="absolute top-[45%] left-[25%] opacity-[0.02] rotate-[3deg]">
+          <svg width="110" height="35" viewBox="0 0 110 35" fill="currentColor" className="text-white"><text x="0" y="28" fontSize="24" fontWeight="800" fontFamily="Georgia, serif">El Universal</text></svg>
+        </div>
+      </div>
+
       {/* Radial glow — same as Landing */}
       <div style={{ position: "fixed", inset: 0, background: "radial-gradient(ellipse at 30% 40%, rgba(37,99,235,0.07) 0%, transparent 60%), radial-gradient(ellipse at 80% 80%, rgba(14,165,233,0.04) 0%, transparent 50%)", pointerEvents: "none", zIndex: 0 }} />
 

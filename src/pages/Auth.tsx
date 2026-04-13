@@ -5,6 +5,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
+import newspapersCollage from "@/assets/newspapers-collage.jpg";
 import { lovable } from "@/integrations/lovable/index";
 
 const FEATURES = [

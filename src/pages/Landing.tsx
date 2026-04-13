@@ -156,7 +156,7 @@ export default function Landing() {
           </span>
         </h1>
 
-        <p style={{ fontSize: "1.2rem", color: "#94A3B8", maxWidth: 560, marginBottom: "2.5rem", lineHeight: 1.7 }}>
+        <p style={{ fontSize: "1.2rem", color: "#fff", maxWidth: 560, marginBottom: "2.5rem", lineHeight: 1.7 }}>
           MIDIA genera 5 perspectivas automáticas sobre cada noticia — económica, política, social, internacional y cultural — para que formes tu propia opinión.
         </p>
 
@@ -169,8 +169,8 @@ export default function Landing() {
           </a>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "2rem", flexWrap: "wrap", justifyContent: "center", opacity: 0.7 }}>
-          <span style={{ fontSize: "0.8rem", color: "#64748B", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 500 }}>Construido con tecnología de</span>
+        <div style={{ display: "flex", alignItems: "center", gap: "2rem", flexWrap: "wrap", justifyContent: "center" }}>
+          <span style={{ fontSize: "0.8rem", color: "#fff", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 500 }}>Construido con tecnología de</span>
           <div style={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
             {["CLAUDE AI", "SUPABASE", "REACT"].map((t) => (
               <div key={t} style={{ width: 100, height: 28, background: "rgba(255,255,255,0.06)", borderRadius: 4, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.7rem", color: "#475569", fontWeight: 600, letterSpacing: "0.05em" }}>{t}</div>

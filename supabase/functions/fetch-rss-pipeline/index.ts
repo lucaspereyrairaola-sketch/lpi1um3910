@@ -375,7 +375,7 @@ serve(async (req) => {
   }
 
   return new Response(
-    JSON.stringify({ processed: results.length, errors: errors.length, results, errors }),
+    JSON.stringify({ processed: results.length, error_count: errors.length, results, errors: errors }),
     { headers: { ...CORS, "Content-Type": "application/json" } }
   );
 });

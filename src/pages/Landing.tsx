@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import newspapersCollage from "@/assets/newspapers-collage.jpg";
 
 // ─── Demo perspectives data ────────────────────────────────────────────────────
 const PERSPECTIVES = [

@@ -197,7 +197,7 @@ export default function Landing() {
           <p style={{ color: "#94A3B8", fontSize: "1.1rem", maxWidth: 500, margin: "0 auto" }}>Hacé click en cada perspectiva y mirá cómo cambia la lectura de la misma noticia.</p>
         </div>
 
-        <Reveal style={{ maxWidth: 960, margin: "0 auto" }}>
+        <div className="max-w-4xl mx-auto">
           <div style={{ background: "linear-gradient(145deg,rgba(15,23,42,0.8),rgba(15,23,42,0.4))", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, overflow: "hidden", boxShadow: "0 25px 80px rgba(0,0,0,0.5)" }}>
             {/* Header */}
             <div style={{ padding: "1.5rem 2rem", borderBottom: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -230,7 +230,7 @@ export default function Landing() {
               Hacé click en las pestañas para ver cómo cambia la narrativa <span style={{ color: "#2563EB" }}>↑</span>
             </div>
           </div>
-        </Reveal>
+        </div>
       </section>
 
       {/* ── How it works ── */}

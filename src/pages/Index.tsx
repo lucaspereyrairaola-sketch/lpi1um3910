@@ -6,6 +6,7 @@ import { EconTicker } from "@/components/EconTicker";
 import EventCard from "@/components/EventCard";
 import { mockEvents } from "@/data/mockEvents";
 import { useArticles } from "@/hooks/useArticles";
+import { useNewsFeed } from "@/hooks/useNewsFeed";
 import { useReaderProfile } from "@/hooks/useReaderProfile";
 import { useSavedArticles } from "@/hooks/useBookmarks";
 import type { ArticleFeed } from "@/types/article";
@@ -67,6 +68,11 @@ function TagBadge({ tag, size = "sm" }: { tag: string; size?: "sm" | "md" }) {
   );
 }
 
+/** Devuelve el href correcto según el origen del artículo */
+function articleHref(id: string): string {
+  return id.startsWith("news:") ? `/news/${id.slice(5)}` : `/article/${id}`;
+}
+
 function getExcerpt(body: string, max: number): string {
   if (max === 0) return "";
   const clean = body.replace(/[#*_`>\[\]]/g, "").trim();
@@ -84,7 +90,7 @@ function LeftMainCard({ article, depth, isPriority }: { article: ArticleFeed; de
 
   return (
     <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
-      <Link to={`/article/${article.id}`} className="block group">
+      <Link to={articleHref(article.id)} className="block group">
         <div className="bg-[hsl(var(--surface))] hover:bg-[hsl(var(--surface-hover))] border border-border/50 hover:border-primary/30 rounded-2xl p-5 transition-all duration-300 flex flex-col gap-3">
           <div className="flex items-center gap-2 flex-wrap">
             {isPriority && <span className="flex items-center text-[10px] uppercase tracking-widest font-bold text-primary"><PriorityDot />Para vos</span>}
@@ -120,7 +126,7 @@ function LeftMainCard({ article, depth, isPriority }: { article: ArticleFeed; de
 function LeftCompactRow({ article, index, isPriority }: { article: ArticleFeed; index: number; isPriority: boolean }) {
   return (
     <motion.div initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3, delay: 0.05 + index * 0.04 }}>
-      <Link to={`/article/${article.id}`} className="block group">
+      <Link to={articleHref(article.id)} className="block group">
         <div className="flex items-start gap-3 py-2.5 px-3 rounded-xl hover:bg-secondary/40 transition-colors border border-transparent hover:border-border/40">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-1.5 mb-1 flex-wrap">
@@ -151,7 +157,7 @@ function QuadrantCard({ article, depth, slot, index, isPriority }: { article: Ar
 
   return (
     <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.05 + index * 0.07 }} className="h-full">
-      <Link to={`/article/${article.id}`} className="block group h-full">
+      <Link to={articleHref(article.id)} className="block group h-full">
         <div className={`bg-[hsl(var(--surface))] hover:bg-[hsl(var(--surface-hover))] border border-border/50 hover:border-primary/30 rounded-xl ${padding} transition-all duration-300 h-full flex flex-col gap-2.5`}>
           <div className="flex items-center gap-1.5 flex-wrap">
             {isPriority && <PriorityDot />}
@@ -315,7 +321,7 @@ function TopicsSection({ articles, preferredTopics }: { articles: ArticleFeed[];
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {filtered.map((a, i) => (
                 <motion.div key={a.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
-                  <Link to={`/article/${a.id}`} className="block group">
+                  <Link to={articleHref(a.id)} className="block group">
                     <div className="bg-[hsl(var(--surface))] hover:bg-[hsl(var(--surface-hover))] border border-border/50 hover:border-primary/30 rounded-xl p-4 transition-all h-full flex flex-col gap-2">
                       <h3 className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors leading-snug line-clamp-3">{a.title}</h3>
                       <div className="flex items-center gap-2 mt-auto pt-2 border-t border-border/30">
@@ -427,7 +433,7 @@ function AuthorsSection({ articles }: { articles: ArticleFeed[] }) {
             <div className="space-y-2">
               {authorArticles.map((a, i) => (
                 <motion.div key={a.id} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}>
-                  <Link to={`/article/${a.id}`} className="block group">
+                  <Link to={articleHref(a.id)} className="block group">
                     <div className="flex items-center gap-4 px-4 py-3.5 bg-[hsl(var(--surface))] hover:bg-[hsl(var(--surface-hover))] border border-border/50 hover:border-primary/30 rounded-xl transition-all">
                       <div className="flex-1 min-w-0">
                         <div className="flex gap-1.5 mb-1 flex-wrap">
@@ -491,7 +497,7 @@ function RecentSection({ articles }: { articles: ArticleFeed[] }) {
           <div className="space-y-2">
             {dayArticles.map((a, i) => (
               <motion.div key={a.id} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}>
-                <Link to={`/article/${a.id}`} className="block group">
+                <Link to={articleHref(a.id)} className="block group">
                   <div className="flex items-center gap-4 px-4 py-3.5 bg-[hsl(var(--surface))] hover:bg-[hsl(var(--surface-hover))] border border-border/50 hover:border-primary/30 rounded-xl transition-all">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5 mb-1 flex-wrap">
@@ -685,7 +691,7 @@ function SavedSection() {
     <div className="space-y-2">
       {articles.map((a: any, i: number) => (
         <motion.div key={a.id} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}>
-          <Link to={`/article/${a.id}`} className="block group">
+          <Link to={articleHref(a.id)} className="block group">
             <div className="flex items-center gap-4 px-4 py-3.5 bg-[hsl(var(--surface))] hover:bg-[hsl(var(--surface-hover))] border border-border/50 hover:border-primary/30 rounded-xl transition-all">
               <div className="flex-1 min-w-0">
                 <div className="flex gap-1.5 mb-1 flex-wrap">
@@ -712,7 +718,7 @@ function DailyBrief({ articles, mockEvts }: { articles: ArticleFeed[]; mockEvts:
 
   // Get top 3: prefer real articles, fallback to mock events
   const items = articles.length >= 3
-    ? articles.slice(0, 3).map(a => ({ id: a.id, title: a.title, tags: a.tags, readTime: a.read_time, href: `/article/${a.id}`, summary: a.body.slice(0, 100).replace(/[#*_`]/g, "") + "…" }))
+    ? articles.slice(0, 3).map(a => ({ id: a.id, title: a.title, tags: a.tags, readTime: a.read_time, href: articleHref(a.id), summary: (a.summary || a.body).slice(0, 100).replace(/[#*_`]/g, "") + "…" }))
     : mockEvts.slice(0, 3).map(e => ({ id: e.id, title: e.title, tags: e.tags as string[], readTime: e.readTime, href: `/event/${e.id}`, summary: e.neutralSummary.slice(0, 100) + "…" }));
 
   if (!open) return null;
@@ -764,7 +770,7 @@ function HistorySection() {
     <div className="space-y-2">
       {history.map((a: any, i: number) => (
         <motion.div key={a.id} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}>
-          <Link to={`/article/${a.id}`} className="block group">
+          <Link to={articleHref(a.id)} className="block group">
             <div className="flex items-center gap-4 px-4 py-3.5 bg-[hsl(var(--surface))] hover:bg-[hsl(var(--surface-hover))] border border-border/50 hover:border-primary/30 rounded-xl transition-all">
               <div className="flex-1 min-w-0">
                 <div className="flex gap-1.5 mb-1 flex-wrap">
@@ -797,8 +803,10 @@ function EmptyState({ message }: { message: string }) {
 
 // ─── MAIN ─────────────────────────────────────────────────
 const Index = () => {
-  const { data: articles, isLoading } = useArticles();
+  const { data: articles, isLoading: articlesLoading } = useArticles();
+  const { data: newsFeedData, isLoading: newsLoading } = useNewsFeed(20);
   const { data: profile } = useReaderProfile();
+  const isLoading = articlesLoading || newsLoading;
 
   const [activeSection, setActiveSection] = useState<Section>("foryou");
   const [activeTopicFilter, setActiveTopicFilter] = useState("todos");
@@ -831,7 +839,18 @@ const Index = () => {
     return ["todos", ...preferredTopics.slice(0, 6)];
   }, [preferredTopics]);
 
-  const allArticles = articles ?? [];
+  // Mezclar artículos de periodistas + pipeline RSS, ordenados por fecha
+  const allArticles = useMemo(() => {
+    const regular = articles ?? [];
+    const rss = newsFeedData ?? [];
+    const merged = [...regular, ...rss];
+    return merged.sort(
+      (a, b) =>
+        new Date(b.published_at ?? b.created_at).getTime() -
+        new Date(a.published_at ?? a.created_at).getTime()
+    );
+  }, [articles, newsFeedData]);
+
   const hasArticles = allArticles.length > 0;
 
   return (

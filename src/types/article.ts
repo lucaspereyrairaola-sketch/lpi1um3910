@@ -19,4 +19,9 @@ export interface ArticleFeed {
   journalist_name: string | null;
   read_time: number;
   perspectives: Perspective[] | null;
+  // campos opcionales para artículos del pipeline RSS
+  source_url?: string;
+  source_id?: string;
+  source_name?: string;
+  summary?: string;
 }

@@ -14,6 +14,7 @@ import Dashboard from "./pages/journalist/Dashboard";
 import ArticleEditor from "./pages/journalist/ArticleEditor";
 import JournalistOnboarding from "./pages/journalist/JournalistOnboarding";
 import ArticlePage from "./pages/ArticlePage";
+import NewsArticlePage from "./pages/NewsArticlePage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -51,6 +52,7 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/feed" element={<ProtectedRoute><Index /></ProtectedRoute>} />
             <Route path="/article/:id" element={<ProtectedRoute><ArticlePage /></ProtectedRoute>} />
+            <Route path="/news/:id" element={<ProtectedRoute><NewsArticlePage /></ProtectedRoute>} />
             <Route path="/event/:id" element={<ProtectedRoute><EventPage /></ProtectedRoute>} />
             <Route path="/preferences" element={<ProtectedRoute><Preferences /></ProtectedRoute>} />
             <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />

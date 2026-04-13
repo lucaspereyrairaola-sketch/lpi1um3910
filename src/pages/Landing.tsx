@@ -144,7 +144,7 @@ export default function Landing() {
         <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 50% 30%, rgba(37,99,235,0.08) 0%, transparent 60%), radial-gradient(ellipse at 80% 60%, rgba(14,165,233,0.05) 0%, transparent 50%)", pointerEvents: "none" }} />
 
         {/* Badge */}
-        <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "rgba(37,99,235,0.12)", border: "1px solid rgba(37,99,235,0.25)", borderRadius: 100, padding: "0.4rem 1rem", fontSize: "0.8rem", fontWeight: 600, color: "#60A5FA", marginBottom: "2rem", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+        <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "rgba(37,99,235,0.25)", border: "1px solid rgba(37,99,235,0.4)", borderRadius: 100, padding: "0.4rem 1rem", fontSize: "0.8rem", fontWeight: 600, color: "#fff", marginBottom: "2rem", textTransform: "uppercase", letterSpacing: "0.08em", textShadow: "0 1px 8px rgba(0,0,0,0.6)" }}>
           <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#22C55E", animation: "pulse 2s infinite", display: "inline-block" }} />
           Acceso anticipado abierto
         </div>
@@ -169,8 +169,8 @@ export default function Landing() {
           </a>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "2rem", flexWrap: "wrap", justifyContent: "center" }}>
-          <span style={{ fontSize: "0.8rem", color: "#fff", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 500 }}>Construido con tecnología de</span>
+        <div style={{ display: "flex", alignItems: "center", gap: "2rem", flexWrap: "wrap", justifyContent: "center", textShadow: "0 1px 8px rgba(0,0,0,0.6)" }}>
+          <span style={{ fontSize: "0.8rem", color: "#fff", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 600 }}>Construido con tecnología de</span>
           <div style={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
             {["CLAUDE AI", "SUPABASE", "REACT"].map((t) => (
               <div key={t} style={{ width: 100, height: 28, background: "rgba(255,255,255,0.06)", borderRadius: 4, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.7rem", color: "#475569", fontWeight: 600, letterSpacing: "0.05em" }}>{t}</div>

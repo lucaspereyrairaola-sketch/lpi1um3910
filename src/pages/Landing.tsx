@@ -138,8 +138,8 @@ export default function Landing() {
       <section style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "8rem 2rem 4rem", position: "relative", overflow: "hidden" }}>
         {/* Newspaper collage background */}
         <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
-          <img src={newspapersCollage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-          <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 50% 50%, rgba(10,14,23,0.3) 0%, rgba(10,14,23,0.75) 80%)" }} />
+          <img src={newspapersCollage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.55 }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(10,14,23,0.4) 0%, rgba(10,14,23,0.6) 100%)" }} />
         </div>
         <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 50% 30%, rgba(37,99,235,0.08) 0%, transparent 60%), radial-gradient(ellipse at 80% 60%, rgba(14,165,233,0.05) 0%, transparent 50%)", pointerEvents: "none" }} />
 
@@ -149,14 +149,14 @@ export default function Landing() {
           Acceso anticipado abierto
         </div>
 
-        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2.8rem, 6vw, 5rem)", fontWeight: 800, lineHeight: 1.1, maxWidth: 800, marginBottom: "1.5rem", color: "#fff" }}>
+        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2.8rem, 6vw, 5rem)", fontWeight: 800, lineHeight: 1.1, maxWidth: 800, marginBottom: "1.5rem", color: "#fff", textShadow: "0 2px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.5)" }}>
           Cada noticia tiene más de{" "}
           <span style={{ background: "linear-gradient(135deg,#60A5FA,#34D399)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
             una verdad.
           </span>
         </h1>
 
-        <p style={{ fontSize: "1.2rem", color: "#fff", maxWidth: 560, marginBottom: "2.5rem", lineHeight: 1.7 }}>
+        <p style={{ fontSize: "1.2rem", color: "#fff", maxWidth: 560, marginBottom: "2.5rem", lineHeight: 1.7, textShadow: "0 1px 12px rgba(0,0,0,0.8), 0 0 30px rgba(0,0,0,0.5)" }}>
           MIDIA genera 5 perspectivas automáticas sobre cada noticia — económica, política, social, internacional y cultural — para que formes tu propia opinión.
         </p>
 

@@ -138,8 +138,8 @@ export default function Landing() {
       <section style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "8rem 2rem 4rem", position: "relative", overflow: "hidden" }}>
         {/* Newspaper collage background */}
         <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
-          <img src={newspapersCollage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-          <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 50% 50%, rgba(10,14,23,0.3) 0%, rgba(10,14,23,0.75) 80%)" }} />
+          <img src={newspapersCollage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.55 }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(10,14,23,0.4) 0%, rgba(10,14,23,0.6) 100%)" }} />
         </div>
         <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 50% 30%, rgba(37,99,235,0.08) 0%, transparent 60%), radial-gradient(ellipse at 80% 60%, rgba(14,165,233,0.05) 0%, transparent 50%)", pointerEvents: "none" }} />
 

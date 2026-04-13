@@ -61,9 +61,9 @@ const Auth = () => {
         <img
           src={newspapersCollage}
           alt=""
-          className="w-full h-full object-cover opacity-[0.18]"
+          className="w-full h-full object-cover opacity-[0.35]"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/60" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/70 to-background/50" />
       </div>
 
       {/* Radial glow — same as Landing */}

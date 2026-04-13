@@ -55,7 +55,7 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex relative overflow-hidden" style={{ fontFamily: "'Inter', sans-serif" }}>
+    <div className="min-h-screen bg-background flex items-center justify-center relative overflow-hidden" style={{ fontFamily: "'Inter', sans-serif" }}>
       {/* Background newspaper collage */}
       <div className="absolute inset-0 pointer-events-none select-none">
         <img
@@ -74,7 +74,7 @@ const Auth = () => {
         initial={{ opacity: 0, x: -24 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6 }}
-        className="hidden lg:flex flex-col justify-center w-[480px] shrink-0 px-12 py-14 relative z-10 border-r border-border/30 gap-6"
+        className="hidden lg:flex flex-col justify-center w-[480px] shrink-0 px-12 py-14 relative z-10 border-r border-border/30 gap-6 self-center"
       >
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2.5 no-underline">
@@ -116,7 +116,7 @@ const Auth = () => {
       </motion.div>
 
       {/* ── Right panel: form ── */}
-      <div className="flex-1 flex flex-col items-center justify-center px-6 pb-12 relative z-10">
+      <div className="flex-1 flex flex-col items-center justify-center px-6 py-12 relative z-10 self-center">
         {/* Mobile logo */}
         <Link to="/" className="flex items-center gap-2 mb-8 lg:hidden no-underline">
           <svg viewBox="0 0 28 28" fill="none" width={24} height={24}><circle cx="14" cy="14" r="13" stroke="#2563EB" strokeWidth="2"/><path d="M8 14h12M14 8v12M9 9l10 10M19 9L9 19" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/><circle cx="14" cy="14" r="4" fill="#2563EB"/></svg>
@@ -127,7 +127,7 @@ const Auth = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="w-full max-w-md"
+          className="w-full max-w-md mx-auto"
         >
           {/* Card */}
           <div className="glass rounded-2xl p-8">

@@ -1,54 +1,52 @@
 name: RSS Pipeline — Fetch & Generate Perspectives
 
 on:
-  # Cada 30 minutos
+  # Cada 30 minutos (offset para no chocar con el cron de GitHub)
   schedule:
     - cron: '7 * * * *'   # :07 de cada hora
     - cron: '37 * * * *'  # :37 de cada hora
 
-  # También ejecutable manualmente desde GitHub Actions UI
+  # Ejecutable manualmente
   workflow_dispatch:
     inputs:
       maxPerSource:
-        description: 'Máx. artículos por fuente (1-10)'
+        description: 'Máx. artículos por fuente (1-3)'
         required: false
-        default: '3'
+        default: '1'
       dryRun:
-        description: 'Dry run (true = solo simular, no guardar)'
+        description: 'Dry run (true = solo simular)'
         required: false
         default: 'false'
-      source:
-        description: 'Fuente específica (infobae|lanacion|pagina12|perfil|ambito|cronista) — dejar vacío para todas'
-        required: false
-        default: ''
 
 jobs:
   fetch-and-generate:
-    name: Fetch RSS → Generate Perspectives
+    name: ${{ matrix.source }}
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 5
+
+    # Una fuente por job → corren en paralelo, cada uno tarda ~60s
+    strategy:
+      fail-fast: false
+      matrix:
+        source: [infobae, lanacion, pagina12, perfil, ambito, cronista]
 
     steps:
-      - name: 🗞️ Llamar al pipeline RSS
+      - name: 🗞️ Procesar ${{ matrix.source }}
         id: pipeline
         run: |
-          # Construir body del request
-          MAX="${{ github.event.inputs.maxPerSource || '3' }}"
+          MAX="${{ github.event.inputs.maxPerSource || '1' }}"
           DRY="${{ github.event.inputs.dryRun || 'false' }}"
-          SOURCE="${{ github.event.inputs.source || '' }}"
 
-          if [ -n "$SOURCE" ]; then
-            BODY=$(jq -n --arg max "$MAX" --argjson dry "$DRY" --arg src "$SOURCE" \
-              '{maxPerSource: ($max|tonumber), dryRun: $dry, source: $src}')
-          else
-            BODY=$(jq -n --arg max "$MAX" --argjson dry "$DRY" \
-              '{maxPerSource: ($max|tonumber), dryRun: $dry}')
-          fi
+          BODY=$(jq -n \
+            --arg max "$MAX" \
+            --argjson dry "$DRY" \
+            --arg src "${{ matrix.source }}" \
+            '{maxPerSource: ($max|tonumber), dryRun: $dry, source: $src}')
 
-          echo "📤 Request body: $BODY"
+          echo "📤 ${{ matrix.source }} → $BODY"
 
           RESPONSE=$(curl -s -w "\n%{http_code}" \
-            --max-time 600 \
+            --max-time 270 \
             -X POST "${{ secrets.SUPABASE_URL }}/functions/v1/fetch-rss-pipeline" \
             -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
             -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
@@ -58,33 +56,36 @@ jobs:
           HTTP_CODE=$(echo "$RESPONSE" | tail -1)
           BODY_RESP=$(echo "$RESPONSE" | head -n -1)
 
-          echo "📥 HTTP Status: $HTTP_CODE"
-          echo "📥 Response: $BODY_RESP"
+          echo "📥 HTTP $HTTP_CODE"
+          echo "$BODY_RESP" | python3 -c "
+import json,sys
+try:
+  d = json.load(sys.stdin)
+  print(f'  ✅ Procesados: {d.get(\"processed\",0)}')
+  print(f'  ❌ Errores: {d.get(\"errors\",0)}')
+  for r in d.get('results',[]):
+    print(f'  → {r.get(\"title\",\"\")[:70]}')
+  for e in d.get('errors_detail',[]):
+    print(f'  ✗ {e}')
+except: print(sys.stdin.read())
+" || true
 
-          # Extraer métricas
-          PROCESSED=$(echo "$BODY_RESP" | jq -r '.processed // 0')
-          ERRORS=$(echo "$BODY_RESP" | jq -r '.errors // 0')
-
-          echo "✅ Procesados: $PROCESSED"
-          echo "❌ Errores: $ERRORS"
-
-          echo "processed=$PROCESSED" >> $GITHUB_OUTPUT
-          echo "errors=$ERRORS" >> $GITHUB_OUTPUT
           echo "http_code=$HTTP_CODE" >> $GITHUB_OUTPUT
 
           if [ "$HTTP_CODE" != "200" ]; then
-            echo "::error::Pipeline falló con HTTP $HTTP_CODE"
-            exit 1
+            echo "::warning::${{ matrix.source }} falló con HTTP $HTTP_CODE"
           fi
 
-      - name: 📊 Resumen
-        if: always()
+  summary:
+    name: 📊 Resumen
+    runs-on: ubuntu-latest
+    needs: fetch-and-generate
+    if: always()
+    steps:
+      - name: Resumen
         run: |
-          echo "## RSS Pipeline Result" >> $GITHUB_STEP_SUMMARY
+          echo "## RSS Pipeline — $(date -u '+%Y-%m-%d %H:%M UTC')" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "| Métrica | Valor |" >> $GITHUB_STEP_SUMMARY
-          echo "|---------|-------|" >> $GITHUB_STEP_SUMMARY
-          echo "| Artículos procesados | ${{ steps.pipeline.outputs.processed }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Errores | ${{ steps.pipeline.outputs.errors }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| HTTP Status | ${{ steps.pipeline.outputs.http_code }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Ejecutado | $(date -u '+%Y-%m-%d %H:%M UTC') |" >> $GITHUB_STEP_SUMMARY
+          echo "Fuentes procesadas: infobae · lanacion · pagina12 · perfil · ambito · cronista" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Revisá cada job individual para ver los artículos procesados." >> $GITHUB_STEP_SUMMARY

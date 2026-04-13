@@ -93,10 +93,19 @@ function Reveal({ children, className = "" }: { children: React.ReactNode; class
 
 // ─── Landing page ──────────────────────────────────────────────────────────────
 export default function Landing() {
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(0);
   const [email, setEmail] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+
+  // Redirect authenticated users to feed
+  useEffect(() => {
+    if (!loading && user) {
+      navigate("/feed", { replace: true });
+    }
+  }, [user, loading, navigate]);
 
   const active = PERSPECTIVES[activeTab];
 

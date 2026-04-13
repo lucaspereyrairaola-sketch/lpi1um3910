@@ -208,6 +208,54 @@ export type Database = {
           },
         ]
       }
+      news_feed: {
+        Row: {
+          body: string | null
+          created_at: string | null
+          error_msg: string | null
+          id: string
+          perspectives: Json | null
+          published_at: string | null
+          source_id: string
+          source_name: string
+          source_url: string
+          status: string | null
+          summary: string | null
+          tags: string[] | null
+          title: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string | null
+          error_msg?: string | null
+          id?: string
+          perspectives?: Json | null
+          published_at?: string | null
+          source_id: string
+          source_name: string
+          source_url: string
+          status?: string | null
+          summary?: string | null
+          tags?: string[] | null
+          title: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string | null
+          error_msg?: string | null
+          id?: string
+          perspectives?: Json | null
+          published_at?: string | null
+          source_id?: string
+          source_name?: string
+          source_url?: string
+          status?: string | null
+          summary?: string | null
+          tags?: string[] | null
+          title?: string
+        }
+        Relationships: []
+      }
       perspective_polls: {
         Row: {
           article_id: string

@@ -137,30 +137,30 @@ export default function Landing() {
       {/* ── Hero ── */}
       <section style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "8rem 2rem 4rem", position: "relative", overflow: "hidden" }}>
         {/* Newspaper collage background */}
-        <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
+        <div style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0 }}>
           <img src={newspapersCollage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.55 }} />
           <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 50% 50%, rgba(10,14,23,0.75) 0%, rgba(10,14,23,0.3) 70%)" }} />
         </div>
-        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 50% 30%, rgba(37,99,235,0.08) 0%, transparent 60%), radial-gradient(ellipse at 80% 60%, rgba(14,165,233,0.05) 0%, transparent 50%)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 50% 30%, rgba(37,99,235,0.08) 0%, transparent 60%), radial-gradient(ellipse at 80% 60%, rgba(14,165,233,0.05) 0%, transparent 50%)", pointerEvents: "none", zIndex: 0 }} />
 
         {/* Badge */}
-        <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "rgba(37,99,235,0.25)", border: "1px solid rgba(37,99,235,0.4)", borderRadius: 100, padding: "0.4rem 1rem", fontSize: "0.8rem", fontWeight: 600, color: "#fff", marginBottom: "2rem", textTransform: "uppercase", letterSpacing: "0.08em", textShadow: "0 1px 8px rgba(0,0,0,0.6)" }}>
+        <div style={{ position: "relative", zIndex: 1, display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "rgba(37,99,235,0.25)", border: "1px solid rgba(37,99,235,0.4)", borderRadius: 100, padding: "0.4rem 1rem", fontSize: "0.8rem", fontWeight: 600, color: "#fff", marginBottom: "2rem", textTransform: "uppercase", letterSpacing: "0.08em", textShadow: "0 1px 8px rgba(0,0,0,0.6)" }}>
           <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#22C55E", animation: "pulse 2s infinite", display: "inline-block" }} />
           Acceso anticipado abierto
         </div>
 
-        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2.8rem, 6vw, 5rem)", fontWeight: 800, lineHeight: 1.1, maxWidth: 800, marginBottom: "1.5rem", color: "#fff", textShadow: "0 4px 24px rgba(0,0,0,0.9), 0 0 60px rgba(0,0,0,0.6)" }}>
+        <h1 style={{ position: "relative", zIndex: 1, fontFamily: "'Playfair Display', serif", fontSize: "clamp(2.8rem, 6vw, 5rem)", fontWeight: 800, lineHeight: 1.1, maxWidth: 800, marginBottom: "1.5rem", color: "#fff", textShadow: "0 4px 24px rgba(0,0,0,0.9), 0 0 60px rgba(0,0,0,0.6)" }}>
           Cada noticia tiene más de{" "}
           <span style={{ color: "#3B82F6" }}>
             una verdad.
           </span>
         </h1>
 
-        <p style={{ fontSize: "1.25rem", color: "#fff", maxWidth: 560, marginBottom: "2.5rem", lineHeight: 1.7, fontWeight: 500, textShadow: "0 2px 16px rgba(0,0,0,0.9), 0 0 40px rgba(0,0,0,0.6)" }}>
+        <p style={{ position: "relative", zIndex: 1, fontSize: "1.25rem", color: "#fff", maxWidth: 560, marginBottom: "2.5rem", lineHeight: 1.7, fontWeight: 500, textShadow: "0 2px 16px rgba(0,0,0,0.9), 0 0 40px rgba(0,0,0,0.6)" }}>
           MIDIA genera 5 perspectivas automáticas sobre cada noticia — económica, política, social, internacional y cultural — para que formes tu propia opinión.
         </p>
 
-        <div style={{ display: "flex", gap: "1rem", marginBottom: "3.5rem", flexWrap: "wrap", justifyContent: "center" }}>
+        <div style={{ position: "relative", zIndex: 1, display: "flex", gap: "1rem", marginBottom: "3.5rem", flexWrap: "wrap", justifyContent: "center" }}>
           <a href="#cta" style={{ background: "linear-gradient(135deg,#2563EB,#0EA5E9)", color: "#fff", padding: "0.8rem 2rem", borderRadius: 8, fontWeight: 600, fontSize: "1rem", textDecoration: "none" }}>
             Quiero acceso anticipado →
           </a>
@@ -169,7 +169,7 @@ export default function Landing() {
           </a>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "2rem", flexWrap: "wrap", justifyContent: "center", textShadow: "0 1px 8px rgba(0,0,0,0.6)" }}>
+        <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "2rem", flexWrap: "wrap", justifyContent: "center", textShadow: "0 1px 8px rgba(0,0,0,0.6)" }}>
           <span style={{ fontSize: "0.8rem", color: "#fff", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 600 }}>Construido con tecnología de</span>
           <div style={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
             {["CLAUDE AI", "SUPABASE", "REACT"].map((t) => (

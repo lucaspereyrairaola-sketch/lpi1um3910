@@ -227,7 +227,7 @@ const ArticlePage = () => {
           </div>
 
           {/* Title */}
-          <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-4 tracking-tight leading-tight">
+          <h1 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4 leading-tight">
             {article.title}
           </h1>
 

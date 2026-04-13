@@ -846,21 +846,21 @@ const Index = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="flex items-center justify-between mb-6"
+          className="flex items-start justify-between mb-6"
         >
           <div>
-            <h1 className="text-xl font-bold text-foreground tracking-tight">
-              {preferredTopics.length > 0 ? "Tu Feed" : "Noticias"}
+            <h1 className="font-display text-2xl font-bold text-foreground tracking-tight leading-tight">
+              {preferredTopics.length > 0 ? "Tu panorama de hoy" : "El panorama completo"}
             </h1>
-            <p className="text-xs text-muted-foreground mt-0.5">
+            <p className="text-xs text-muted-foreground mt-1">
               {preferredTopics.length > 0
-                ? `${preferredTopics.slice(0, 3).join(" · ")} · profundidad ${depth === "minimal" ? "titulares" : depth === "full" ? "completa" : "resumen"}`
-                : "Configurá tus preferencias para personalizar este feed"}
+                ? `${preferredTopics.slice(0, 3).map(t => t.charAt(0).toUpperCase() + t.slice(1)).join(" · ")}`
+                : "Configurá tus temas para personalizar este feed"}
             </p>
           </div>
           <Link
             to="/preferences"
-            className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground border border-border/40 hover:border-border rounded-full px-3 py-1.5 transition-all"
+            className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground border border-border/40 hover:border-border rounded-full px-3 py-1.5 transition-all shrink-0"
           >
             <Settings className="w-3.5 h-3.5" />
             Ajustar

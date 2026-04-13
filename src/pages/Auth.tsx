@@ -74,7 +74,7 @@ const Auth = () => {
         initial={{ opacity: 0, x: -24 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6 }}
-        className="hidden lg:flex flex-col justify-between w-[480px] shrink-0 px-12 py-14 relative z-10 border-r border-border/30"
+        className="hidden lg:flex flex-col justify-center w-[480px] shrink-0 px-12 py-14 relative z-10 border-r border-border/30"
       >
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2.5 no-underline">

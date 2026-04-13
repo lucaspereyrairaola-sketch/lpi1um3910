@@ -139,7 +139,7 @@ export default function Landing() {
         {/* Newspaper collage background */}
         <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
           <img src={newspapersCollage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.55 }} />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(10,14,23,0.4) 0%, rgba(10,14,23,0.6) 100%)" }} />
+          <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 50% 50%, rgba(10,14,23,0.75) 0%, rgba(10,14,23,0.3) 70%)" }} />
         </div>
         <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 50% 30%, rgba(37,99,235,0.08) 0%, transparent 60%), radial-gradient(ellipse at 80% 60%, rgba(14,165,233,0.05) 0%, transparent 50%)", pointerEvents: "none" }} />
 
@@ -149,14 +149,14 @@ export default function Landing() {
           Acceso anticipado abierto
         </div>
 
-        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2.8rem, 6vw, 5rem)", fontWeight: 800, lineHeight: 1.1, maxWidth: 800, marginBottom: "1.5rem", color: "#fff", textShadow: "0 2px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.5)" }}>
+        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2.8rem, 6vw, 5rem)", fontWeight: 800, lineHeight: 1.1, maxWidth: 800, marginBottom: "1.5rem", color: "#fff", textShadow: "0 4px 24px rgba(0,0,0,0.9), 0 0 60px rgba(0,0,0,0.6)" }}>
           Cada noticia tiene más de{" "}
-          <span style={{ background: "linear-gradient(135deg,#60A5FA,#34D399)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+          <span style={{ color: "#3B82F6" }}>
             una verdad.
           </span>
         </h1>
 
-        <p style={{ fontSize: "1.2rem", color: "#fff", maxWidth: 560, marginBottom: "2.5rem", lineHeight: 1.7, textShadow: "0 1px 12px rgba(0,0,0,0.8), 0 0 30px rgba(0,0,0,0.5)" }}>
+        <p style={{ fontSize: "1.25rem", color: "#fff", maxWidth: 560, marginBottom: "2.5rem", lineHeight: 1.7, fontWeight: 500, textShadow: "0 2px 16px rgba(0,0,0,0.9), 0 0 40px rgba(0,0,0,0.6)" }}>
           MIDIA genera 5 perspectivas automáticas sobre cada noticia — económica, política, social, internacional y cultural — para que formes tu propia opinión.
         </p>
 
@@ -164,7 +164,7 @@ export default function Landing() {
           <a href="#cta" style={{ background: "linear-gradient(135deg,#2563EB,#0EA5E9)", color: "#fff", padding: "0.8rem 2rem", borderRadius: 8, fontWeight: 600, fontSize: "1rem", textDecoration: "none" }}>
             Quiero acceso anticipado →
           </a>
-          <a href="#demo" style={{ background: "rgba(255,255,255,0.08)", color: "#fff", padding: "0.8rem 2rem", borderRadius: 8, fontWeight: 600, fontSize: "1rem", textDecoration: "none", border: "1px solid rgba(255,255,255,0.12)" }}>
+          <a href="#demo" style={{ background: "rgba(255,255,255,0.15)", color: "#fff", padding: "0.8rem 2rem", borderRadius: 8, fontWeight: 600, fontSize: "1rem", textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)" }}>
             ▶ Ver cómo funciona
           </a>
         </div>

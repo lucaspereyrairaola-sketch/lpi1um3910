@@ -74,7 +74,7 @@ const Auth = () => {
         initial={{ opacity: 0, x: -24 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6 }}
-        className="hidden lg:flex flex-col justify-center w-[480px] shrink-0 px-12 py-14 relative z-10 border-r border-border/30"
+        className="hidden lg:flex flex-col justify-start w-[480px] shrink-0 px-12 pt-[15vh] pb-14 relative z-10 border-r border-border/30"
       >
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2.5 no-underline">
@@ -117,7 +117,7 @@ const Auth = () => {
       </motion.div>
 
       {/* ── Right panel: form ── */}
-      <div className="flex-1 flex flex-col items-center justify-center px-6 py-12 relative z-10">
+      <div className="flex-1 flex flex-col items-center justify-start pt-[15vh] px-6 pb-12 relative z-10">
         {/* Mobile logo */}
         <Link to="/" className="flex items-center gap-2 mb-8 lg:hidden no-underline">
           <svg viewBox="0 0 28 28" fill="none" width={24} height={24}><circle cx="14" cy="14" r="13" stroke="#2563EB" strokeWidth="2"/><path d="M8 14h12M14 8v12M9 9l10 10M19 9L9 19" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/><circle cx="14" cy="14" r="4" fill="#2563EB"/></svg>

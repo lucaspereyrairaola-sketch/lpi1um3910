@@ -149,14 +149,14 @@ export default function Landing() {
           Acceso anticipado abierto
         </div>
 
-        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2.8rem, 6vw, 5rem)", fontWeight: 800, lineHeight: 1.1, maxWidth: 800, marginBottom: "1.5rem", color: "#fff" }}>
+        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2.8rem, 6vw, 5rem)", fontWeight: 800, lineHeight: 1.1, maxWidth: 800, marginBottom: "1.5rem", color: "#fff", textShadow: "0 2px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.5)" }}>
           Cada noticia tiene más de{" "}
           <span style={{ background: "linear-gradient(135deg,#60A5FA,#34D399)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
             una verdad.
           </span>
         </h1>
 
-        <p style={{ fontSize: "1.2rem", color: "#fff", maxWidth: 560, marginBottom: "2.5rem", lineHeight: 1.7 }}>
+        <p style={{ fontSize: "1.2rem", color: "#fff", maxWidth: 560, marginBottom: "2.5rem", lineHeight: 1.7, textShadow: "0 1px 12px rgba(0,0,0,0.8), 0 0 30px rgba(0,0,0,0.5)" }}>
           MIDIA genera 5 perspectivas automáticas sobre cada noticia — económica, política, social, internacional y cultural — para que formes tu propia opinión.
         </p>
 

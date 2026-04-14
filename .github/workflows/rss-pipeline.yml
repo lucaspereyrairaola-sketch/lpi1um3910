@@ -57,18 +57,7 @@ jobs:
           BODY_RESP=$(echo "$RESPONSE" | head -n -1)
 
           echo "📥 HTTP $HTTP_CODE"
-          echo "$BODY_RESP" | python3 -c "
-import json,sys
-try:
-  d = json.load(sys.stdin)
-  print(f'  ✅ Procesados: {d.get(\"processed\",0)}')
-  print(f'  ❌ Errores: {d.get(\"errors\",0)}')
-  for r in d.get('results',[]):
-    print(f'  → {r.get(\"title\",\"\")[:70]}')
-  for e in d.get('errors_detail',[]):
-    print(f'  ✗ {e}')
-except: print(sys.stdin.read())
-" || true
+          echo "$BODY_RESP" | python3 -c 'import json,sys; d=json.load(sys.stdin); print("Procesados:",d.get("processed",0)); print("Errores:",d.get("errors",0)); [print("->",r.get("title","")[:70]) for r in d.get("results",[])]' || echo "$BODY_RESP"
 
           echo "http_code=$HTTP_CODE" >> $GITHUB_OUTPUT
 

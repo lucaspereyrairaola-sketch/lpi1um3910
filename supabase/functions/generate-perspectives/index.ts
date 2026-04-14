@@ -146,7 +146,14 @@ Devuelve ÚNICAMENTE un JSON válido con esta estructura (sin texto adicional, s
   ]
 }
 
-Reglas estrictas:
+REGLAS CRÍTICAS — NO NEGOCIABLES:
+- Los campos "id" y "label" son FIJOS. NUNCA los modifiques ni agregues subtítulos. Usá exactamente:
+  id: "economica"     → label: "Económica"
+  id: "politica"      → label: "Política"
+  id: "social"        → label: "Social"
+  id: "internacional" → label: "Internacional"
+  id: "cultural"      → label: "Cultural"
+- El campo "tone" SÍ puede variar según el artículo (ej: "Científico", "Reflexivo", "Crítico")
 - Cada perspectiva analiza el MISMO hecho desde un ángulo radicalmente diferente
 - Los keyArguments deben ser afirmaciones concretas, no genéricas (máximo 12 palabras)
 - Todo en español neutro latinoamericano
@@ -216,9 +223,9 @@ serve(async (req) => {
                     items: {
                       type: "object",
                       properties: {
-                        id: { type: "string" },
-                        label: { type: "string" },
-                        icon: { type: "string" },
+                        id: { type: "string", enum: ["economica", "politica", "social", "internacional", "cultural"] },
+                        label: { type: "string", enum: ["Económica", "Política", "Social", "Internacional", "Cultural"] },
+                        icon: { type: "string", enum: ["📈", "🏛️", "👥", "🌍", "🎭"] },
                         tone: { type: "string" },
                         content: { type: "array", minItems: 3, items: { type: "string" } },
                         keyArguments: { type: "array", minItems: 3, maxItems: 3, items: { type: "string" } },

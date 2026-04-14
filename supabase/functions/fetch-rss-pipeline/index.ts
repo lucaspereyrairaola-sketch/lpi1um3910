@@ -94,16 +94,16 @@ async function fetchArticleText(url: string): Promise<string> {
 function detectTags(title: string, body: string, baseTags: string[]): string[] {
   const t = `${title} ${body}`.toLowerCase();
   const tags = new Set(baseTags);
-  if (/econom|inflaci|dólar|dolar|peso\b|finanzas|bolsa|merval|banco central|deuda|fmi|indec/.test(t)) tags.add("Economía");
-  if (/polític|gobierno|milei|kirchner|congreso|diputad|senado|elecciones|partido|ministro|decreto/.test(t)) tags.add("Política");
-  if (/salud|hospital|médico|medicina|enfermedad|pandemia|vacuna/.test(t)) tags.add("Salud");
-  if (/tecnolog|inteligencia artificial|\bia\b|startup|digital|software|internet/.test(t)) tags.add("Tecnología");
-  if (/ambiente|glaciares|clima|climático|contaminación|ecolog|biodiversidad/.test(t)) tags.add("Ambiente");
-  if (/deporte|fútbol|futbol|messi|river|boca|mundial|tenis|básquet/.test(t)) tags.add("Deportes");
-  if (/cultura|arte|cine|música|teatro|literatura|festival/.test(t)) tags.add("Cultura");
-  if (/seguridad|crimen|narco|policía|justicia|judicial/.test(t)) tags.add("Seguridad");
-  if (/internacional|eeuu|estados unidos|europa|china|brasil|chile|onu/.test(t)) tags.add("Internacional");
-  if (/ciencia|investigación|descubrimiento|universidad|conicet/.test(t)) tags.add("Ciencia");
+  if (/econom|inflaci|dólar|dolar|peso\b|finanzas|bolsa|merval|banco central|deuda|fmi|indec|tarifas|exportacion|importacion/.test(t)) tags.add("Economía");
+  if (/polític|gobierno|milei|kirchner|congreso|diputad|senado|elecciones|partido|ministro|decreto|veto|reforma/.test(t)) tags.add("Política");
+  if (/salud|hospital|médico|medicina|enfermedad|pandemia|vacuna|neurolog|psicolog|psiquiat|terapia|dormir|sueño|cerebro|cognitiv|mental|bienestar|nutricion|dieta|ejercicio|clínica|tratamiento|diagnóstico|síntoma/.test(t)) tags.add("Salud");
+  if (/tecnolog|inteligencia artificial|startup|ciberseguridad|software|blockchain|criptomoneda|robotica|automatizacion/.test(t)) tags.add("Tecnología");
+  if (/ambiente|glaciares|cambio climático|calentamiento|contaminación|ecolog|biodiversidad|energía renovable|solar|eólica|forestal|sequía|inundacion/.test(t)) tags.add("Ambiente");
+  if (/deporte|fútbol|futbol|messi|river|boca|mundial|tenis|básquet|rugby|atletismo|racing|independiente|san lorenzo/.test(t)) tags.add("Deportes");
+  if (/cultura|arte|cine|música|teatro|literatura|festival|libro|escritor|exhibición|museo/.test(t)) tags.add("Cultura");
+  if (/seguridad|crimen|narco|policía|justicia|judicial|delito|robo|homicidio|femicidio/.test(t)) tags.add("Seguridad");
+  if (/internacional|eeuu|estados unidos|europa|china|brasil|chile|onu|otan|geopolítica|trump|guerra|conflicto/.test(t)) tags.add("Internacional");
+  if (/ciencia|investigación científica|descubrimiento|universidad|conicet|nasa|estudio científico/.test(t)) tags.add("Ciencia");
   return [...tags];
 }
 

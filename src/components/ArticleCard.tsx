@@ -23,8 +23,8 @@ interface ArticleCardProps {
   className?: string;
 }
 
-function getExcerpt(body: string, maxChars = 160): string {
-  const plain = body.replace(/[#*_`>\[\]]/g, "").trim();
+function getExcerpt(body: string | null | undefined, maxChars = 160): string {
+  const plain = (body ?? "").replace(/[#*_`>\[\]]/g, "").trim();
   return plain.length > maxChars ? plain.slice(0, maxChars).trim() + "…" : plain;
 }
 

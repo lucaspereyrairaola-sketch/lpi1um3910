@@ -23,8 +23,8 @@ interface ArticleCardProps {
   className?: string;
 }
 
-function getExcerpt(body: string, maxChars = 160): string {
-  const plain = body.replace(/[#*_`>\[\]]/g, "").trim();
+function getExcerpt(body: string | null | undefined, maxChars = 160): string {
+  const plain = (body ?? "").replace(/[#*_`>\[\]]/g, "").trim();
   return plain.length > maxChars ? plain.slice(0, maxChars).trim() + "…" : plain;
 }
 
@@ -77,7 +77,7 @@ const FeaturedCard = ({ article, index, isPriority }: ArticleCardProps) => {
 
           {/* Tags row */}
           <div className="flex items-center gap-2 mb-4 flex-wrap">
-            {article.tags.slice(0, 3).map((tag) => <TagBadge key={tag} tag={tag} />)}
+            {(article.tags ?? []).slice(0, 3).map((tag) => <TagBadge key={tag} tag={tag} />)}
             {hasPerspectives && <PerspectivesBadge count={article.perspectives!.length} />}
             {article.access_level !== "free" && (
               <span className="ml-auto"><AccessBadge level={article.access_level} /></span>
@@ -142,7 +142,7 @@ const MediumCard = ({ article, index, isPriority }: ArticleCardProps) => {
           )}
 
           <div className="flex items-center gap-2 mb-2.5 flex-wrap">
-            {article.tags.slice(0, 2).map((tag) => <TagBadge key={tag} tag={tag} />)}
+            {(article.tags ?? []).slice(0, 2).map((tag) => <TagBadge key={tag} tag={tag} />)}
             {hasPerspectives && <PerspectivesBadge count={article.perspectives!.length} />}
             {article.access_level !== "free" && (
               <span className="ml-auto"><AccessBadge level={article.access_level} /></span>
@@ -193,7 +193,7 @@ const CompactCard = ({ article, index, isPriority }: ArticleCardProps) => {
           {/* Left: tags + title */}
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-1.5 mb-1 flex-wrap">
-              {article.tags.slice(0, 1).map((tag) => <TagBadge key={tag} tag={tag} />)}
+              {(article.tags ?? []).slice(0, 1).map((tag) => <TagBadge key={tag} tag={tag} />)}
               {hasPerspectives && (
                 <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-primary/10 text-primary flex items-center gap-0.5">
                   <Layers className="w-2.5 h-2.5" />
